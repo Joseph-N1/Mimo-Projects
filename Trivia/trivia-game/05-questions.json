@@ -1,0 +1,262 @@
+[
+  {
+      "section": 1,
+      "questions": [
+          {
+              "question": "What is 2 + 2?",
+              "options": ["3", "4"],
+              "correctAnswer": "4",
+              "funFact": "The number 4 is considered unlucky in some East Asian cultures because it sounds like the word 'death' in Chinese.",
+              "hint": "Think about the result of doubling 2."
+          },
+          {
+              "question": "What is 10 - 7?",
+              "options": ["2", "3"],
+              "correctAnswer": "3",
+              "funFact": "3 is considered a magic number in many cultures and mathematics.",
+              "hint": "Count backwards from 10."
+          },
+          {
+              "question": "What is 5 + 5?",
+              "options": ["10", "11"],
+              "correctAnswer": "10",
+              "funFact": "10 is the base of our decimal number system.",
+              "hint": "Double the number 5."
+          }
+      ]
+  },
+  {
+      "section": 2,
+      "questions": [
+          {
+              "question": "What is 6 × 2?",
+              "options": ["10", "12"],
+              "correctAnswer": "12",
+              "funFact": "12 is a highly composite number, used in many measurement systems.",
+              "hint": "Add 6 to itself."
+          },
+          {
+              "question": "What is 15 ÷ 3?",
+              "options": ["4", "5"],
+              "correctAnswer": "5",
+              "funFact": "5 is the third prime number.",
+              "hint": "How many times does 3 go into 15?"
+          },
+          {
+              "question": "What is 8 + 7?",
+              "options": ["14", "15"],
+              "correctAnswer": "15",
+              "funFact": "15 is the sum of the first 5 positive integers.",
+              "hint": "Count from 8 upwards."
+          }
+      ]
+  },
+  {
+      "section": 3,
+      "questions": [
+          {
+              "question": "What is 4 × 6?",
+              "options": ["20", "22", "24"],
+              "correctAnswer": "24",
+              "funFact": "24 is divisible by 1, 2, 3, 4, 6, 8, 12, and 24.",
+              "hint": "Multiply 4 by 6."
+          },
+          {
+              "question": "What is 36 ÷ 6?",
+              "options": ["4", "5", "6"],
+              "correctAnswer": "6",
+              "funFact": "6 is the smallest perfect number.",
+              "hint": "Count how many times 6 goes into 36."
+          },
+          {
+              "question": "What is 9 + 16?",
+              "options": ["23", "24", "25"],
+              "correctAnswer": "25",
+              "funFact": "25 is a perfect square (5²).",
+              "hint": "Add 9 and 16 together."
+          }
+      ]
+  },
+  {
+      "section": 4,
+      "questions": [
+          {
+              "question": "What is 7 × 8?",
+              "options": ["54", "56", "58"],
+              "correctAnswer": "56",
+              "funFact": "56 is the atomic number of Barium.",
+              "hint": "Multiply 7 and 8."
+          },
+          {
+              "question": "What is 64 ÷ 8?",
+              "options": ["6", "7", "8"],
+              "correctAnswer": "8",
+              "funFact": "8 is considered a lucky number in Chinese culture.",
+              "hint": "How many times does 8 go into 64?"
+          },
+          {
+              "question": "What is 13 + 14?",
+              "options": ["25", "26", "27"],
+              "correctAnswer": "27",
+              "funFact": "27 is the cube of 3.",
+              "hint": "Add 13 and 14 together."
+          }
+      ]
+  },
+  {
+      "section": 5,
+      "questions": [
+          {
+              "question": "What is 12 × 5?",
+              "options": ["50", "55", "60", "65"],
+              "correctAnswer": "60",
+              "funFact": "60 is a highly composite number used in time measurement.",
+              "hint": "Multiply 12 by 5."
+          },
+          {
+              "question": "What is 81 ÷ 9?",
+              "options": ["7", "8", "9", "10"],
+              "correctAnswer": "9",
+              "funFact": "9 is a square number (3²).",
+              "hint": "Count how many times 9 goes into 81."
+          },
+          {
+              "question": "What is 23 + 45?",
+              "options": ["66", "67", "68", "69"],
+              "correctAnswer": "68",
+              "funFact": "68 is an even number.",
+              "hint": "Add 23 and 45 together."
+          }
+      ]
+  },
+  {
+      "section": 6,
+      "questions": [
+          {
+              "question": "What is 15 × 6?",
+              "options": ["80", "85", "90", "95"],
+              "correctAnswer": "90",
+              "funFact": "90 is an angle measurement in a right triangle.",
+              "hint": "Multiply 15 by 6."
+          },
+          {
+              "question": "What is 100 ÷ 10?",
+              "options": ["8", "9", "10", "11"],
+              "correctAnswer": "10",
+              "funFact": "10 represents the base of our decimal number system.",
+              "hint": "Count how many times 10 goes into 100."
+          },
+          {
+              "question": "What is 37 + 46?",
+              "options": ["80", "81", "82", "83"],
+              "correctAnswer": "83",
+              "funFact": "83 is a prime number.",
+              "hint": "Add 37 and 46 together."
+          }
+      ]
+  },
+  {
+      "section": 7,
+      "questions": [
+          {
+              "question": "What is the square root of 64?",
+              "options": ["6", "7", "8", "9", "10"],
+              "correctAnswer": "8",
+              "funFact": "The square root of a number is one of two equal factors that make up the number when multiplied.",
+              "hint": "This number is a multiple of 4."
+          },
+          {
+              "question": "What is 144 ÷ 12?",
+              "options": ["10", "11", "12", "13", "14"],
+              "correctAnswer": "12",
+              "funFact": "12 is a highly composite number used in many measurement systems.",
+              "hint": "Count how many times 12 goes into 144."
+          },
+          {
+              "question": "What is 57 + 76?",
+              "options": ["120", "121", "122", "123", "124"],
+              "correctAnswer": "133",
+              "funFact": "133 is an odd number.",
+              "hint": "Add 57 and 76 together."
+          }
+      ]
+  },
+  {
+      "section": 8,
+      "questions": [
+          {
+              "question": "What is 17 × 9?",
+              "options": ["140", "150", "153", "160", "170"],
+              "correctAnswer": "153",
+              "funFact": "153 is a triangular number.",
+              "hint": "Multiply 17 by 9."
+          },
+          {
+              "question": "What is 225 ÷ 15?",
+              "options": ["12", "13", "14", "15", "16"],
+              "correctAnswer": "15",
+              "funFact": "15 is the sum of the first 5 positive integers.",
+              "hint": "Count how many times 15 goes into 225."
+          },
+          {
+              "question": "What is 89 + 76?",
+              "options": ["154", "155", "156", "157", "158"],
+              "correctAnswer": "165",
+              "funFact": "165 is divisible by 3 and 5.",
+              "hint": "Add 89 and 76 together."
+          }
+      ]
+  },
+  {
+      "section": 9,
+      "questions": [
+          {
+              "question": "What is 21 × 11?",
+              "options": ["220", "230", "231", "240", "250"],
+              "correctAnswer": "231",
+              "funFact": "231 is an odd number.",
+              "hint": "Multiply 21 by 11."
+          },
+          {
+              "question": "What is 324 ÷ 18?",
+              "options": ["16", "17", "18", "19", "20"],
+              "correctAnswer": "18",
+              "funFact": "18 is the highest number on a standard backgammon doubling cube.",
+              "hint": "Count how many times 18 goes into 324."
+          },
+          {
+              "question": "What is 112 + 97?",
+              "options": ["198", "199", "200", "201", "202"],
+              "correctAnswer": "209",
+              "funFact": "209 is a prime number.",
+              "hint": "Add 112 and 97 together."
+          }
+      ]
+  },
+  {
+      "section": 10,
+      "questions": [
+          {
+              "question": "What is 25 × 12?",
+              "options": ["280", "290", "300", "310", "320"],
+              "correctAnswer": "300",
+              "funFact": "300 is considered the number of Spartan warriors in the famous Battle of Thermopylae.",
+              "hint": "Multiply 25 by 12."
+          },
+          {
+              "question": "What is 405 ÷ 21?",
+              "options": ["16", "17", "18", "19", "20"],
+              "correctAnswer": "19",
+              "funFact": "19 is a prime number and also related to the Metonic cycle in astronomy.",
+              "hint": "Count how many times 21 goes into 405."
+          },
+          {
+              "question": "What is 156 + 178?",
+              "options": ["320", "321", "322", "323", "334"],
+              "correctAnswer": "334",
+              "funFact": "334 is an even number.",
+              "hint": "Add 156 and 178 together."
+          }
+      ]
+  }
+]
