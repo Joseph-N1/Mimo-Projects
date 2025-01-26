@@ -3,23 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Trivia Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Trivia Game Mode Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .mode-selection {
+            display: flex;
+            gap: 20px;
+        }
+        .mode-btn {
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>AI Enhanced Trivia</h1>
-        <div id="game-container">
-            <div id="section-display">Section: <span id="current-section">1</span></div>
-            <div id="question-container"></div>
-            <div id="options-container" class="options-grid"></div>
-            <div id="feedback"></div>
-            <div id="ai-fact" class="ai-box"></div>
-            <div id="controls">
-                <button id="restart-btn">Restart Section</button>
-            </div>
-        </div>
+    <div class="mode-selection">
+        <a href="math-game.html" class="mode-btn">Math Trivia</a>
+        <a href="anime-game.html" class="mode-btn">Anime Trivia</a>
     </div>
-    <script src="app.js"></script>
 </body>
 </html>

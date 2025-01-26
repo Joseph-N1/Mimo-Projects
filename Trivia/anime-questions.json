@@ -1,0 +1,192 @@
+[
+    {
+        "section": 1,
+        "questions": [
+            {
+                "question": "Who is the main protagonist of Naruto?",
+                "options": ["Sasuke", "Naruto"],
+                "correctAnswer": "Naruto",
+                "funFact": "Naruto Uzumaki means 'Maelstrom' in Japanese, symbolizing his turbulent life.",
+                "hint": "Think of the character whose name is in the anime title."
+            },
+            {
+                "question": "Who is the main character in Jujutsu Kaisen?",
+                "options": ["Gojo", "Yuji"],
+                "correctAnswer": "Yuji",
+                "funFact": "Yuji Itadori was initially an ordinary high school student before becoming a Jujutsu sorcerer.",
+                "hint": "He swallows Sukuna's finger at the beginning of the series."
+            }
+        ]
+    },
+    {
+        "section": 2,
+        "questions": [
+            {
+                "question": "What is Naruto's dream?",
+                "options": ["Become Hokage", "Become a Ninja"],
+                "correctAnswer": "Become Hokage",
+                "funFact": "The Hokage is the strongest ninja and leader of the Hidden Leaf Village.",
+                "hint": "He wants to be the top leader in his village."
+            },
+            {
+                "question": "Who is Yuji's mentor in Jujutsu Kaisen?",
+                "options": ["Sukuna", "Gojo"],
+                "correctAnswer": "Gojo",
+                "funFact": "Satoru Gojo is considered the strongest Jujutsu sorcerer in the series.",
+                "hint": "He has white hair and teaches at Tokyo Jujutsu High."
+            }
+        ]
+    },
+    {
+        "section": 3,
+        "questions": [
+            {
+                "question": "What is Naruto's special jutsu?",
+                "options": ["Chidori", "Shadow Clone Jutsu", "Rasengan"],
+                "correctAnswer": "Shadow Clone Jutsu",
+                "funFact": "This technique creates multiple physical copies of the user.",
+                "hint": "It involves creating multiple versions of himself."
+            },
+            {
+                "question": "What is Yuji's primary power?",
+                "options": ["Cursed Technique", "Fire Power", "Super Strength"],
+                "correctAnswer": "Cursed Technique",
+                "funFact": "Yuji can channel cursed energy through physical attacks.",
+                "hint": "Related to the mystical powers in Jujutsu Kaisen."
+            }
+        ]
+    },
+    {
+        "section": 4,
+        "questions": [
+            {
+                "question": "Who is Naruto's best friend and rival?",
+                "options": ["Sakura", "Kakashi", "Sasuke"],
+                "correctAnswer": "Sasuke",
+                "funFact": "Their rivalry is a central theme throughout the Naruto series.",
+                "hint": "He left the village and became an antagonist."
+            },
+            {
+                "question": "Who is the main antagonist in Jujutsu Kaisen?",
+                "options": ["Gojo", "Mahito", "Sukuna"],
+                "correctAnswer": "Sukuna",
+                "funFact": "Sukuna is a powerful curse who resides within Yuji.",
+                "hint": "A powerful curse that Yuji has inside him."
+            }
+        ]
+    },
+    {
+        "section": 5,
+        "questions": [
+            {
+                "question": "What village is Naruto from?",
+                "options": ["Hidden Sand", "Hidden Leaf", "Hidden Mist", "Hidden Cloud"],
+                "correctAnswer": "Hidden Leaf",
+                "funFact": "Konohagakure means 'Village Hidden in the Leaves'.",
+                "hint": "It's the village with a leaf symbol."
+            },
+            {
+                "question": "What school do Jujutsu Kaisen characters attend?",
+                "options": ["Tokyo Jujutsu High", "Kyoto Jujutsu High", "Tokyo Magic School", "Jujutsu Academy"],
+                "correctAnswer": "Tokyo Jujutsu High",
+                "funFact": "This is where young Jujutsu sorcerers are trained.",
+                "hint": "Located in Tokyo, trains curse fighters."
+            }
+        ]
+    },
+    {
+        "section": 6,
+        "questions": [
+            {
+                "question": "Who trains Naruto initially?",
+                "options": ["Jiraiya", "Kakashi", "Iruka", "Sasuke"],
+                "correctAnswer": "Kakashi",
+                "funFact": "Kakashi is known as the Copy Ninja due to his ability to copy techniques.",
+                "hint": "He has a sharingan eye and wears a mask."
+            },
+            {
+                "question": "Who does Yuji fight in his first major battle?",
+                "options": ["Gojo", "Mahito", "Sukuna", "Aoi Todo"],
+                "correctAnswer": "Mahito",
+                "funFact": "Mahito is a special grade cursed spirit who can transform humans.",
+                "hint": "A shape-shifting curse that Yuji struggles against."
+            }
+        ]
+    },
+    {
+        "section": 7,
+        "questions": [
+            {
+                "question": "What is the name of Naruto's strongest form?",
+                "options": ["Nine-Tails Mode", "Sage Mode", "Hokage Mode", "Super Naruto"],
+                "correctAnswer": "Nine-Tails Mode",
+                "funFact": "This mode allows Naruto to harness the power of the Nine-Tailed Fox.",
+                "hint": "Involves the powerful fox spirit inside him."
+            },
+            {
+                "question": "What is Gojo's special ability?",
+                "options": ["Infinite Void", "Time Manipulation", "Teleportation", "Mind Reading"],
+                "correctAnswer": "Infinite Void",
+                "funFact": "This technique allows Gojo to manipulate space around him.",
+                "hint": "His most powerful and unique cursed technique."
+            }
+        ]
+    },
+    {
+        "section": 8,
+        "questions": [
+            {
+                "question": "Who sealed the Nine-Tails in Naruto?",
+                "options": ["Third Hokage", "Fourth Hokage", "Jiraiya", "Sarutobi"],
+                "correctAnswer": "Fourth Hokage",
+                "funFact": "The Fourth Hokage was Naruto's father, Minato Namikaze.",
+                "hint": "Naruto's biological father who sealed the fox in him."
+            },
+            {
+                "question": "What is Megumi's cursed technique?",
+                "options": ["Shadow Technique", "Fire Technique", "Water Technique", "Lightning Technique"],
+                "correctAnswer": "Shadow Technique",
+                "funFact": "Megumi can summon shikigami (spirit animals) from shadows.",
+                "hint": "Involves creating creatures from darkness."
+            }
+        ]
+    },
+    {
+        "section": 9,
+        "questions": [
+            {
+                "question": "What is the name of Naruto's son?",
+                "options": ["Boruto", "Sasuke Jr", "Kakashi Jr", "Naruto Jr"],
+                "correctAnswer": "Boruto",
+                "funFact": "Boruto means 'bolt' and continues his father's legacy.",
+                "hint": "The protagonist of the sequel series."
+            },
+            {
+                "question": "Who is Nobara's main opponent?",
+                "options": ["Mahito", "Sukuna", "Gojo", "Yuji"],
+                "correctAnswer": "Mahito",
+                "funFact": "Nobara has a unique cursed technique involving nails and hammers.",
+                "hint": "A major curse spirit she fights multiple times."
+            }
+        ]
+    },
+    {
+        "section": 10,
+        "questions": [
+            {
+                "question": "What is the ultimate goal of Akatsuki in Naruto?",
+                "options": ["World Domination", "Collect Tailed Beasts", "Destroy Leaf Village", "Create Peace"],
+                "correctAnswer": "Collect Tailed Beasts",
+                "funFact": "The Akatsuki wanted to capture all nine tailed beasts for their own purposes.",
+                "hint": "Involves gathering powerful spiritual creatures."
+            },
+            {
+                "question": "What is the final arc of Jujutsu Kaisen called?",
+                "options": ["Shibuya Incident", "Tokyo Battle", "Curse War", "Sorcerer Showdown"],
+                "correctAnswer": "Shibuya Incident",
+                "funFact": "This arc is considered one of the most intense in the series.",
+                "hint": "A major battle that takes place in a specific Tokyo district."
+            }
+        ]
+    }
+]
