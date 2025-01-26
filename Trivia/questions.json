@@ -1,0 +1,33 @@
+[
+    {
+      "section": 1,
+      "questions": [
+        {
+          "question": "What is 2 + 2?",
+          "options": ["3", "4"],
+          "correctAnswer": "4",
+          "funFact": "The number 4 is considered unlucky in some East Asian cultures because it sounds like the word 'death' in Chinese.",
+          "hint": "Think about the result of doubling 2."
+        },
+        {
+          "question": "What is the capital of France?",
+          "options": ["London", "Paris"],
+          "correctAnswer": "Paris",
+          "funFact": "Paris is often called the 'City of Light' because it was one of the first major cities to use gas street lighting.",
+          "hint": "Think about famous landmarks like the Eiffel Tower."
+        }
+      ]
+    },
+    {
+      "section": 7,
+      "questions": [
+        {
+          "question": "What is the square root of 64?",
+          "options": ["6", "7", "8", "9", "10"],
+          "correctAnswer": "8",
+          "funFact": "The square root of a number is one of two equal factors that make up the number when multiplied.",
+          "hint": "This number is a multiple of 4."
+        }
+      ]
+    }
+  ]
