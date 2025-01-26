@@ -15,7 +15,13 @@ This repository is a testament to my learning journey and growth in programming.
 
 ## 🧩 Projects Included
 
-- **[Project Name #1]**: Brief description of the project.
+- **[Trivia #1]**: [AI-Enhanced Trivia Game]: An interactive trivia game built with JavaScript that helps users learn through AI-assisted educational content.
+  Features:
+10 progressive difficulty sections with 2–5 answer options
+Dynamic AI-generated hints and fun facts
+Real-time feedback and score tracking
+Customizable JSON question database
+Responsive design with clean UI
 - **[Project Name #2]**: Brief description of the project.
 - **[Project Name #3]**: Brief description of the project.
 - *(More projects to come as I continue to learn and experiment!)*
