@@ -6,7 +6,7 @@ class TriviaGame {
         this.score = 0;
         this.wrongAttempts = 0;
         this.gameMode = gameMode;
-        this.timer = 30; // 30 seconds for the first section
+        this.timer = 30 + (this.currentSection * 10);
         this.timerInterval = null;
 
         this.loadQuestions().then(() => {
@@ -26,8 +26,7 @@ class TriviaGame {
             sports: '17-sports-questions.json',
             literature: '18-literature-questions.json'
         };
-        const jsonFile = jsonFiles[this.gameMode];
-        const response = await fetch(jsonFile);
+        const response = await fetch(jsonFiles[this.gameMode]);
         this.sections = await response.json();
     }
 
@@ -36,9 +35,12 @@ class TriviaGame {
         this.currentQuestion = 0;
         this.score = 0;
         this.wrongAttempts = 0;
-        this.timer = 30; // Reset timer for the first section
+        this.timer = 30 + (this.currentSection * 10);
+        
+        // Event listeners
         document.getElementById('restart-btn').addEventListener('click', () => this.restartSection());
         document.getElementById('next-btn').addEventListener('click', () => this.nextQuestion());
+        document.getElementById('try-again-btn').addEventListener('click', () => this.resetQuestion());
     }
 
     displayQuestion() {
@@ -46,68 +48,71 @@ class TriviaGame {
         const question = section.questions[this.currentQuestion];
         const optionsContainer = document.getElementById('options-container');
 
-        // Clear previous content
+        // Reset UI state
         optionsContainer.innerHTML = '';
         document.getElementById('feedback').innerHTML = '';
         document.getElementById('ai-fact').innerHTML = '';
-        document.getElementById('next-btn').style.display = 'none'; // Hide "Next" button initially
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('try-again-btn').style.display = 'none';
 
-        // Update section display
+        // Update displays
         document.getElementById('current-section').textContent = this.currentSection + 1;
+        document.getElementById('timer').textContent = this.timer;
+        document.getElementById('question-container').innerHTML = `<h3>${question.question}</h3>`;
 
-        // Display question
-        document.getElementById('question-container').innerHTML = `
-            <h3>${question.question}</h3>
-        `;
-
-        // Create answer buttons
-        question.options.forEach((option, index) => {
+        // Create options
+        question.options.forEach(option => {
             const button = document.createElement('button');
             button.textContent = option;
-            button.addEventListener('click', () => this.checkAnswer(option === question.correctAnswer));
+            
+            // Fix: Handle both 'correctAnswer' and 'answer' fields
+            const correctAnswer = question.correctAnswer || question.answer;
+            button.addEventListener('click', () => this.checkAnswer(option === correctAnswer));
+            
             optionsContainer.appendChild(button);
         });
-
-        // Set grid layout based on options count
-        const columns = Math.min(question.options.length, 5);
-        optionsContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
         // Start timer
         this.startTimer();
     }
 
     checkAnswer(isCorrect) {
-        const feedback = document.getElementById('feedback');
-        if (isCorrect) {
-            this.score++;
-            this.wrongAttempts = 0;
-            feedback.textContent = 'Correct!';
-            feedback.className = 'correct';
-        } else {
-            this.wrongAttempts++;
-            feedback.textContent = 'Not quite, try again.';
-            feedback.className = 'incorrect';
-            if (this.currentSection >= 6 && this.wrongAttempts >= 2) {
-                this.provideHint();
-            }
-        }
-
-        // Stop timer and show "Next" button
         this.stopTimer();
+        const feedback = document.getElementById('feedback');
+
+        if (isCorrect) {
+            this.handleCorrectAnswer(feedback);
+        } else {
+            this.handleIncorrectAnswer(feedback);
+        }
+    }
+
+    handleCorrectAnswer(feedback) {
+        this.score++;
+        this.wrongAttempts = 0;
+        feedback.textContent = 'Correct!';
+        feedback.className = 'correct';
         document.getElementById('next-btn').style.display = 'block';
         this.showAIFact();
     }
 
-    showAIFact() {
-        const question = this.sections[this.currentSection].questions[this.currentQuestion];
-        const aiFact = document.getElementById('ai-fact');
-        aiFact.innerHTML = `<strong>Did you know?</strong> ${question.funFact}`;
+    handleIncorrectAnswer(feedback) {
+        this.wrongAttempts++;
+        feedback.textContent = 'Not quite. Try again!';
+        feedback.className = 'incorrect';
+        document.getElementById('try-again-btn').style.display = 'block';
+        
+        if (this.currentSection >= 6 && this.wrongAttempts >= 2) {
+            this.provideHint();
+        }
     }
 
-    provideHint() {
-        const question = this.sections[this.currentSection].questions[this.currentQuestion];
-        const aiFact = document.getElementById('ai-fact');
-        aiFact.innerHTML = `<strong>Hint:</strong> ${question.hint}`;
+    resetQuestion() {
+        document.getElementById('feedback').innerHTML = '';
+        document.getElementById('ai-fact').innerHTML = '';
+        document.getElementById('try-again-btn').style.display = 'none';
+        this.timer = 30 + (this.currentSection * 10);
+        this.startTimer();
     }
 
     nextQuestion() {
@@ -116,41 +121,51 @@ class TriviaGame {
             this.currentSection++;
             this.currentQuestion = 0;
             if (this.currentSection >= this.sections.length) {
-                this.endGame();
-                return;
+                return this.endGame();
             }
         }
-
-        // Increase timer by 10 seconds for each new section
         this.timer = 30 + (this.currentSection * 10);
         this.displayQuestion();
-    }
-
-    endGame() {
-        const gameContainer = document.getElementById('game-container');
-        gameContainer.innerHTML = `
-            <h2>Game Over!</h2>
-            <p>Your final score is: ${this.score}</p>
-            <button id="restart-btn">Restart Game</button>
-            <a href="01-index.html" class="mode-btn">Choose Another Category</a>
-        `;
-        document.getElementById('restart-btn').addEventListener('click', () => this.initGame());
     }
 
     startTimer() {
         document.getElementById('timer').textContent = this.timer;
         this.timerInterval = setInterval(() => {
-            this.timer--;
+            this.timer = Math.max(0, this.timer - 1);
             document.getElementById('timer').textContent = this.timer;
             if (this.timer <= 0) {
                 this.stopTimer();
-                this.checkAnswer(false); // Automatically mark as incorrect
+                this.checkAnswer(false);
             }
         }, 1000);
     }
 
     stopTimer() {
         clearInterval(this.timerInterval);
+    }
+
+    showAIFact() {
+        const question = this.sections[this.currentSection].questions[this.currentQuestion];
+        
+        // Fix: Handle both 'funFact' and 'fact' fields
+        const fact = question.funFact || question.fact;
+        document.getElementById('ai-fact').innerHTML = `<strong>Did you know?</strong> ${fact}`;
+    }
+
+    provideHint() {
+        const question = this.sections[this.currentSection].questions[this.currentQuestion];
+        document.getElementById('ai-fact').innerHTML = `<strong>Hint:</strong> ${question.hint}`;
+    }
+
+    endGame() {
+        const gameContainer = document.getElementById('game-container');
+        gameContainer.innerHTML = `
+            <h2>Game Over!</h2>
+            <p>Final Score: ${this.score}</p>
+            <button id="restart-btn">Restart Game</button>
+            <a href="01-index.html" class="mode-btn">Main Menu</a>
+        `;
+        document.getElementById('restart-btn').addEventListener('click', () => this.initGame());
     }
 
     restartSection() {
@@ -160,33 +175,19 @@ class TriviaGame {
     }
 }
 
-// Initialize game when loaded
+// Initialize game
 window.addEventListener('load', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    let gameMode = urlParams.get('mode');
+    const path = window.location.pathname;
+    const gameModes = {
+        'math-game': 'math',
+        'anime-game': 'anime',
+        'science-game': 'science',
+        'geography-game': 'geography',
+        'worldhistory-game': 'worldhistory',
+        'sports-game': 'sports',
+        'literature-game': 'literature'
+    };
 
-    // Fallback to default mode if none specified
-    if (!gameMode) {
-        const path = window.location.pathname;
-        if (path.includes('math-game')) {
-            gameMode = 'math';
-        } else if (path.includes('anime-game')) {
-            gameMode = 'anime';
-        } else if (path.includes('science-game')) {
-            gameMode = 'science';
-        } else if (path.includes('geography-game')) {
-            gameMode = 'geography';
-        } else if (path.includes('worldhistory-game')) {
-            gameMode = 'worldhistory';
-        } else if (path.includes('sports-game')) {
-            gameMode = 'sports';
-        } else if (path.includes('literature-game')) {
-            gameMode = 'literature';
-        } else {
-            gameMode = 'math'; // Default fallback
-        }
-    }
-
-    console.log('Initializing game with mode:', gameMode);
+    const gameMode = Object.entries(gameModes).find(([key]) => path.includes(key))?.[1] || 'math';
     new TriviaGame(gameMode);
 });

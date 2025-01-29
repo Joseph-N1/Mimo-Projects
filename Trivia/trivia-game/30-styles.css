@@ -67,3 +67,23 @@ button:hover {
     background-color: #2196F3;
     display: none; /* Hidden by default */
 }
+
+/* Add main menu button */
+#main-menu-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #9E9E9E;
+}
+
+/* Style Try Again button */
+#try-again-btn {
+    background-color: #FF9800;
+    display: none;
+}
+
+/* Ensure timer never shows negatives */
+#timer::after {
+    content: 's';
+    margin-left: 3px;
+}

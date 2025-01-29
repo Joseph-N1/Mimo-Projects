@@ -174,7 +174,7 @@
           },
           {
               "question": "What is 57 + 76?",
-              "options": ["120", "121", "122", "123", "124"],
+              "options": ["120", "131", "133", "123", "124"],
               "correctAnswer": "133",
               "funFact": "133 is an odd number.",
               "hint": "Add 57 and 76 together."
@@ -200,7 +200,7 @@
           },
           {
               "question": "What is 89 + 76?",
-              "options": ["154", "155", "156", "157", "158"],
+              "options": ["154", "165", "156", "167", "158"],
               "correctAnswer": "165",
               "funFact": "165 is divisible by 3 and 5.",
               "hint": "Add 89 and 76 together."
@@ -226,7 +226,7 @@
           },
           {
               "question": "What is 112 + 97?",
-              "options": ["198", "199", "200", "201", "202"],
+              "options": ["198", "209", "200", "201", "202"],
               "correctAnswer": "209",
               "funFact": "209 is a prime number.",
               "hint": "Add 112 and 97 together."
