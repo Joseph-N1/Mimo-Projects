@@ -15,7 +15,10 @@
         }
         .mode-selection {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
+            max-width: 600px;
+            justify-content: center;
         }
         .mode-btn {
             padding: 20px;
@@ -23,11 +26,24 @@
             color: white;
             text-decoration: none;
             border-radius: 10px;
+            text-align: center;
+            flex: 1 1 calc(33.333% - 40px); /* 3 buttons per row with gap */
+            box-sizing: border-box;
+        }
+        .mode-btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <<a href="02-math-game.html" class="mode-btn">Math Trivia</a>
-    <a href="03-anime-game.html" class="mode-btn">Anime Trivia</a>
+    <div class="mode-selection">
+        <a href="02-math-game.html" class="mode-btn">Math Trivia</a>
+        <a href="03-anime-game.html" class="mode-btn">Anime Trivia</a>
+        <a href="04-science-game.html" class="mode-btn">Science Trivia</a>
+        <a href="05-geography-game.html" class="mode-btn">Geography Trivia</a>
+        <a href="06-worldhistory-game.html" class="mode-btn">World History Trivia</a>
+        <a href="07-sports-game.html" class="mode-btn">Sports Trivia</a>
+        <a href="08-literature-game.html" class="mode-btn">Literature Trivia</a>
+    </div>
 </body>
 </html>

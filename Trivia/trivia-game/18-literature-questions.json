@@ -1,0 +1,172 @@
+[
+    {
+        "section": 1,
+        "questions": [
+            {
+                "question": "Who wrote the novel '1984'?",
+                "options": ["Aldous Huxley", "George Orwell", "Ray Bradbury", "J.R.R. Tolkien"],
+                "answer": "George Orwell",
+                "fact": "Published in 1949, '1984' is a dystopian novel that explores themes of totalitarianism, surveillance, and individual freedom."
+            },
+            {
+                "question": "Which Shakespearean play features the famous 'To be or not to be' soliloquy?",
+                "options": ["Macbeth", "Hamlet", "Othello", "King Lear"],
+                "answer": "Hamlet",
+                "fact": "In Act 3, Scene 1 of 'Hamlet', the title character contemplates existence and the nature of life and death."
+            }
+        ]
+    },
+    {
+        "section": 2,
+        "questions": [
+            {
+                "question": "What is the name of the fictional town in Harper Lee's 'To Kill a Mockingbird'?",
+                "options": ["Maycomb", "Hannibal", "Salem", "Avonlea"],
+                "answer": "Maycomb",
+                "fact": "Maycomb, Alabama, serves as the backdrop for Harper Lee's novel, which deals with themes of racial injustice and moral growth."
+            },
+            {
+                "question": "Which epic poem begins with the line 'Sing, goddess, of the wrath of Achilles'?",
+                "options": ["The Odyssey", "The Iliad", "Paradise Lost", "The Aeneid"],
+                "answer": "The Iliad",
+                "fact": "'The Iliad', attributed to Homer, tells the story of the Trojan War and the anger of the Greek hero Achilles."
+            }
+        ]
+    },
+    {
+        "section": 3,
+        "questions": [
+            {
+                "question": "Who is the author of 'Pride and Prejudice'?",
+                "options": ["Emily Brontë", "Jane Austen", "Charlotte Brontë", "Louisa May Alcott"],
+                "answer": "Jane Austen",
+                "fact": "First published in 1813, 'Pride and Prejudice' is one of Jane Austen’s most famous novels, featuring Elizabeth Bennet and Mr. Darcy."
+            },
+            {
+                "question": "Which novel features a young girl named Scout Finch?",
+                "options": ["Jane Eyre", "Wuthering Heights", "To Kill a Mockingbird", "Anne of Green Gables"],
+                "answer": "To Kill a Mockingbird",
+                "fact": "Scout Finch is the narrator of 'To Kill a Mockingbird', a novel by Harper Lee that explores themes of racial injustice in the American South."
+            }
+        ]
+    },
+    {
+        "section": 4,
+        "questions": [
+            {
+                "question": "Who is the detective in Sir Arthur Conan Doyle’s novels?",
+                "options": ["Hercule Poirot", "Sherlock Holmes", "Philip Marlowe", "Miss Marple"],
+                "answer": "Sherlock Holmes",
+                "fact": "Sherlock Holmes, created by Sir Arthur Conan Doyle, is one of the most famous fictional detectives in literature."
+            },
+            {
+                "question": "Which book series features the character Katniss Everdeen?",
+                "options": ["Divergent", "The Maze Runner", "The Hunger Games", "Percy Jackson"],
+                "answer": "The Hunger Games",
+                "fact": "Katniss Everdeen is the protagonist of 'The Hunger Games' series by Suzanne Collins, set in a dystopian future."
+            }
+        ]
+    },
+    {
+        "section": 5,
+        "questions": [
+            {
+                "question": "Which Russian author wrote 'Crime and Punishment'?",
+                "options": ["Leo Tolstoy", "Fyodor Dostoevsky", "Anton Chekhov", "Vladimir Nabokov"],
+                "answer": "Fyodor Dostoevsky",
+                "fact": "'Crime and Punishment', published in 1866, is a psychological novel about guilt and redemption."
+            },
+            {
+                "question": "Who wrote 'The Great Gatsby'?",
+                "options": ["Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck", "William Faulkner"],
+                "answer": "F. Scott Fitzgerald",
+                "fact": "Published in 1925, 'The Great Gatsby' is a classic American novel that explores themes of wealth, love, and the American Dream."
+            }
+        ]
+    },
+    {
+        "section": 6,
+        "questions": [
+            {
+                "question": "💡 Who wrote the Gothic novel 'Frankenstein'?",
+                "options": ["Mary Shelley", "Bram Stoker", "Edgar Allan Poe", "Emily Brontë"],
+                "answer": "Mary Shelley",
+                "fact": "Mary Shelley wrote 'Frankenstein' at age 18, pioneering the science fiction genre."
+            },
+            {
+                "question": "💡 Which dystopian novel features 'Big Brother'?",
+                "options": ["Brave New World", "1984", "Fahrenheit 451", "The Handmaid's Tale"],
+                "answer": "1984",
+                "fact": "'Big Brother' is a symbol of oppressive surveillance in George Orwell’s '1984'."
+            }
+        ]
+    },
+    {
+        "section": 7,
+        "questions": [
+            {
+                "question": "💡 What is the sequel to 'The Hunger Games' trilogy?",
+                "options": ["Catching Fire", "Mockingjay", "The Ballad of Songbirds and Snakes", "Divergent"],
+                "answer": "Mockingjay",
+                "fact": "'Mockingjay' concludes Katniss Everdeen’s rebellion against the Capitol."
+            },
+            {
+                "question": "💡 Who wrote the poem 'The Raven'?",
+                "options": ["Walt Whitman", "Emily Dickinson", "Edgar Allan Poe", "Robert Frost"],
+                "answer": "Edgar Allan Poe",
+                "fact": "Poe’s 'The Raven' is famous for its melancholic rhythm and repeated 'Nevermore.'"
+            }
+        ]
+    },
+    {
+        "section": 8,
+        "questions": [
+            {
+                "question": "💡 Which novel opens with 'Call me Ishmael'?",
+                "options": ["Moby Dick", "Pride and Prejudice", "The Old Man and the Sea", "Ulysses"],
+                "answer": "Moby Dick",
+                "fact": "Herman Melville’s 'Moby Dick' explores obsession through Captain Ahab’s hunt for a white whale."
+            },
+            {
+                "question": "💡 Who created the fantasy world of Middle-earth?",
+                "options": ["C.S. Lewis", "J.K. Rowling", "J.R.R. Tolkien", "George R.R. Martin"],
+                "answer": "J.R.R. Tolkien",
+                "fact": "Tolkien’s 'The Lord of the Rings' and 'The Hobbit' are set in Middle-earth."
+            }
+        ]
+    },
+    {
+        "section": 9,
+        "questions": [
+            {
+                "question": "💡 What is the setting of 'Pride and Prejudice'?",
+                "options": ["Victorian London", "Rural England", "Colonial India", "Revolutionary France"],
+                "answer": "Rural England",
+                "fact": "The novel revolves around the Bennet family in 19th-century rural England."
+            },
+            {
+                "question": "💡 Which author wrote 'Beloved'?",
+                "options": ["Toni Morrison", "Maya Angelou", "Alice Walker", "Zora Neale Hurston"],
+                "answer": "Toni Morrison",
+                "fact": "'Beloved' addresses the trauma of slavery and won the Pulitzer Prize in 1988."
+            }
+        ]
+    },
+    {
+        "section": 10,
+        "questions": [
+            {
+                "question": "💡 Who is the protagonist of 'The Catcher in the Rye'?",
+                "options": ["Holden Caulfield", "Jay Gatsby", "Atticus Finch", "Huckleberry Finn"],
+                "answer": "Holden Caulfield",
+                "fact": "J.D. Salinger’s novel follows Holden’s journey through alienation in New York City."
+            },
+            {
+                "question": "💡 Which play by Arthur Miller critiques the American Dream?",
+                "options": ["Death of a Salesman", "The Crucible", "A View from the Bridge", "All My Sons"],
+                "answer": "Death of a Salesman",
+                "fact": "Willy Loman’s tragic story questions the cost of relentless ambition."
+            }
+        ]
+    }
+]

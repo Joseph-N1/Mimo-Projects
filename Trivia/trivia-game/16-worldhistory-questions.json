@@ -1,0 +1,172 @@
+[
+    {
+        "section": 1,
+        "questions": [
+            {
+                "question": "Who was the first emperor of China?",
+                "options": ["Qin Shi Huang", "Kublai Khan", "Sun Yat-sen", "Mao Zedong"],
+                "answer": "Qin Shi Huang",
+                "fact": "Qin Shi Huang unified China in 221 BCE and built the first version of the Great Wall."
+            },
+            {
+                "question": "What year did the French Revolution begin?",
+                "options": ["1776", "1789", "1804", "1815"],
+                "answer": "1789",
+                "fact": "The French Revolution started in 1789, leading to the fall of the monarchy and the rise of Napoleon."
+            }
+        ]
+    },
+    {
+        "section": 2,
+        "questions": [
+            {
+                "question": "Which ancient civilization built Machu Picchu?",
+                "options": ["Aztecs", "Mayans", "Incas", "Olmecs"],
+                "answer": "Incas",
+                "fact": "Machu Picchu was built by the Inca civilization in the 15th century and is located in modern-day Peru."
+            },
+            {
+                "question": "Who was the first President of the United States?",
+                "options": ["Thomas Jefferson", "John Adams", "George Washington", "Benjamin Franklin"],
+                "answer": "George Washington",
+                "fact": "George Washington served as the first U.S. President from 1789 to 1797."
+            }
+        ]
+    },
+    {
+        "section": 3,
+        "questions": [
+            {
+                "question": "What was the name of the ship that carried the Pilgrims to America in 1620?",
+                "options": ["Mayflower", "Santa Maria", "HMS Beagle", "Endeavour"],
+                "answer": "Mayflower",
+                "fact": "The Mayflower transported the Pilgrims to North America in 1620, landing at Plymouth Rock."
+            },
+            {
+                "question": "💡 Which empire was ruled by Genghis Khan?",
+                "options": ["Ottoman Empire", "Mongol Empire", "Roman Empire", "Persian Empire"],
+                "answer": "Mongol Empire",
+                "fact": "Genghis Khan founded the Mongol Empire, the largest contiguous empire in history."
+            }
+        ]
+    },
+    {
+        "section": 4,
+        "questions": [
+            {
+                "question": "💡 What ancient wonder was located in Alexandria, Egypt?",
+                "options": ["Hanging Gardens", "Colossus of Rhodes", "Lighthouse of Alexandria", "Great Pyramid of Giza"],
+                "answer": "Lighthouse of Alexandria",
+                "fact": "The Lighthouse of Alexandria was one of the Seven Wonders of the Ancient World."
+            },
+            {
+                "question": "💡 Who wrote the 95 Theses that sparked the Protestant Reformation?",
+                "options": ["John Calvin", "Martin Luther", "Henry VIII", "Ignatius of Loyola"],
+                "answer": "Martin Luther",
+                "fact": "Martin Luther nailed his 95 Theses to a church door in 1517, challenging Catholic practices."
+            }
+        ]
+    },
+    {
+        "section": 5,
+        "questions": [
+            {
+                "question": "💡 Which war ended with the Treaty of Versailles in 1919?",
+                "options": ["World War I", "World War II", "Napoleonic Wars", "Cold War"],
+                "answer": "World War I",
+                "fact": "The Treaty of Versailles formally ended World War I and imposed harsh penalties on Germany."
+            },
+            {
+                "question": "💡 Who was the leader of the Soviet Union during WWII?",
+                "options": ["Vladimir Lenin", "Joseph Stalin", "Mikhail Gorbachev", "Nikita Khrushchev"],
+                "answer": "Joseph Stalin",
+                "fact": "Joseph Stalin led the USSR from 1924 until his death in 1953."
+            }
+        ]
+    },
+    {
+        "section": 6,
+        "questions": [
+            {
+                "question": "💡 What was the capital of the Byzantine Empire?",
+                "options": ["Athens", "Rome", "Constantinople", "Alexandria"],
+                "answer": "Constantinople",
+                "fact": "Constantinople (modern-day Istanbul) was the heart of the Byzantine Empire."
+            },
+            {
+                "question": "💡 Which civilization invented the concept of zero?",
+                "options": ["Ancient Greeks", "Ancient Egyptians", "Mayans", "Ancient Indians"],
+                "answer": "Ancient Indians",
+                "fact": "Indian mathematicians developed the concept of zero around the 5th century CE."
+            }
+        ]
+    },
+    {
+        "section": 7,
+        "questions": [
+            {
+                "question": "💡 What event began in 1492 when Columbus reached the Americas?",
+                "options": ["Age of Exploration", "Industrial Revolution", "Renaissance", "Crusades"],
+                "answer": "Age of Exploration",
+                "fact": "Columbus's voyage marked the start of European exploration and colonization of the Americas."
+            },
+            {
+                "question": "💡 Who was the last active ruler of Ancient Egypt?",
+                "options": ["Nefertiti", "Cleopatra VII", "Hatshepsut", "Ramses II"],
+                "answer": "Cleopatra VII",
+                "fact": "Cleopatra VII allied with Rome but died in 30 BCE, ending Egypt's independence."
+            }
+        ]
+    },
+    {
+        "section": 8,
+        "questions": [
+            {
+                "question": "💡 Which empire built the Taj Mahal?",
+                "options": ["Mughal Empire", "Ottoman Empire", "Gupta Empire", "Maurya Empire"],
+                "answer": "Mughal Empire",
+                "fact": "The Mughal Emperor Shah Jahan built the Taj Mahal as a mausoleum for his wife."
+            },
+            {
+                "question": "💡 What ancient city was destroyed by Mount Vesuvius in 79 CE?",
+                "options": ["Athens", "Pompeii", "Troy", "Babylon"],
+                "answer": "Pompeii",
+                "fact": "Pompeii was buried under volcanic ash, preserving it for centuries."
+            }
+        ]
+    },
+    {
+        "section": 9,
+        "questions": [
+            {
+                "question": "💡 Which treaty ended the Thirty Years' War in 1648?",
+                "options": ["Treaty of Paris", "Peace of Westphalia", "Treaty of Utrecht", "Treaty of Tordesillas"],
+                "answer": "Peace of Westphalia",
+                "fact": "This treaty reshaped European borders and established state sovereignty."
+            },
+            {
+                "question": "💡 Who led the Haitian Revolution (1791–1804)?",
+                "options": ["Simón Bolívar", "Toussaint Louverture", "José de San Martín", "Miguel Hidalgo"],
+                "answer": "Toussaint Louverture",
+                "fact": "Louverture led the first successful slave revolt, establishing Haiti's independence."
+            }
+        ]
+    },
+    {
+        "section": 10,
+        "questions": [
+            {
+                "question": "💡 What was the main cause of the Cold War?",
+                "options": ["Economic rivalry", "Ideological conflict", "Religious differences", "Territorial disputes"],
+                "answer": "Ideological conflict",
+                "fact": "The Cold War was a clash between capitalist democracies and communist states."
+            },
+            {
+                "question": "💡 Which African kingdom was known for its wealth in gold and salt trade?",
+                "options": ["Mali Empire", "Kingdom of Aksum", "Songhai Empire", "Zulu Kingdom"],
+                "answer": "Mali Empire",
+                "fact": "Mansa Musa, Mali's ruler, was one of history’s wealthiest individuals."
+            }
+        ]
+    }
+]

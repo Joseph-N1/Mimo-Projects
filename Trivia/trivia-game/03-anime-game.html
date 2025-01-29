@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Trivia Game</title>
-    <link rel="stylesheet" href="07-styles.css">
+    <link rel="stylesheet" href="30-styles.css">
 </head>
 <body>
     <div class="container">
         <h1>AI Enhanced Trivia</h1>
         <div id="game-container">
             <div id="section-display">Section: <span id="current-section">1</span></div>
+            <div id="timer">Time left: 30</div>
             <div id="question-container"></div>
             <div id="options-container" class="options-grid"></div>
             <div id="feedback"></div>
             <div id="ai-fact" class="ai-box"></div>
             <div id="controls">
                 <button id="restart-btn">Restart Section</button>
+                <button id="next-btn">Next Question</button>
             </div>
         </div>
     </div>
-    <script src="04-app.js"></script>
+    <script src="20-app.js"></script>
 </body>
 </html>

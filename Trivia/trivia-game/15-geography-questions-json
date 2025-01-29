@@ -1,0 +1,172 @@
+[
+    {
+        "section": 1,
+        "questions": [
+            {
+                "question": "What is the capital of Canada?",
+                "options": ["Toronto", "Ottawa", "Montreal", "Vancouver"],
+                "answer": "Ottawa",
+                "fact": "Ottawa is Canada’s capital, located in the province of Ontario."
+            },
+            {
+                "question": "Which river is the longest in the world?",
+                "options": ["Amazon River", "Nile River", "Yangtze River", "Mississippi River"],
+                "answer": "Nile River",
+                "fact": "The Nile stretches 6,650 km (4,130 miles) through northeastern Africa."
+            }
+        ]
+    },
+    {
+        "section": 2,
+        "questions": [
+            {
+                "question": "What is the smallest country by area?",
+                "options": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+                "answer": "Vatican City",
+                "fact": "Vatican City, the seat of the Catholic Church, is only 0.49 km²."
+            },
+            {
+                "question": "Which desert is the largest in the world?",
+                "options": ["Sahara", "Arabian", "Gobi", "Antarctic"],
+                "answer": "Antarctic",
+                "fact": "The Antarctic Desert is the largest (14 million km²) and also the coldest."
+            }
+        ]
+    },
+    {
+        "section": 3,
+        "questions": [
+            {
+                "question": "What mountain is the highest peak in Africa?",
+                "options": ["Mount Kenya", "Mount Kilimanjaro", "Mount Elgon", "Mount Stanley"],
+                "answer": "Mount Kilimanjaro",
+                "fact": "Kilimanjaro’s summit, Uhuru Peak, stands at 5,895 meters (19,341 feet)."
+            },
+            {
+                "question": "Which country is known as the Land of the Rising Sun?",
+                "options": ["China", "South Korea", "Japan", "Vietnam"],
+                "answer": "Japan",
+                "fact": "Japan’s name (Nihon) means 'origin of the sun,' reflecting its eastern position."
+            }
+        ]
+    },
+    {
+        "section": 4,
+        "questions": [
+            {
+                "question": "What is the capital of Australia?",
+                "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+                "answer": "Canberra",
+                "fact": "Canberra was purpose-built as Australia’s capital in 1913."
+            },
+            {
+                "question": "Which continent is the driest inhabited continent?",
+                "options": ["Africa", "Asia", "Australia", "South America"],
+                "answer": "Australia",
+                "fact": "Australia’s interior is dominated by arid deserts like the Outback."
+            }
+        ]
+    },
+    {
+        "section": 5,
+        "questions": [
+            {
+                "question": "What is the name of the sea between Greece and Turkey?",
+                "options": ["Adriatic Sea", "Aegean Sea", "Black Sea", "Mediterranean Sea"],
+                "answer": "Aegean Sea",
+                "fact": "The Aegean Sea is dotted with over 2,000 islands, including Santorini and Mykonos."
+            },
+            {
+                "question": "Which country has the most natural lakes?",
+                "options": ["Canada", "Russia", "USA", "Finland"],
+                "answer": "Canada",
+                "fact": "Canada has over 2 million lakes, covering 7.6% of its land area."
+            }
+        ]
+    },
+    {
+        "section": 6,
+        "questions": [
+            {
+                "question": "💡 What is the capital of Brazil?",
+                "options": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+                "answer": "Brasília",
+                "fact": "Brasília became Brazil’s capital in 1960, replacing Rio de Janeiro."
+            },
+            {
+                "question": "💡 Which country is home to the Amazon Rainforest?",
+                "options": ["Colombia", "Peru", "Brazil", "Venezuela"],
+                "answer": "Brazil",
+                "fact": "60% of the Amazon Rainforest lies within Brazil’s borders."
+            }
+        ]
+    },
+    {
+        "section": 7,
+        "questions": [
+            {
+                "question": "💡 Which U.S. state is known as the 'Sunshine State'?",
+                "options": ["California", "Texas", "Florida", "Hawaii"],
+                "answer": "Florida",
+                "fact": "Florida’s warm climate and beaches make it a major tourist destination."
+            },
+            {
+                "question": "💡 What is the tallest mountain in the world?",
+                "options": ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+                "answer": "Mount Everest",
+                "fact": "Everest’s peak is 8,848 meters (29,029 feet) above sea level."
+            }
+        ]
+    },
+    {
+        "section": 8,
+        "questions": [
+            {
+                "question": "💡 Which African country is known as the 'Pearl of Africa'?",
+                "options": ["Kenya", "Uganda", "Tanzania", "Ethiopia"],
+                "answer": "Uganda",
+                "fact": "Winston Churchill coined the term for Uganda’s natural beauty."
+            },
+            {
+                "question": "💡 What is the capital of South Africa?",
+                "options": ["Cape Town", "Johannesburg", "Pretoria", "Durban"],
+                "answer": "Pretoria",
+                "fact": "South Africa has three capitals: Pretoria (administrative), Cape Town (legislative), and Bloemfontein (judicial)."
+            }
+        ]
+    },
+    {
+        "section": 9,
+        "questions": [
+            {
+                "question": "💡 Which European country has the most islands?",
+                "options": ["Greece", "Sweden", "Norway", "Finland"],
+                "answer": "Sweden",
+                "fact": "Sweden has over 267,000 islands, though only 1,000 are inhabited."
+            },
+            {
+                "question": "💡 What is the largest ocean on Earth?",
+                "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                "answer": "Pacific Ocean",
+                "fact": "The Pacific covers 165 million km², larger than all landmasses combined."
+            }
+        ]
+    },
+    {
+        "section": 10,
+        "questions": [
+            {
+                "question": "💡 Which country is shaped like a boot?",
+                "options": ["Greece", "Italy", "Spain", "France"],
+                "answer": "Italy",
+                "fact": "Italy’s distinctive boot shape extends into the Mediterranean Sea."
+            },
+            {
+                "question": "💡 What is the capital of Iceland?",
+                "options": ["Reykjavik", "Oslo", "Helsinki", "Stockholm"],
+                "answer": "Reykjavik",
+                "fact": "Reykjavik is the world’s northernmost capital city."
+            }
+        ]
+    }
+]

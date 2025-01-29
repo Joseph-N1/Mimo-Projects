@@ -1,0 +1,172 @@
+[
+    {
+        "section": 1,
+        "questions": [
+            {
+                "question": "Which country won the first-ever FIFA World Cup in 1930?",
+                "options": ["Brazil", "Germany", "Uruguay", "Argentina"],
+                "answer": "Uruguay",
+                "fact": "Uruguay hosted and won the inaugural FIFA World Cup in 1930, defeating Argentina in the final."
+            },
+            {
+                "question": "How many players are on a standard soccer team?",
+                "options": ["9", "10", "11", "12"],
+                "answer": "11",
+                "fact": "A standard soccer team consists of 11 players, including the goalkeeper."
+            }
+        ]
+    },
+    {
+        "section": 2,
+        "questions": [
+            {
+                "question": "Which sport is known as the 'King of Sports'?",
+                "options": ["Basketball", "Soccer", "Cricket", "Tennis"],
+                "answer": "Soccer",
+                "fact": "Soccer, or football in many countries, is often called the 'King of Sports' due to its global popularity."
+            },
+            {
+                "question": "What is the length of a marathon?",
+                "options": ["21.1 km", "42.2 km", "50 km", "100 km"],
+                "answer": "42.2 km",
+                "fact": "A marathon is exactly 42.195 kilometers (26.2 miles) long, standardized in 1908."
+            }
+        ]
+    },
+    {
+        "section": 3,
+        "questions": [
+            {
+                "question": "Which NBA player is known as 'His Airness'?",
+                "options": ["LeBron James", "Kobe Bryant", "Michael Jordan", "Shaquille O'Neal"],
+                "answer": "Michael Jordan",
+                "fact": "Michael Jordan earned the nickname 'His Airness' due to his incredible leaping ability and dunking skills."
+            },
+            {
+                "question": "💡 In which sport is the term 'hat-trick' commonly used?",
+                "options": ["Basketball", "Soccer", "Cricket", "Hockey"],
+                "answer": "Soccer",
+                "fact": "A hat-trick refers to a player scoring three goals in a single game."
+            }
+        ]
+    },
+    {
+        "section": 4,
+        "questions": [
+            {
+                "question": "💡 Which country invented the sport of cricket?",
+                "options": ["Australia", "India", "England", "South Africa"],
+                "answer": "England",
+                "fact": "Cricket originated in England during the 16th century."
+            },
+            {
+                "question": "💡 What is the maximum score in a single frame of bowling?",
+                "options": ["100", "200", "300", "400"],
+                "answer": "300",
+                "fact": "A perfect game in bowling involves 12 consecutive strikes, totaling 300 points."
+            }
+        ]
+    },
+    {
+        "section": 5,
+        "questions": [
+            {
+                "question": "💡 Which athlete has won the most Olympic gold medals?",
+                "options": ["Usain Bolt", "Michael Phelps", "Carl Lewis", "Simone Biles"],
+                "answer": "Michael Phelps",
+                "fact": "Michael Phelps holds 23 Olympic gold medals in swimming."
+            },
+            {
+                "question": "💡 In tennis, what is a score of zero called?",
+                "options": ["Love", "Nil", "Zero", "Null"],
+                "answer": "Love",
+                "fact": "The term 'love' likely comes from the French word 'l'œuf' (egg), symbolizing zero."
+            }
+        ]
+    },
+    {
+        "section": 6,
+        "questions": [
+            {
+                "question": "💡 Which sport uses the term 'birdie'?",
+                "options": ["Golf", "Badminton", "Archery", "Baseball"],
+                "answer": "Golf",
+                "fact": "A birdie means scoring one stroke under par on a hole."
+            },
+            {
+                "question": "💡 What is the diameter of a basketball hoop in inches?",
+                "options": ["12", "16", "18", "24"],
+                "answer": "18",
+                "fact": "A regulation basketball hoop is 18 inches (45.7 cm) in diameter."
+            }
+        ]
+    },
+    {
+        "section": 7,
+        "questions": [
+            {
+                "question": "💡 Which sport awards the Wimbledon trophy?",
+                "options": ["Cricket", "Tennis", "Golf", "Rugby"],
+                "answer": "Tennis",
+                "fact": "Wimbledon is the oldest tennis tournament in the world, held since 1877."
+            },
+            {
+                "question": "💡 What is the national sport of Japan?",
+                "options": ["Sumo Wrestling", "Karate", "Baseball", "Judo"],
+                "answer": "Sumo Wrestling",
+                "fact": "Sumo has been Japan's national sport for over 1,500 years."
+            }
+        ]
+    },
+    {
+        "section": 8,
+        "questions": [
+            {
+                "question": "💡 In which year were women first allowed to compete in the modern Olympics?",
+                "options": ["1896", "1900", "1920", "1948"],
+                "answer": "1900",
+                "fact": "Women first competed in the 1900 Paris Olympics in tennis and golf."
+            },
+            {
+                "question": "💡 Which country has won the most FIFA World Cups?",
+                "options": ["Brazil", "Germany", "Italy", "Argentina"],
+                "answer": "Brazil",
+                "fact": "Brazil has won the FIFA World Cup five times (1958, 1962, 1970, 1994, 2002)."
+            }
+        ]
+    },
+    {
+        "section": 9,
+        "questions": [
+            {
+                "question": "💡 What is the oldest sport in the world?",
+                "options": ["Wrestling", "Running", "Archery", "Polo"],
+                "answer": "Wrestling",
+                "fact": "Wrestling dates back to ancient cave paintings and the original Olympic Games."
+            },
+            {
+                "question": "💡 Which sport uses a shuttlecock?",
+                "options": ["Tennis", "Badminton", "Squash", "Table Tennis"],
+                "answer": "Badminton",
+                "fact": "A shuttlecock (or birdie) is struck over a net in badminton."
+            }
+        ]
+    },
+    {
+        "section": 10,
+        "questions": [
+            {
+                "question": "💡 Which athlete holds the world record for the 100-meter sprint?",
+                "options": ["Usain Bolt", "Carl Lewis", "Asafa Powell", "Justin Gatlin"],
+                "answer": "Usain Bolt",
+                "fact": "Usain Bolt’s world record is 9.58 seconds, set in 2009."
+            },
+            {
+                "question": "💡 What is the highest possible break in snooker?",
+                "options": ["100", "147", "155", "200"],
+                "answer": "147",
+                "fact": "A maximum break in snooker requires potting all 15 reds with blacks, then all colors."
+            }
+        ]
+    }
+]

@@ -6,15 +6,27 @@ class TriviaGame {
         this.score = 0;
         this.wrongAttempts = 0;
         this.gameMode = gameMode;
-        
+        this.timer = 30; // 30 seconds for the first section
+        this.timerInterval = null;
+
         this.loadQuestions().then(() => {
             this.initGame();
             this.displayQuestion();
+            this.startTimer();
         });
     }
 
     async loadQuestions() {
-        const jsonFile = this.gameMode === 'anime' ? '06-anime-questions.json' : '05-questions.json';
+        const jsonFiles = {
+            anime: '13-anime-questions.json',
+            math: '12-questions.json',
+            science: '14-science-questions.json',
+            geography: '15-geography-questions.json',
+            worldhistory: '16-worldhistory-questions.json',
+            sports: '17-sports-questions.json',
+            literature: '18-literature-questions.json'
+        };
+        const jsonFile = jsonFiles[this.gameMode];
         const response = await fetch(jsonFile);
         this.sections = await response.json();
     }
@@ -24,18 +36,21 @@ class TriviaGame {
         this.currentQuestion = 0;
         this.score = 0;
         this.wrongAttempts = 0;
+        this.timer = 30; // Reset timer for the first section
         document.getElementById('restart-btn').addEventListener('click', () => this.restartSection());
+        document.getElementById('next-btn').addEventListener('click', () => this.nextQuestion());
     }
 
     displayQuestion() {
         const section = this.sections[this.currentSection];
         const question = section.questions[this.currentQuestion];
         const optionsContainer = document.getElementById('options-container');
-        
+
         // Clear previous content
         optionsContainer.innerHTML = '';
         document.getElementById('feedback').innerHTML = '';
         document.getElementById('ai-fact').innerHTML = '';
+        document.getElementById('next-btn').style.display = 'none'; // Hide "Next" button initially
 
         // Update section display
         document.getElementById('current-section').textContent = this.currentSection + 1;
@@ -56,6 +71,9 @@ class TriviaGame {
         // Set grid layout based on options count
         const columns = Math.min(question.options.length, 5);
         optionsContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+        // Start timer
+        this.startTimer();
     }
 
     checkAnswer(isCorrect) {
@@ -65,8 +83,6 @@ class TriviaGame {
             this.wrongAttempts = 0;
             feedback.textContent = 'Correct!';
             feedback.className = 'correct';
-            this.showAIFact();
-            this.nextQuestion();
         } else {
             this.wrongAttempts++;
             feedback.textContent = 'Not quite, try again.';
@@ -75,6 +91,11 @@ class TriviaGame {
                 this.provideHint();
             }
         }
+
+        // Stop timer and show "Next" button
+        this.stopTimer();
+        document.getElementById('next-btn').style.display = 'block';
+        this.showAIFact();
     }
 
     showAIFact() {
@@ -95,12 +116,41 @@ class TriviaGame {
             this.currentSection++;
             this.currentQuestion = 0;
             if (this.currentSection >= this.sections.length) {
-                alert(`Game Over! Final Score: ${this.score}`);
-                this.initGame();
+                this.endGame();
                 return;
             }
         }
-        setTimeout(() => this.displayQuestion(), 1500);
+
+        // Increase timer by 10 seconds for each new section
+        this.timer = 30 + (this.currentSection * 10);
+        this.displayQuestion();
+    }
+
+    endGame() {
+        const gameContainer = document.getElementById('game-container');
+        gameContainer.innerHTML = `
+            <h2>Game Over!</h2>
+            <p>Your final score is: ${this.score}</p>
+            <button id="restart-btn">Restart Game</button>
+            <a href="01-index.html" class="mode-btn">Choose Another Category</a>
+        `;
+        document.getElementById('restart-btn').addEventListener('click', () => this.initGame());
+    }
+
+    startTimer() {
+        document.getElementById('timer').textContent = this.timer;
+        this.timerInterval = setInterval(() => {
+            this.timer--;
+            document.getElementById('timer').textContent = this.timer;
+            if (this.timer <= 0) {
+                this.stopTimer();
+                this.checkAnswer(false); // Automatically mark as incorrect
+            }
+        }, 1000);
+    }
+
+    stopTimer() {
+        clearInterval(this.timerInterval);
     }
 
     restartSection() {
@@ -114,20 +164,29 @@ class TriviaGame {
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     let gameMode = urlParams.get('mode');
-    
+
     // Fallback to default mode if none specified
     if (!gameMode) {
-        // Detect mode from page filename
         const path = window.location.pathname;
         if (path.includes('math-game')) {
             gameMode = 'math';
         } else if (path.includes('anime-game')) {
             gameMode = 'anime';
+        } else if (path.includes('science-game')) {
+            gameMode = 'science';
+        } else if (path.includes('geography-game')) {
+            gameMode = 'geography';
+        } else if (path.includes('worldhistory-game')) {
+            gameMode = 'worldhistory';
+        } else if (path.includes('sports-game')) {
+            gameMode = 'sports';
+        } else if (path.includes('literature-game')) {
+            gameMode = 'literature';
         } else {
             gameMode = 'math'; // Default fallback
         }
     }
-    
+
     console.log('Initializing game with mode:', gameMode);
     new TriviaGame(gameMode);
 });

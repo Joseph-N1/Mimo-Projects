@@ -1,6 +1,4 @@
-Here's a refined, organized version of your Instructions.md:
 
-````markdown
 # 🎮 AI-Enhanced Trivia Game Project
 
 ## 📂 Project Structure

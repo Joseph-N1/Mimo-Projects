@@ -1,0 +1,192 @@
+[
+  {
+    "section": 1,
+    "questions": [
+      {
+        "question": "What is the force that pulls objects toward the Earth?",
+        "options": ["Magnetism", "Gravity", "Friction", "Momentum"],
+        "correctAnswer": "Gravity",
+        "funFact": "Gravity is what keeps the planets in orbit around the sun!",
+        "hint": "It starts with 'G'."
+      },
+      {
+        "question": "What is the speed of light in a vacuum?",
+        "options": ["299,792 km/s", "150,000 km/s", "1,080 km/h", "300,000 m/s"],
+        "correctAnswer": "299,792 km/s",
+        "funFact": "Light from the Sun takes about 8 minutes to reach Earth.",
+        "hint": "It's very close to 300,000 km/s."
+      }
+    ]
+  },
+  {
+    "section": 2,
+    "questions": [
+      {
+        "question": "What is the chemical symbol for gold?",
+        "options": ["Go", "Gd", "Ag", "Au"],
+        "correctAnswer": "Au",
+        "funFact": "The symbol 'Au' comes from the Latin word 'Aurum,' meaning 'shining dawn.'",
+        "hint": "It's not 'Ag', which is for silver."
+      },
+      {
+        "question": "What gas do plants absorb from the atmosphere?",
+        "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+        "correctAnswer": "Carbon Dioxide",
+        "funFact": "Plants use carbon dioxide in photosynthesis to produce oxygen and energy.",
+        "hint": "It's a compound that humans exhale."
+      }
+    ]
+  },
+  {
+    "section": 3,
+    "questions": [
+      {
+        "question": "What is the powerhouse of the cell?",
+        "options": ["Nucleus", "Ribosome", "Mitochondria", "Golgi Apparatus"],
+        "correctAnswer": "Mitochondria",
+        "funFact": "Mitochondria produce energy in the form of ATP, essential for cell function.",
+        "hint": "It starts with 'M'."
+      },
+      {
+        "question": "Which organ pumps blood throughout the human body?",
+        "options": ["Lungs", "Brain", "Liver", "Heart"],
+        "correctAnswer": "Heart",
+        "funFact": "The human heart beats about 100,000 times per day!",
+        "hint": "It's often associated with love."
+      }
+    ]
+  },
+  {
+    "section": 4,
+    "questions": [
+      {
+        "question": "What is the smallest unit of life?",
+        "options": ["Atom", "Cell", "Molecule", "Organ"],
+        "correctAnswer": "Cell",
+        "funFact": "Cells were first discovered by Robert Hooke in 1665.",
+        "hint": "It starts with 'C'."
+      },
+      {
+        "question": "What is the chemical formula for water?",
+        "options": ["H2O", "CO2", "NaCl", "O2"],
+        "correctAnswer": "H2O",
+        "funFact": "Water covers about 71% of the Earth's surface.",
+        "hint": "It has two hydrogen atoms and one oxygen atom."
+      }
+    ]
+  },
+  {
+    "section": 5,
+    "questions": [
+      {
+        "question": "What is the hardest natural substance on Earth?",
+        "options": ["Gold", "Iron", "Diamond", "Quartz"],
+        "correctAnswer": "Diamond",
+        "funFact": "Diamonds are formed under high pressure and temperature deep within the Earth.",
+        "hint": "It's often used in jewelry."
+      },
+      {
+        "question": "What is the process by which plants make their own food?",
+        "options": ["Respiration", "Photosynthesis", "Transpiration", "Fermentation"],
+        "correctAnswer": "Photosynthesis",
+        "funFact": "Photosynthesis produces oxygen as a byproduct, which is essential for life on Earth.",
+        "hint": "It involves sunlight and chlorophyll."
+      }
+    ]
+  },
+  {
+    "section": 6,
+    "questions": [
+      {
+        "question": "What is the largest planet in our solar system?",
+        "options": ["Earth", "Mars", "Jupiter", "Saturn"],
+        "correctAnswer": "Jupiter",
+        "funFact": "Jupiter is so large that all the other planets in the solar system could fit inside it.",
+        "hint": "It starts with 'J'."
+      },
+      {
+        "question": "What is the freezing point of water in Celsius?",
+        "options": ["0°C", "32°C", "100°C", "-10°C"],
+        "correctAnswer": "0°C",
+        "funFact": "Water freezes at 0°C and boils at 100°C at sea level.",
+        "hint": "It's the same as the melting point of ice."
+      }
+    ]
+  },
+  {
+    "section": 7,
+    "questions": [
+      {
+        "question": "What is the chemical symbol for sodium?",
+        "options": ["So", "Na", "Sd", "Ni"],
+        "correctAnswer": "Na",
+        "funFact": "Sodium is a highly reactive metal that explodes in water.",
+        "hint": "It's derived from the Latin word 'Natrium'."
+      },
+      {
+        "question": "What is the unit of electrical resistance?",
+        "options": ["Volt", "Ampere", "Ohm", "Watt"],
+        "correctAnswer": "Ohm",
+        "funFact": "The unit 'Ohm' is named after the German physicist Georg Simon Ohm.",
+        "hint": "It starts with 'O'."
+      }
+    ]
+  },
+  {
+    "section": 8,
+    "questions": [
+      {
+        "question": "What is the primary gas in Earth's atmosphere?",
+        "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"],
+        "correctAnswer": "Nitrogen",
+        "funFact": "Nitrogen makes up about 78% of Earth's atmosphere.",
+        "hint": "It's not oxygen, which is only about 21%."
+      },
+      {
+        "question": "What is the study of fossils called?",
+        "options": ["Geology", "Paleontology", "Archaeology", "Biology"],
+        "correctAnswer": "Paleontology",
+        "funFact": "Paleontologists study fossils to understand the history of life on Earth.",
+        "hint": "It starts with 'P'."
+      }
+    ]
+  },
+  {
+    "section": 9,
+    "questions": [
+      {
+        "question": "What is the chemical symbol for carbon?",
+        "options": ["Ca", "Co", "C", "Cr"],
+        "correctAnswer": "C",
+        "funFact": "Carbon is the basis of all known life on Earth.",
+        "hint": "It's a single letter."
+      },
+      {
+        "question": "What is the process by which liquid water turns into vapor?",
+        "options": ["Condensation", "Evaporation", "Sublimation", "Freezing"],
+        "correctAnswer": "Evaporation",
+        "funFact": "Evaporation is a key part of the water cycle.",
+        "hint": "It starts with 'E'."
+      }
+    ]
+  },
+  {
+    "section": 10,
+    "questions": [
+      {
+        "question": "What is the closest star to Earth?",
+        "options": ["Proxima Centauri", "Alpha Centauri", "Sirius", "The Sun"],
+        "correctAnswer": "The Sun",
+        "funFact": "The Sun is about 93 million miles away from Earth.",
+        "hint": "It's the center of our solar system."
+      },
+      {
+        "question": "What is the chemical formula for table salt?",
+        "options": ["NaCl", "H2O", "CO2", "KCl"],
+        "correctAnswer": "NaCl",
+        "funFact": "Table salt is essential for human health but is often overconsumed.",
+        "hint": "It contains sodium and chlorine."
+      }
+    ]
+  }
+]
