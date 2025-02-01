@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Trivia Game</title>
+    <title>Anime Trivia</title>
     <link rel="stylesheet" href="30-styles.css">
 </head>
 <body>
     <a href="01-index.html" id="main-menu-btn" class="mode-btn">Main Menu</a>
     <div class="container">
-        <h1>AI Enhanced Trivia</h1>
-        <div id="game-container">
-            <div id="section-display">Section: <span id="current-section">1</span></div>
-            <div id="timer">Time left: 30</div>
-            <div id="question-container"></div>
-            <div id="options-container" class="options-grid"></div>
-            <div id="feedback"></div>
-            <div id="ai-fact" class="ai-box"></div>
-            <div id="controls">
-                <button id="restart-btn">Restart Section</button>
-                <button id="try-again-btn">Try Again</button>
-                <button id="next-btn">Next Question</button>
+        <h1>Anime Trivia</h1>
+        <div class="card">
+            <div class="tools">
+                <div id="section-display">Section: <span id="current-section">1</span></div>
+                <div id="timer">Time left: 30</div>
+            </div>
+            <div class="card__content">
+                <div id="game-container">
+                    <div id="question-container"></div>
+                    <div id="options-container" class="options-grid"></div>
+                    <div id="feedback"></div>
+                    <div id="ai-fact" class="ai-box"></div>
+                    <div id="controls">
+                        <button id="restart-btn">Restart</button>
+                        <button id="try-again-btn">Try Again</button>
+                        <button id="next-btn">Next</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
