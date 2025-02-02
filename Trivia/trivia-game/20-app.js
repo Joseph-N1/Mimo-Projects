@@ -36,7 +36,7 @@ class TriviaGame {
         this.score = 0;
         this.wrongAttempts = 0;
         this.timer = 30 + (this.currentSection * 10);
-        
+
         // Event listeners
         document.getElementById('restart-btn').addEventListener('click', () => this.restartSection());
         document.getElementById('next-btn').addEventListener('click', () => this.nextQuestion());
@@ -60,16 +60,36 @@ class TriviaGame {
         document.getElementById('timer').textContent = this.timer;
         document.getElementById('question-container').innerHTML = `<h3>${question.question}</h3>`;
 
-        // Create options
+        // Create options with checkboxes
         question.options.forEach(option => {
-            const button = document.createElement('button');
-            button.textContent = option;
-            
-            // Fix: Handle both 'correctAnswer' and 'answer' fields
-            const correctAnswer = question.correctAnswer || question.answer;
-            button.addEventListener('click', () => this.checkAnswer(option === correctAnswer));
-            
-            optionsContainer.appendChild(button);
+            const label = document.createElement('label');
+            label.className = 'material-checkbox';
+
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.value = option;
+
+            const span = document.createElement('span');
+            span.className = 'checkmark';
+
+            const text = document.createTextNode(option);
+
+            label.appendChild(input);
+            label.appendChild(span);
+            label.appendChild(text);
+
+            // Add click handler
+            label.addEventListener('click', () => {
+                // Uncheck all other checkboxes
+                document.querySelectorAll('.material-checkbox input').forEach(checkbox => {
+                    if (checkbox !== input) checkbox.checked = false;
+                });
+
+                // Check the answer
+                this.checkAnswer(option === (question.correctAnswer || question.answer));
+            });
+
+            optionsContainer.appendChild(label);
         });
 
         // Start timer
@@ -101,7 +121,7 @@ class TriviaGame {
         feedback.textContent = 'Not quite. Try again!';
         feedback.className = 'incorrect';
         document.getElementById('try-again-btn').style.display = 'block';
-        
+
         if (this.currentSection >= 6 && this.wrongAttempts >= 2) {
             this.provideHint();
         }
@@ -146,8 +166,6 @@ class TriviaGame {
 
     showAIFact() {
         const question = this.sections[this.currentSection].questions[this.currentQuestion];
-        
-        // Fix: Handle both 'funFact' and 'fact' fields
         const fact = question.funFact || question.fact;
         document.getElementById('ai-fact').innerHTML = `<strong>Did you know?</strong> ${fact}`;
     }
