@@ -3,93 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Math Trivia</title>
+    <title>Math Trivia</title>
     <link rel="stylesheet" href="30-styles.css">
-    <link rel="stylesheet" href="card.css">
-    <style>
-        /* Custom card styling */
-        .card {
-            width: 600px;
-            min-height: 500px;
-            background-color: #011522;
-            border-radius: 15px;
-            padding: 25px;
-            position: relative;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .card__content {
-            padding: 20px;
-        }
-
-        #game-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        #question-container h3 {
-            margin: 20px 0;
-            font-size: 1.4em;
-            color: #fff;
-        }
-
-        .options-grid {
-            display: grid;
-            gap: 12px;
-            margin: 15px 0;
-        }
-
-        .options-grid button {
-            background-color: #1a2b3c;
-            border: 2px solid #2c4357;
-            padding: 12px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-
-        .options-grid button:hover {
-            background-color: #2c4357;
-            transform: translateX(5px);
-        }
-
-        #controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        #ai-fact {
-            background-color: #1a2b3c;
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            border-radius: 5px;
-        }
-
-        #main-menu-btn {
-            background-color: #2c4357;
-            top: 20px;
-            left: 20px;
-        }
-
-        #timer {
-            background-color: #2c4357;
-            right: 20px;
-            top: 20px;
-        }
-    </style>
 </head>
 <body>
-    <a href="01-index.html" id="main-menu-btn" class="mode-btn">Main Menu</a>
+    <a href="01-index.html" id="main-menu-btn" class="frutiger-button">
+        <div class="inner">
+            <div class="top-white"></div>
+            <span class="text">Main Menu</span>
+        </div>
+    </a>
     <div class="container">
+        <h1>Math Trivia</h1>
         <div class="card">
             <div class="tools">
-                <!-- Simplified status indicators -->
-                <div id="section-display" style="color: white; font-size: 0.9em;">
-                    Section: <span id="current-section">1</span>
-                </div>
+                <div id="section-display">Section: <span id="current-section">1</span></div>
                 <div id="timer">Time left: 30</div>
             </div>
             <div class="card__content">
@@ -102,6 +30,10 @@
                         <button id="restart-btn">Restart</button>
                         <button id="try-again-btn">Try Again</button>
                         <button id="next-btn">Next</button>
+                    </div> 
+                    <div id="progress-bar-container">
+                        <div id="progress-bar"></div>
+                        <span id="progress-text">0% Complete</span>
                     </div>
                 </div>
             </div>

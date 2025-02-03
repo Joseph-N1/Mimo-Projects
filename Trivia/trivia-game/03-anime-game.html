@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="30-styles.css">
 </head>
 <body>
-    <a href="01-index.html" id="main-menu-btn" class="mode-btn">Main Menu</a>
+    <a href="01-index.html" id="main-menu-btn" class="frutiger-button">
+        <div class="inner">
+            <div class="top-white"></div>
+            <span class="text">Main Menu</span>
+        </div>
+    </a>
     <div class="container">
         <h1>Anime Trivia</h1>
         <div class="card">
@@ -25,7 +30,12 @@
                         <button id="restart-btn">Restart</button>
                         <button id="try-again-btn">Try Again</button>
                         <button id="next-btn">Next</button>
+                    </div> 
+                    <div id="progress-bar-container">
+                        <div id="progress-bar"></div>
+                        <span id="progress-text">0% Complete</span>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -33,3 +43,4 @@
     <script src="20-app.js"></script>
 </body>
 </html>
+
