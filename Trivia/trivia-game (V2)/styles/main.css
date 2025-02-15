@@ -1,0 +1,355 @@
+/* ========== BASE STYLES ========== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    background: linear-gradient(-45deg, #011522, #1a2b3c, #2c4357, #3d5c7a);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ========== CONTAINER & CARD ========== */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.card {
+    width: 90%;
+    max-width: 600px;
+    min-height: 500px;
+    background-color: #011522;
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__content {
+    padding: 20px;
+    width: 100%;
+}
+
+/* ========== GAME ELEMENTS ========== */
+#game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+#question-container h3 {
+    margin: 20px 0;
+    font-size: 1.4em;
+    color: #fff;
+    text-align: center;
+}
+
+/* ========== OPTIONS & CHECKBOXES ========== */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.material-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.material-checkbox:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.checkmark {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    border: 2px solid #C3CF34;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.material-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.material-checkbox input[type="checkbox"]:checked ~ .checkmark {
+    background-color: #2F3300;
+    border-color: #454B00;
+}
+
+.material-checkbox input[type="checkbox"]:checked ~ .checkmark:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* ========== BUTTONS & CONTROLS ========== */
+#controls {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.3s;
+}
+
+button:hover { opacity: 0.8; }
+
+/* ========== CONTROL BUTTON COLORS ========== */
+#next-btn {
+    background-color: #2196F3; /* Blue */
+    display: none;
+}
+
+#try-again-btn {
+    background-color: #FF9800; /* Orange */
+    display: none;
+}
+
+#restart-btn {
+    background-color: #4CAF50; /* Green */
+}
+
+.correct { background-color: #4CAF50; } /* Green */
+.incorrect { background-color: #f44336; } /* Red */
+
+/* ========== FRUTIGER BUTTONS ========== */
+.frutiger-button {
+    cursor: pointer;
+    position: relative;
+    padding: 2px;
+    border-radius: 6px;
+    border: 0;
+    text-shadow: 1px 1px #000a;
+    background: linear-gradient(#006a4e, #00ff88); /* Green gradient */
+    box-shadow: 0px 4px 6px 0px #0008;
+    transition: 0.3s all;
+}
+.frutiger-button:hover {
+    box-shadow: 0px 6px 12px 0px #0009;
+}
+
+.frutiger-button:active {
+    box-shadow: 0px 0px 0px 0px #0000;
+}
+
+.inner {
+    position: relative;
+    inset: 0px;
+    padding: 1em;
+    border-radius: 4px;
+    background: radial-gradient(circle at 50% 100%, #30f8b0 10%, #30f8b000 55%),
+                linear-gradient(#00523a, #00cd7a); /* Green gradients */
+    overflow: hidden;
+    transition: inherit;
+}
+
+/* Keep the rest of the original button CSS unchanged below */
+.inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-65deg, #0000 40%, #fff7 50%, #0000 70%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: thing 3s ease infinite;
+}
+
+@keyframes thing {
+    0% {
+        background-position: 130%;
+        opacity: 1;
+    }
+    to {
+        background-position: -166%;
+        opacity: 0;
+    }
+}
+
+.top-white {
+    position: absolute;
+    border-radius: inherit;
+    inset: 0 -8em;
+    background: radial-gradient(circle at 50% -270%, #fff 45%, #fff6 60%, #fff0 60%);
+    transition: inherit;
+}
+
+.inner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transition: inherit;
+    box-shadow: inset 0px 2px 8px -2px #0000;
+}
+
+.frutiger-button:active .inner::after {
+    box-shadow: inset 0px 2px 8px -2px #000a;
+}
+
+.text {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-weight: 550;
+    transition: inherit;
+}
+
+#main-menu-btn.frutiger-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 150px;
+    text-decoration: none;
+}
+
+#main-menu-btn .inner { padding: 0.8em; }
+#main-menu-btn .text { font-size: 0.9em; }
+
+/* ========== FEEDBACK & PROGRESS ========== */
+#feedback {
+    min-height: 30px;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 25px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#feedback.correct, #feedback.incorrect {
+    display: flex;
+}
+
+#progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #1a2b3c;
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+#progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00cd7a);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 10px;
+}
+
+#progress-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 0.8em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* ========== UTILITY CLASSES ========== */
+.correct { background-color: #4CAF50; }
+.incorrect { background-color: #f44336; }
+
+#timer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #2c4357;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+#timer::after {
+    content: 's';
+    margin-left: 3px;
+}
+
+/* ========== FEEDBACK & AI FACT STYLING ========== */
+#feedback {
+    min-height: 30px;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 25px;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: bold;
+}
+
+#feedback.correct, #feedback.incorrect {
+    display: flex;
+}
+
+#ai-fact {
+    background-color: #1a2b3c;
+    border-left: 4px solid #4CAF50;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    color: white;
+    display: none; /* Hidden by default */
+}
+
+#ai-fact.visible {
+    display: block; /* Show when visible class is added */
+}
