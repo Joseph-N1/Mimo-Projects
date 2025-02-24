@@ -353,3 +353,31 @@ button:hover { opacity: 0.8; }
 #ai-fact.visible {
     display: block; /* Show when visible class is added */
 }
+
+/* Add to main.css */
+.score-display {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.score-display p {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.end-game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.control-btn {
+    padding: 12px 24px;
+    background: #00ff88;
+    color: #1a2b3c;
+    border-radius: 25px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}

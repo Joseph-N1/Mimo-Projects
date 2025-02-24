@@ -23,15 +23,19 @@ class MockAIGenerator {
         };
     }
 
-    generate(topic) {
-        const data = JSON.parse(JSON.stringify(this.mockData));
-        data.sections[0].questions.forEach(question => {
-            // Replace "corn" with the user's topic in both questions and fun facts
-            question.question = question.question.replace(/corn/gi, topic);
-            question.funFact = question.funFact.replace(/corn/gi, topic);
-        });
-        return data;
-    }
+    // Update MockAIGenerator class
+generate(topic) {
+    const data = JSON.parse(JSON.stringify(this.mockData));
+    data.topic = topic; // Store the topic
+    
+    data.sections[0].questions.forEach(question => {
+        question.question = question.question.replace(/corn/gi, topic);
+        question.funFact = question.funFact.replace(/corn/gi, topic);
+        question.hint = question.hint.replace(/corn/gi, topic);
+    });
+    
+    return data;
+}
 }
 
 class NicheGame {

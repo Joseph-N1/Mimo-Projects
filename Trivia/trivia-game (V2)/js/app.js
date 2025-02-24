@@ -31,17 +31,25 @@ class TriviaGame {
 
         try {
             if (this.gameMode === 'niche') {
-                // Load questions from sessionStorage for Niche mode
                 const nicheData = sessionStorage.getItem('nicheQuizData');
                 if (nicheData) {
                     const parsedData = JSON.parse(nicheData);
-                    if (Array.isArray(parsedData)) {
-                        this.sections = parsedData;
+                    
+                    // Improved data validation
+                    if (parsedData?.sections?.length) {
+                        this.sections = parsedData.sections;
+                        
+                        // Add topic context to questions
+                        const topic = parsedData.topic || 'Niche Topic';
+                        this.sections.forEach((section, index) => {
+                            section.questions.forEach(question => {
+                                question.question = `${topic} (Section ${index + 1}): ${question.question}`;
+                            });
+                        });
                     } else {
-                        throw new Error('Invalid quiz data format');
+                        throw new Error('Invalid niche quiz structure');
                     }
                 } else {
-                    // Redirect to Niche topic selection if no data is found
                     alert('No quiz data found. Please select a topic again.');
                     window.location.href = 'niche-game.html';
                     return;
@@ -53,7 +61,8 @@ class TriviaGame {
             }
         } catch (error) {
             console.error('Error loading questions:', error);
-            alert('Failed to load questions. Please try again.');
+            alert(`Failed to load questions: ${error.message}`);
+            if (this.gameMode === 'niche') window.location.href = 'niche-game.html';
         }
     }
 
@@ -97,12 +106,22 @@ class TriviaGame {
         }
     }
 
+    sanitizeHTML(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    } 
+
     showAIFact() {
-        const question = this.sections[this.currentSection].questions[this.currentQuestion];
-        const fact = question.funFact || question.fact;
+        const question = this.getCurrentQuestion();
         const aiFactElement = document.getElementById('ai-fact');
-        aiFactElement.innerHTML = `<strong>Did you know?</strong> ${fact}`;
-        aiFactElement.classList.add('visible'); // Make AI fact visible
+        const fact = question.funFact || question.fact;
+        
+        aiFactElement.innerHTML = `
+            <strong>Did you know?</strong> 
+            ${this.sanitizeHTML(fact)}
+        `;
+        aiFactElement.classList.add('visible');
     }
 
     provideHint() {
@@ -221,11 +240,14 @@ class TriviaGame {
         document.getElementById('try-again-btn').addEventListener('click', () => this.resetQuestion());
     }
 
+    
+
     // ========== TIMER METHODS ========== //
     startTimer() {
+        const timerElement = document.getElementById('time-remaining');
         this.timerInterval = setInterval(() => {
             this.timer = Math.max(0, this.timer - 1);
-            document.getElementById('timer').textContent = this.timer;
+            if (timerElement) timerElement.textContent = this.timer;
             if (this.timer <= 0) {
                 this.stopTimer();
                 this.checkAnswer(false);
@@ -240,17 +262,31 @@ class TriviaGame {
     // ========== GAME END ========== //
     endGame() {
         const gameContainer = document.getElementById('game-container');
+        const totalQuestions = this.sections.reduce((acc, section) => 
+            acc + section.questions.length, 0
+        );
+    
         gameContainer.innerHTML = `
-            <h2>Game Over!</h2>
-            <p>Final Score: ${this.score}</p>
-            <button id="restart-btn">Restart Game</button>
-            <a href="01-index.html" class="mode-btn">Main Menu</a>
+            <h2>Quiz Complete!</h2>
+            <div class="score-display">
+                <p>Final Score: ${this.score}/${totalQuestions}</p>
+                <p>Accuracy: ${Math.round((this.score/totalQuestions)*100)}%</p>
+            </div>
+            <div class="end-game-controls">
+                <button id="restart-game-btn" class="control-btn">Play Again</button>
+                <a href="niche-game.html" class="control-btn">New Topic</a>
+                <a href="01-index.html" class="control-btn">Main Menu</a>
+            </div>
         `;
-        document.getElementById('restart-btn').addEventListener('click', () => this.initGame());
-    }
-}
 
-// Initialize game
+        document.getElementById('restart-game-btn')?.addEventListener('click', () => {
+            this.resetGameState();
+            this.displayQuestion();
+        });
+        }
+    }
+
+    // Initialize game
 window.addEventListener('load', () => {
     const path = window.location.pathname;
     const gameModes = {

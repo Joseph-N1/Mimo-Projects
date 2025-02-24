@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Niche Topics Quiz</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/niche.css"> <!-- Add niche-specific styles -->
 </head>
 <body>
     <a href="01-index.html" id="main-menu-btn" class="frutiger-button">
@@ -14,11 +15,11 @@
         </div>
     </a>
     <div class="container">
-        <h1>Niche Topics Quiz</h1>
+        <h1 id="quiz-title">Niche Topics Quiz</h1> <!-- Added ID for dynamic updates -->
         <div class="card">
             <div class="tools">
                 <div id="section-display">Section: <span id="current-section">1</span></div>
-                <div id="timer">Time left: 30</div>
+                <div id="timer">Time left: <span id="time-remaining">30</span></div>
             </div>
             <div class="card__content">
                 <div id="game-container">
@@ -27,9 +28,9 @@
                     <div id="feedback"></div>
                     <div id="ai-fact" class="ai-box"></div>
                     <div id="controls">
-                        <button id="restart-btn">Restart</button>
-                        <button id="try-again-btn">Try Again</button>
-                        <button id="next-btn">Next</button>
+                        <button id="restart-btn" class="control-btn">Restart</button>
+                        <button id="try-again-btn" class="control-btn">Try Again</button>
+                        <button id="next-btn" class="control-btn">Next</button>
                     </div> 
                     <div id="progress-bar-container">
                         <div id="progress-bar"></div>
@@ -40,5 +41,19 @@
         </div>
     </div>
     <script src="js/app.js"></script>
+    <script>
+        // Initialize game with niche mode
+        window.addEventListener('load', () => {
+            const quizData = JSON.parse(sessionStorage.getItem('nicheQuizData'));
+            
+            // Update quiz title with actual topic
+            if(quizData?.topic) {
+                document.getElementById('quiz-title').textContent = `${quizData.topic} Quiz`;
+            }
+            
+            // Initialize game with niche mode
+            new TriviaGame('niche');
+        });
+    </script>
 </body>
 </html>
