@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Cinematic Universe Data Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="gradient-bg text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12 fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                Marvel Cinematic Universe Analysis
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                A comprehensive visualization of box office performance, runtime trends, and financial success across the MCU phases
+            </p>
+        </header>
+
+        <!-- Key Insights Section -->
+        <section class="mb-16 bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg fade-in">
+            <h2 class="text-2xl font-bold mb-6 text-yellow-400 flex items-center">
+                <i class="fas fa-lightbulb mr-3"></i> Key Insights
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2 text-red-400">Highest Grossing Film</h3>
+                    <p class="text-gray-300">Avengers: Endgame dominates with <span class="text-yellow-300">$2.798 billion</span> worldwide, making it the highest-grossing MCU film.</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2 text-blue-400">Best Opening Weekend</h3>
+                    <p class="text-gray-300">Avengers: Endgame also holds the record opening weekend at <span class="text-yellow-300">$357.1 million</span> in the US.</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2 text-green-400">Runtime Trends</h3>
+                    <p class="text-gray-300">Average runtime increased from <span class="text-yellow-300">2h6m</span> (Iron Man) to <span class="text-yellow-300">3h1m</span> (Endgame), showing audience appetite for longer superhero narratives.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="mb-16 fade-in">
+            <h2 class="text-2xl font-bold mb-6 text-center text-yellow-400">Financial Performance Analysis</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Worldwide Gross by Film</h3>
+                    <div class="chart-container">
+                        <canvas id="worldwideChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Domestic vs Worldwide Gross</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Opening Weekend Performance</h3>
+                    <div class="chart-container">
+                        <canvas id="openingChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Runtime Evolution</h3>
+                    <div class="chart-container">
+                        <canvas id="runtimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table Section -->
+        <section class="mb-16 fade-in">
+            <h2 class="text-2xl font-bold mb-6 text-center text-yellow-400">Complete MCU Film Data</h2>
+            <div class="overflow-x-auto bg-gray-800 bg-opacity-50 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Movie</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Runtime</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Release Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Opening Weekend (US)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Gross (US)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Gross (Worldwide)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gray-800 divide-y divide-gray-700" id="movieTableBody">
+                        <!-- Data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section class="mb-16 bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg fade-in">
+            <h2 class="text-2xl font-bold mb-6 text-yellow-400">Detailed Analysis</h2>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-3 text-red-400">Financial Growth Over Time</h3>
+                <p class="text-gray-300 mb-4">
+                    The MCU has shown remarkable financial growth since its inception in 2008. Iron Man's $585.8 million worldwide gross was impressive at the time, but it's dwarfed by later entries. The franchise crossed the $1 billion mark with The Avengers (2012) and reached its peak with Avengers: Endgame's $2.798 billion.
+                </p>
+                <p class="text-gray-300">
+                    The chart shows how the Avengers films consistently outperform solo hero movies, with each Avengers installment setting new box office records. The only solo films approaching Avengers-level success are Black Panther ($1.347 billion) and Spider-Man: Far From Home ($1.132 billion).
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-3 text-blue-400">International Appeal</h3>
+                <p class="text-gray-300">
+                    The ratio of worldwide to domestic gross has generally increased over time, indicating growing international appeal. Early films like Iron Man (1.84x) and The Incredible Hulk (1.96x) had modest international multipliers, while later films like Avengers: Infinity War (3.02x) and Avengers: Endgame (3.26x) show how the franchise became truly global.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-3 text-green-400">Runtime Trends</h3>
+                <p class="text-gray-300 mb-4">
+                    Runtime has steadily increased as the franchise matured. The average runtime grew from about 2 hours in Phase 1 to nearly 2.5 hours in Phase 3. This reflects both increased narrative complexity and audience willingness to engage with longer superhero stories.
+                </p>
+                <p class="text-gray-300">
+                    Interestingly, the longest films (Avengers: Endgame at 3h1m and Avengers: Infinity War at 2h29m) were also the highest grossing, suggesting that for event films, longer runtimes don't deter audiences but may actually enhance the "event" feeling.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold mb-3 text-purple-400">Opening Weekend Power</h3>
+                <p class="text-gray-300">
+                    Opening weekends have grown dramatically, from Iron Man's $98.6 million to Endgame's staggering $357.1 million. The chart shows how opening weekends became increasingly front-loaded, especially for Avengers films. This indicates growing fan anticipation and the rise of "opening weekend as cultural event" phenomenon.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-400 text-sm">
+            <p>Data visualization created with HTML, CSS, JavaScript and Chart.js</p>
+            <p class="mt-2">Marvel Cinematic Universe box office data through 2019</p>
+        </footer>
+    </div>
+
+    <script>
+        // Movie data
+        const movieData = [
+            { movie: "Iron Man", length_hrs: 2, length_min: 6, release_date: "5/2/2008", opening_weekend_us: 98618668, gross_us: 319034126, gross_world: 585796247 },
+            { movie: "The Incredible Hulk", length_hrs: 1, length_min: 52, release_date: "6/12/2008", opening_weekend_us: 55414050, gross_us: 134806913, gross_world: 264770996 },
+            { movie: "Iron Man 2", length_hrs: 2, length_min: 4, release_date: "5/7/2010", opening_weekend_us: 128122480, gross_us: 312433331, gross_world: 623933331 },
+            { movie: "Thor", length_hrs: 1, length_min: 55, release_date: "5/6/2011", opening_weekend_us: 65723338, gross_us: 181030624, gross_world: 449326618 },
+            { movie: "Captain America: The First Avenger", length_hrs: 2, length_min: 4, release_date: "7/22/2011", opening_weekend_us: 65058524, gross_us: 176654505, gross_world: 370569774 },
+            { movie: "Marvel's The Avengers", length_hrs: 2, length_min: 23, release_date: "5/4/2012", opening_weekend_us: 207438708, gross_us: 623357910, gross_world: 1518815515 },
+            { movie: "Iron Man 3", length_hrs: 2, length_min: 10, release_date: "5/3/2013", opening_weekend_us: 174144585, gross_us: 409013994, gross_world: 1214811252 },
+            { movie: "Thor: The Dark World", length_hrs: 1, length_min: 52, release_date: "11/8/2013", opening_weekend_us: 85737841, gross_us: 206362140, gross_world: 644783140 },
+            { movie: "Captain America: The Winter Soldier", length_hrs: 2, length_min: 16, release_date: "4/4/2014", opening_weekend_us: 95023721, gross_us: 259766572, gross_world: 714421503 },
+            { movie: "Guardians of the Galaxy", length_hrs: 2, length_min: 1, release_date: "8/1/2014", opening_weekend_us: 94320883, gross_us: 333718600, gross_world: 773341024 },
+            { movie: "Avengers: Age of Ultron", length_hrs: 2, length_min: 21, release_date: "5/1/2015", opening_weekend_us: 191271109, gross_us: 459005868, gross_world: 1402809540 },
+            { movie: "Ant-Man", length_hrs: 1, length_min: 57, release_date: "7/17/2015", opening_weekend_us: 57225526, gross_us: 180202163, gross_world: 519311965 },
+            { movie: "Captain America: Civil War", length_hrs: 2, length_min: 27, release_date: "5/6/2016", opening_weekend_us: 179139142, gross_us: 408084349, gross_world: 1153561649 },
+            { movie: "Doctor Strange", length_hrs: 1, length_min: 55, release_date: "11/4/2016", opening_weekend_us: 85058311, gross_us: 232641920, gross_world: 677796076 },
+            { movie: "Guardians of the Galaxy Vol. 2", length_hrs: 2, length_min: 16, release_date: "5/5/2017", opening_weekend_us: 146510104, gross_us: 389813101, gross_world: 863756051 },
+            { movie: "Spiderman: Homecoming", length_hrs: 2, length_min: 13, release_date: "7/7/2017", opening_weekend_us: 117027503, gross_us: 334201140, gross_world: 880166924 },
+            { movie: "Thor: Ragnarok", length_hrs: 2, length_min: 10, release_date: "11/3/2017", opening_weekend_us: 122744989, gross_us: 315058289, gross_world: 853983829 },
+            { movie: "Black Panther", length_hrs: 2, length_min: 14, release_date: "2/16/2018", opening_weekend_us: 202003951, gross_us: 700426566, gross_world: 1347598739 },
+            { movie: "Avengers: Infinity War", length_hrs: 2, length_min: 29, release_date: "4/27/2018", opening_weekend_us: 257698183, gross_us: 678815482, gross_world: 2048359754 },
+            { movie: "Ant-Man and the Wasp", length_hrs: 1, length_min: 58, release_date: "7/6/2018", opening_weekend_us: 75812208, gross_us: 216648740, gross_world: 622674139 },
+            { movie: "Captain Marvel", length_hrs: 2, length_min: 3, release_date: "3/8/2019", opening_weekend_us: 153433423, gross_us: 426829839, gross_world: 1128437854 },
+            { movie: "Avengers: Endgame", length_hrs: 3, length_min: 1, release_date: "4/26/2019", opening_weekend_us: 357115007, gross_us: 858373000, gross_world: 2797800564 },
+            { movie: "Spiderman: Far from Home", length_hrs: 2, length_min: 9, release_date: "7/2/2019", opening_weekend_us: 92579212, gross_us: 390532085, gross_world: 1131927996 }
+        ];
+
+        // Populate table
+        const tableBody = document.getElementById('movieTableBody');
+        movieData.forEach(movie => {
+            const totalMinutes = (movie.length_hrs * 60) + movie.length_min;
+            const runtime = `${movie.length_hrs}h ${movie.length_min}m`;
+            const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const openingWeekend = `$${(movie.opening_weekend_us / 1000000).toFixed(1)}M`;
+            const grossUS = `$${(movie.gross_us / 1000000).toFixed(1)}M`;
+            const grossWorld = `$${(movie.gross_world / 1000000).toFixed(1)}M`;
+            
+            const row = document.createElement('tr');
+            row.className = 'hover:bg-gray-700 transition-colors duration-200';
+            row.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap font-medium">${movie.movie}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${runtime}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${releaseDate}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${openingWeekend}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${grossUS}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${grossWorld}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Prepare chart data
+        const movieNames = movieData.map(movie => movie.movie);
+        const worldwideGross = movieData.map(movie => movie.gross_world / 1000000000); // Convert to billions
+        const usGross = movieData.map(movie => movie.gross_us / 1000000000);
+        const openingWeekends = movieData.map(movie => movie.opening_weekend_us / 1000000); // In millions
+        const runtimes = movieData.map(movie => (movie.length_hrs * 60) + movie.length_min); // Total minutes
+
+        // Worldwide Gross Chart
+        const worldwideCtx = document.getElementById('worldwideChart').getContext('2d');
+        new Chart(worldwideCtx, {
+            type: 'bar',
+            data: {
+                labels: movieNames,
+                datasets: [{
+                    label: 'Worldwide Gross (Billions)',
+                    data: worldwideGross,
+                    backgroundColor: 'rgba(220, 38, 38, 0.7)',
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `$${context.raw.toFixed(2)}B`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Billions USD',
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return `$${value}B`;
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                // Show only every 3rd label to prevent crowding
+                                return value % 3 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Comparison Chart (US vs Worldwide)
+        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(comparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: movieNames,
+                datasets: [
+                    {
+                        label: 'US Gross (Billions)',
+                        data: usGross,
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Worldwide Gross (Billions)',
+                        data: worldwideGross,
+                        backgroundColor: 'rgba(220, 38, 38, 0.7)',
+                        borderColor: 'rgba(220, 38, 38, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: $${context.raw.toFixed(2)}B`;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            color: '#e5e7eb'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Billions USD',
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return `$${value}B`;
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return value % 3 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Opening Weekend Chart
+        const openingCtx = document.getElementById('openingChart').getContext('2d');
+        new Chart(openingCtx, {
+            type: 'line',
+            data: {
+                labels: movieNames,
+                datasets: [{
+                    label: 'Opening Weekend (Millions USD)',
+                    data: openingWeekends,
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `$${context.raw.toFixed(1)}M`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Millions USD',
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return `$${value}M`;
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return value % 3 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Runtime Chart
+        const runtimeCtx = document.getElementById('runtimeChart').getContext('2d');
+        new Chart(runtimeCtx, {
+            type: 'line',
+            data: {
+                labels: movieNames,
+                datasets: [{
+                    label: 'Runtime (minutes)',
+                    data: runtimes,
+                    backgroundColor: 'rgba(168, 85, 247, 0.2)',
+                    borderColor: 'rgba(168, 85, 247, 1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const hrs = Math.floor(context.raw / 60);
+                                const mins = context.raw % 60;
+                                return `${hrs}h ${mins}m (${context.raw} minutes)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 100,
+                        title: {
+                            display: true,
+                            text: 'Minutes',
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return `${value}m`;
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#e5e7eb',
+                            callback: function(value) {
+                                return value % 3 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
