@@ -139,7 +139,7 @@
         <div class="bg-gradient-to-br from-red-700 to-blue-900 text-white">
             <div class="container mx-auto py-4 px-4 flex items-center justify-between">
                 <div class="flex items-center">
-                    <img src="https://i.imgur.com/DMUdDUd.png" alt="F1 Logo" class="h-12 mr-4">
+                    <img src="../images/sample1.jpg" alt="F1 Logo" class="h-12 mr-4">
                     <div>
                         <h1 class="text-3xl font-bold">F1 2025 Season</h1>
                         <p class="text-yellow-300 text-sm">Official Race Data Viewer</p>
@@ -535,22 +535,121 @@
     <script>
         let f1Data = {}; // This will hold our loaded data
 
-        // Function to load the external database
+        // Fixed version of the loadF1Data function
         async function loadF1Data() {
             try {
-                const response = await fetch('DataBase/F1-Seasons-2025.js');
-                const data = await response.json();
-                f1Data = data;
-                
-                // Initialize with Canadian GP data
-                loadRaceData('canada');
-                loadStandings();
-                loadAnalysisData('canada');
-            } catch (error) {
-                console.error('Error loading F1 data:', error);
-                alert('Failed to load race data. Please try again later.');
+        // Option 1: If the JSON file is in the correct relative path
+        const response = await fetch('../DataBase/F1-Seasons-2025.json');
+        
+        // Check if the response is ok
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        
+        const data = await response.json();
+        f1Data = data;
+        
+        // Initialize with Canadian GP data
+        loadRaceData('canada');
+        loadStandings();
+        loadAnalysisData('canada');
+        
+          } catch (error) {
+        console.error('Error loading F1 data:', error);
+        console.log('Trying alternative path...');
+        
+        // Option 2: Try alternative path if the first one fails
+        try {
+            const response = await fetch('./DataBase/F1-Seasons-2025.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            
+            const data = await response.json();
+            f1Data = data;
+            
+            loadRaceData('canada');
+            loadStandings();
+            loadAnalysisData('canada');
+            
+            } catch (secondError) {
+            console.error('Both paths failed:', secondError);
+            alert('Failed to load race data. Please check the file path and try again.');
+            
+            // Load sample data as fallback
+            loadSampleData();
+             }
+          }
+         }
+
+// Fallback function to load sample data for testing
+function loadSampleData() {
+    console.log('Loading sample data...');
+    
+    // Create minimal sample data structure
+    f1Data = {
+        canada: {
+            name: "CANADIAN GRAND PRIX",
+            round: 10,
+            date: "2025-06-15",
+            winner: {
+                driver: "Max Verstappen",
+                team: "Red Bull Racing"
+            },
+            fastestLap: {
+                driver: "Lando Norris",
+                time: "1:28.456",
+                lap: 42
+            },
+            trackLength: "5.412",
+            weather: "Dry",
+            safetyCars: 1,
+            highlights: [
+                "Verstappen leads from start to finish",
+                "Norris sets fastest lap on final stint",
+                "Hamilton recovers from P10 to P3",
+                "Safety car deployed for debris on lap 34"
+            ],
+            results: {
+                qualifying: [
+                    { pos: 1, driver: "Max Verstappen", team: "Red Bull Racing", q1: "1:29.123", q2: "1:28.456", q3: "1:27.891" },
+                    { pos: 2, driver: "Lando Norris", team: "McLaren", q1: "1:29.234", q2: "1:28.567", q3: "1:28.012" },
+                    { pos: 3, driver: "Charles Leclerc", team: "Ferrari", q1: "1:29.345", q2: "1:28.678", q3: "1:28.123" }
+                ],
+                race: [
+                    { pos: 1, driver: "Max Verstappen", team: "Red Bull Racing", start: 1, laps: 57, points: 25, tireStrategy: [] },
+                    { pos: 2, driver: "Lando Norris", team: "McLaren", start: 2, laps: 57, points: 18, tireStrategy: [] },
+                    { pos: 3, driver: "Charles Leclerc", team: "Ferrari", start: 3, laps: 57, points: 15, tireStrategy: [] }
+                ]
+            },
+            pitStops: [
+                { driver: "Max Verstappen", stops: 2, totalTime: 46.789, stopsDetail: [] },
+                { driver: "Lando Norris", stops: 2, totalTime: 47.123, stopsDetail: [] }
+            ],
+            fastestLaps: [
+                { driver: "Lando Norris", lapTime: "1:28.456", lap: 42, avgSpeed: "215.3 km/h" },
+                { driver: "Max Verstappen", lapTime: "1:28.567", lap: 38, avgSpeed: "214.8 km/h" }
+            ]
+        },
+        standings: {
+            drivers: [
+                { pos: 1, driver: "Max Verstappen", team: "Red Bull Racing", points: 245, wins: 6, prevPos: 1 },
+                { pos: 2, driver: "Lando Norris", team: "McLaren", points: 189, wins: 2, prevPos: 2 },
+                { pos: 3, driver: "Charles Leclerc", team: "Ferrari", points: 167, wins: 1, prevPos: 3 }
+            ],
+            constructors: [
+                { pos: 1, team: "Red Bull Racing", points: 378, wins: 7, prevPos: 1 },
+                { pos: 2, team: "McLaren", points: 298, wins: 3, prevPos: 2 },
+                { pos: 3, team: "Ferrari", points: 256, wins: 2, prevPos: 3 }
+            ]
         }
+    };
+    
+    // Initialize with sample data
+    loadRaceData('canada');
+    loadStandings();
+    loadAnalysisData('canada');
+         }
 
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {

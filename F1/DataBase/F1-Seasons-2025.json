@@ -1,5 +1,4 @@
-const f1Data = {
-    // Full JSON structure as shown in the HTML
+{
     "canada": {
   "round": 10,
   "name": "Canadian GP",
@@ -333,7 +332,41 @@ const f1Data = {
     {"driver": "Alexander Albon", "lapTime": "1:16.197", "lap": 31, "avgSpeed": "206.039 km/h"},
     {"driver": "Isack Hadjar", "lapTime": "1:16.292", "lap": 51, "avgSpeed": "205.783 km/h"},
     {"driver": "Liam Lawson", "lapTime": "1:16.320", "lap": 53, "avgSpeed": "205.707 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 198 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 176 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 155 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 136 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 104 },
+    { "pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 79 },
+    { "pos": 7, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 63 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 42 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 22 },
+    { "pos": 10, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 21 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 20 },
+    { "pos": 12, "driver": "Lance Stroll", "team": "Aston Martin", "points": 14 },
+    { "pos": 13, "driver": "Carlos Sainz", "team": "Williams", "points": 13 },
+    { "pos": 14, "driver": "Pierre Gasly", "team": "Alpine", "points": 11 },
+    { "pos": 15, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 10 },
+    { "pos": 16, "driver": "Fernando Alonso", "team": "Aston Martin", "points": 8 },
+    { "pos": 17, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 18, "driver": "Liam Lawson", "team": "Racing Bulls", "points": 4 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 374 },
+    { "pos": 2, "team": "Mercedes", "points": 199 },
+    { "pos": 3, "team": "Ferrari", "points": 183 },
+    { "pos": 4, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 162 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 55 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 28 },
+    { "pos": 6, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 28 },
+    { "pos": 8, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 22 },
+    { "pos": 9, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 20 },
+    { "pos": 10, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 11 }
   ]
+}
 },
 "spain": {
   "round": 9,
@@ -679,7 +712,41 @@ const f1Data = {
     {"driver": "Carlos Sainz", "lapTime": "1:19.317", "lap": 65, "avgSpeed": "211.369 km/h"},
     {"driver": "Liam Lawson", "lapTime": "1:19.424", "lap": 62, "avgSpeed": "211.084 km/h"},
     {"driver": "Alexander Albon", "lapTime": "1:20.508", "lap": 9, "avgSpeed": "208.242 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 186 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 176 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 137 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 111 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 94 },
+    { "pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 71 },
+    { "pos": 7, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 48 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 42 },
+    { "pos": 9, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 21 },
+    { "pos": 10, "driver": "Esteban Ocon", "team": "Haas", "points": 20 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 16 },
+    { "pos": 12, "driver": "Lance Stroll", "team": "Aston Martin", "points": 14 },
+    { "pos": 13, "driver": "Carlos Sainz", "team": "Williams", "points": 12 },
+    { "pos": 14, "driver": "Pierre Gasly", "team": "Alpine", "points": 11 },
+    { "pos": 15, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 10 },
+    { "pos": 16, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 17, "driver": "Liam Lawson", "team": "Racing Bulls", "points": 4 },
+    { "pos": 18, "driver": "Fernando Alonso", "team": "Aston Martin", "points": 2 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 362 },
+    { "pos": 2, "team": "Ferrari", "points": 165 },
+    { "pos": 3, "team": "Mercedes", "points": 159 },
+    { "pos": 4, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 144 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 54 },
+    { "pos": 6, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 28 },
+    { "pos": 7, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 26 },
+    { "pos": 8, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 16 },
+    { "pos": 8, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 16 },
+    { "pos": 10, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 11 }
   ]
+}
 }, 
 "monaco": {
   "round": 8,
@@ -1022,7 +1089,40 @@ const f1Data = {
     {"driver": "Fernando Alonso", "lapTime": "1:15.593", "lap": 15, "avgSpeed": "158.919 km/h"},
     {"driver": "Isack Hadjar", "lapTime": "1:15.981", "lap": 16, "avgSpeed": "158.107 km/h"},
     {"driver": "Pierre Gasly", "lapTime": "1:18.054", "lap": 6, "avgSpeed": "153.908 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 161 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 158 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 136 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 99 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 79 },
+    { "pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 63 },
+    { "pos": 7, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 48 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 42 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 20 },
+    { "pos": 10, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 15 },
+    { "pos": 11, "driver": "Lance Stroll", "team": "Aston Martin", "points": 14 },
+    { "pos": 12, "driver": "Carlos Sainz", "team": "Williams", "points": 12 },
+    { "pos": 13, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 10 },
+    { "pos": 14, "driver": "Pierre Gasly", "team": "Alpine", "points": 7 },
+    { "pos": 15, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 15, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 17, "driver": "Liam Lawson", "team": "Racing Bulls", "points": 4 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 319 },
+    { "pos": 2, "team": "Mercedes", "points": 147 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 143 },
+    { "pos": 4, "team": "Ferrari", "points": 142 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 54 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 26 },
+    { "pos": 7, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 22 },
+    { "pos": 8, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 14 },
+    { "pos": 9, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 7 },
+    { "pos": 10, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 }
   ]
+}
 },
 "imola": {
   "round": 7,
@@ -1354,7 +1454,39 @@ const f1Data = {
     {"driver": "Kimi Antonelli", "lapTime": "1:20.620", "lap": 33, "avgSpeed": "219.206 km/h"},
     {"driver": "Gabriel Bortoleto", "lapTime": "1:20.630", "lap": 57, "avgSpeed": "219.178 km/h"},
     {"driver": "Esteban Ocon", "lapTime": "1:21.413", "lap": 3, "avgSpeed": "217.070 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 146 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 133 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 124 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 99 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 61 },
+    { "pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 53 },
+    { "pos": 7, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 48 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 40 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 14 },
+    { "pos": 9, "driver": "Lance Stroll", "team": "Aston Martin", "points": 14 },
+    { "pos": 11, "driver": "Carlos Sainz", "team": "Williams", "points": 11 },
+    { "pos": 12, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 10 },
+    { "pos": 13, "driver": "Pierre Gasly", "team": "Alpine", "points": 7 },
+    { "pos": 13, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 7 },
+    { "pos": 15, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 15, "driver": "Oliver Bearman", "team": "Haas", "points": 6 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 279 },
+    { "pos": 2, "team": "Mercedes", "points": 147 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 131 },
+    { "pos": 4, "team": "Ferrari", "points": 114 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 51 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 20 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 14 },
+    { "pos": 8, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 10 },
+    { "pos": 9, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 7 },
+    { "pos": 10, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 }
   ]
+}
 },
 "miami": {
   "round": 6,
@@ -1621,7 +1753,39 @@ const f1Data = {
     {"driver": "Lance Stroll", "lapTime": "1:31.769", "lap": 51, "avgSpeed": "212.304 km/h"},
     {"driver": "Gabriel Bortoleto", "lapTime": "1:32.328", "lap": 21, "avgSpeed": "211.021 km/h"},
     {"driver": "Oliver Bearman", "lapTime": "1:32.680", "lap": 24, "avgSpeed": "210.220 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 131 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 115 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 99 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 93 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 53 },
+    { "pos": 6, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 48 },
+    { "pos": 7, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 41 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 30 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 14 },
+    { "pos": 9, "driver": "Lance Stroll", "team": "Aston Martin", "points": 14 },
+    { "pos": 11, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 9 },
+    { "pos": 12, "driver": "Pierre Gasly", "team": "Alpine", "points": 7 },
+    { "pos": 12, "driver": "Carlos Sainz", "team": "Williams", "points": 7 },
+    { "pos": 14, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 14, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 16, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 5 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 246 },
+    { "pos": 2, "team": "Mercedes", "points": 141 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 105 },
+    { "pos": 4, "team": "Ferrari", "points": 94 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 37 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 20 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 14 },
+    { "pos": 8, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 8 },
+    { "pos": 9, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 7 },
+    { "pos": 10, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 }
   ]
+}
 },
 "jeddah": {
   "round": 5,
@@ -1892,7 +2056,39 @@ const f1Data = {
     {"driver": "Alexander Albon", "lapTime": "1:33.477", "lap": 47, "avgSpeed": "237.773 km/h"},
     {"driver": "Esteban Ocon", "lapTime": "1:34.309", "lap": 47, "avgSpeed": "235.676 km/h"},
     {"driver": "Gabriel Bortoleto", "lapTime": "1:34.447", "lap": 39, "avgSpeed": "235.331 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 99 },
+    { "pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 89 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 87 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 73 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 47 },
+    { "pos": 6, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 38 },
+    { "pos": 7, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 31 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 20 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 14 },
+    { "pos": 10, "driver": "Lance Stroll", "team": "Aston Martin", "points": 10 },
+    { "pos": 11, "driver": "Pierre Gasly", "team": "Alpine", "points": 6 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 11, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 14, "driver": "Carlos Sainz", "team": "Williams", "points": 5 },
+    { "pos": 14, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 5 },
+    { "pos": 14, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 5 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 188 },
+    { "pos": 2, "team": "Mercedes", "points": 111 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 89 },
+    { "pos": 4, "team": "Ferrari", "points": 78 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 25 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 20 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 10 },
+    { "pos": 8, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 8 },
+    { "pos": 9, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 },
+    { "pos": 9, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 6 }
   ]
+}
 },
 "bahrain": {
   "round": 4,
@@ -2231,7 +2427,39 @@ const f1Data = {
     {"driver": "Fernando Alonso", "lapTime": "1:37.906", "lap": 38, "avgSpeed": "198.999 km/h"},
     {"driver": "Gabriel Bortoleto", "lapTime": "1:38.006", "lap": 38, "avgSpeed": "198.795 km/h"},
     {"driver": "Lance Stroll", "lapTime": "1:38.064", "lap": 38, "avgSpeed": "198.678 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Lando Norris", "team": "McLaren", "points": 77 },
+    { "pos": 2, "driver": "Oscar Piastri", "team": "McLaren", "points": 74 },
+    { "pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 69 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 63 },
+    { "pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 32 },
+    { "pos": 6, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 30 },
+    { "pos": 7, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 25 },
+    { "pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 18 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 14 },
+    { "pos": 10, "driver": "Lance Stroll", "team": "Aston Martin", "points": 10 },
+    { "pos": 11, "driver": "Pierre Gasly", "team": "Alpine", "points": 6 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 11, "driver": "Oliver Bearman", "team": "Haas", "points": 6 },
+    { "pos": 14, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 5 },
+    { "pos": 15, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 4 },
+    { "pos": 16, "driver": "Carlos Sainz", "team": "Williams", "points": 1 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 151 },
+    { "pos": 2, "team": "Mercedes", "points": 93 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 71 },
+    { "pos": 4, "team": "Ferrari", "points": 57 },
+    { "pos": 5, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 20 },
+    { "pos": 6, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 19 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 10 },
+    { "pos": 8, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 7 },
+    { "pos": 9, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 6 },
+    { "pos": 9, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 }
   ]
+}
 },
 "suzuka": {
   "round": 3,
@@ -2517,7 +2745,37 @@ const f1Data = {
     {"driver": "Lance Stroll", "lapTime": "1:32.052", "lap": 53, "avgSpeed": "227.102 km/h"},
     {"driver": "Nico Hulkenberg", "lapTime": "1:32.572", "lap": 31, "avgSpeed": "225.826 km/h"},
     {"driver": "Jack Doohan", "lapTime": "1:32.685", "lap": 47, "avgSpeed": "225.551 km/h"}
+  ],
+  "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Lando Norris", "team": "McLaren", "points": 62 },
+    { "pos": 2, "driver": "Max Verstappen", "team": "Red Bull", "points": 61 },
+    { "pos": 3, "driver": "Oscar Piastri", "team": "McLaren", "points": 49 },
+    { "pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 45 },
+    { "pos": 5, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 30 },
+    { "pos": 6, "driver": "Charles Leclerc", "team": "Ferrari", "points": 20 },
+    { "pos": 7, "driver": "Alexander Albon", "team": "Williams", "points": 18 },
+    { "pos": 8, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 15 },
+    { "pos": 9, "driver": "Esteban Ocon", "team": "Haas", "points": 10 },
+    { "pos": 9, "driver": "Lance Stroll", "team": "Aston Martin", "points": 10 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 12, "driver": "Oliver Bearman", "team": "Haas", "points": 5 },
+    { "pos": 13, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 4 },
+    { "pos": 14, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 3 },
+    { "pos": 15, "driver": "Carlos Sainz", "team": "Williams", "points": 1 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 111 },
+    { "pos": 2, "team": "Mercedes", "points": 75 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 61 },
+    { "pos": 4, "team": "Ferrari", "points": 35 },
+    { "pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 19 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 15 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 10 },
+    { "pos": 8, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 7 },
+    { "pos": 9, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 }
   ]
+}
 },
   "china": {
     "round": 2,
@@ -2792,7 +3050,36 @@ const f1Data = {
       {"driver": "Lewis Hamilton", "lapTime": "1:35.069", "lap": 41, "avgSpeed": "206.414 km/h"},
       {"driver": "Charles Leclerc", "lapTime": "1:36.157", "lap": 49, "avgSpeed": "204.078 km/h"},
       {"driver": "Pierre Gasly", "lapTime": "1:36.425", "lap": 49, "avgSpeed": "203.511 km/h"}
-    ]
+    ],
+    "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Lando Norris", "team": "McLaren", "points": 44 },
+    { "pos": 2, "driver": "Max Verstappen", "team": "Red Bull", "points": 36 },
+    { "pos": 3, "driver": "George Russell", "team": "Mercedes", "points": 35 },
+    { "pos": 4, "driver": "Oscar Piastri", "team": "McLaren", "points": 34 },
+    { "pos": 5, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 22 },
+    { "pos": 6, "driver": "Alexander Albon", "team": "Williams", "points": 16 },
+    { "pos": 7, "driver": "Esteban Ocon", "team": "Haas", "points": 10 },
+    { "pos": 7, "driver": "Lance Stroll", "team": "Aston Martin", "points": 10 },
+    { "pos": 9, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 9 },
+    { "pos": 10, "driver": "Charles Leclerc", "team": "Ferrari", "points": 8 },
+    { "pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 12, "driver": "Oliver Bearman", "team": "Haas", "points": 4 },
+    { "pos": 13, "driver": "Yuki Tsunoda", "team": "Racing Bulls", "points": 3 },
+    { "pos": 14, "driver": "Carlos Sainz", "team": "Williams", "points": 1 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 78 },
+    { "pos": 2, "team": "Mercedes", "points": 57 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 36 },
+    { "pos": 4, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 17 },
+    { "pos": 4, "team": "Ferrari", "points": 17 },
+    { "pos": 6, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 14 },
+    { "pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 10 },
+    { "pos": 8, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 },
+    { "pos": 9, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 3 }
+  ]
+}
 },
   "australia": {
     "round": 1,
@@ -3002,6 +3289,29 @@ const f1Data = {
       {"driver": "Esteban Ocon", "lapTime": "1:26.764", "lap": 42, "avgSpeed": "218.994 km/h"},
       {"driver": "Oliver Bearman", "lapTime": "1:27.603", "lap": 42, "avgSpeed": "216.896 km/h"},
       {"driver": "Fernando Alonso", "lapTime": "1:28.819", "lap": 32, "avgSpeed": "213.927 km/h"}
-    ]
+    ],
+    "standings": {
+  "drivers": [
+    { "pos": 1, "driver": "Lando Norris", "team": "McLaren", "points": 25 },
+    { "pos": 2, "driver": "Max Verstappen", "team": "Red Bull", "points": 18 },
+    { "pos": 3, "driver": "George Russell", "team": "Mercedes", "points": 15 },
+    { "pos": 4, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 12 },
+    { "pos": 5, "driver": "Alexander Albon", "team": "Williams", "points": 10 },
+    { "pos": 6, "driver": "Lance Stroll", "team": "Aston Martin", "points": 8 },
+    { "pos": 7, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 6 },
+    { "pos": 8, "driver": "Charles Leclerc", "team": "Ferrari", "points": 4 },
+    { "pos": 9, "driver": "Oscar Piastri", "team": "McLaren", "points": 2 },
+    { "pos": 10, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 1 }
+  ],
+  "constructors": [
+    { "pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 27 },
+    { "pos": 2, "team": "Mercedes", "points": 27 },
+    { "pos": 3, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 18 },
+    { "pos": 4, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 10 },
+    { "pos": 5, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 8 },
+    { "pos": 6, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 6 },
+    { "pos": 7, "team": "Ferrari", "points": 5 }
+  ]
+}
   }
-};
+}
