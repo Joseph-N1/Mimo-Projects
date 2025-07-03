@@ -5,7 +5,7 @@ import argparse
 from collections import defaultdict
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBRanker
+# Remove XGBRanker import since it's not used in the script
 import numpy as np
 
 # ------------------------
@@ -21,6 +21,9 @@ def find_database_dir():
         r"c:\Users\Joseph N Nimyel\OneDrive\Documents\Chatbot\DataBase",  # Found location
         os.path.join(SCRIPT_DIR, "DataBase"),
         os.path.join(os.getcwd(), "DataBase"),
+        # Add more potential locations
+        r"c:\Users\Joseph N Nimyel\OneDrive\Documents\Mimo Projects\F1\DataBase",
+        os.path.join(os.path.dirname(SCRIPT_DIR), "..", "DataBase"),
     ]
     
     for possible_dir in possible_db_dirs:
@@ -28,6 +31,21 @@ def find_database_dir():
         if os.path.exists(test_file):
             print(f"✅ Found F1 data directory: {possible_dir}")
             return possible_dir
+    
+    # If not found, print available directories for debugging
+    print("❌ Could not find F1 data directory. Searched:")
+    for dir_path in possible_db_dirs:
+        print(f"   - {dir_path}")
+        if os.path.exists(dir_path):
+            print(f"     Directory exists, but no F1_Seasons_Cleaned_2024.json found")
+            # List files in directory
+            try:
+                files = os.listdir(dir_path)
+                print(f"     Files found: {files[:5]}...")  # Show first 5 files
+            except:
+                print("     Could not list files")
+        else:
+            print(f"     Directory does not exist")
     
     # Fallback to original
     return os.path.join(os.path.dirname(SCRIPT_DIR), "DataBase")
@@ -41,6 +59,13 @@ OUTPUT_FILE = "race_prediction_2024.json"
 
 # Race name mapping for historical data matching
 RACE_NAME_MAPPING = {
+    "Bahrain": ["Bahrain Grand Prix", "Bahrain"],
+    "Saudi Arabian": ["Saudi Arabian Grand Prix", "Saudi Arabia"],
+    "Australian": ["Australian Grand Prix", "Australia"],
+    "Japanese": ["Japanese Grand Prix", "Japan"],
+    "Chinese": ["Chinese Grand Prix", "China"],
+    "Miami": ["Miami Grand Prix", "Miami"],
+    "Emilia Romagna": ["Emilia Romagna Grand Prix", "Imola"],
     "Monaco": ["Monaco Grand Prix", "Monaco"],
     "Canadian": ["Canadian Grand Prix", "Canada"],
     "Spanish": ["Spanish Grand Prix", "Spain"],
@@ -51,9 +76,8 @@ RACE_NAME_MAPPING = {
     "Dutch": ["Dutch Grand Prix", "Netherlands"],
     "Italian": ["Italian Grand Prix", "Italy"],
     "Singapore": ["Singapore Grand Prix"],
-    "Japanese": ["Japanese Grand Prix", "Japan"],
     "Qatar": ["Qatar Grand Prix"],
-    "United States": ["United States Grand Prix", "USA", "US"],
+    "United States": ["United States Grand Prix", "USA", "US", "Austin"],
     "Mexican": ["Mexican Grand Prix", "Mexico"],
     "Brazilian": ["Brazilian Grand Prix", "Brazil"],
     "Las Vegas": ["Las Vegas Grand Prix"],
@@ -169,10 +193,14 @@ def load_season(year):
             
             return data
     except FileNotFoundError:
-        print(f"Error: Could not find file {path}")
+        print(f"❌ Error: Could not find file {path}")
+        print(f"   Make sure the DataBase folder is in the correct location")
         return []
     except json.JSONDecodeError:
-        print(f"Error: Invalid JSON in file {path}")
+        print(f"❌ Error: Invalid JSON in file {path}")
+        return []
+    except Exception as e:
+        print(f"❌ Error loading season data: {e}")
         return []
 
 def find_target_race_position(season_data, target_race_key):
@@ -265,7 +293,7 @@ def extract_race_features(races, up_to_race):
                 
                 records.append({
                     'driver': driver_name,
-                    'team': item['team'],
+                    'team': item.get('team', 'Unknown'),
                     'start_pos': int(item.get('starting position', 20)),
                     'finish_pos': int(item.get('finish position', 20)),
                     'quali_pos': quali_info['quali_pos'],
@@ -402,7 +430,7 @@ def load_track_history(target_race_key):
                                         'quali_pos': quali_info['quali_pos'],
                                         'quali_score': quali_info['quali_score'],
                                         'points': int(item.get('points', 0)),
-                                        'team': item['team']
+                                        'team': item.get('team', 'Unknown')
                                     })
                                 elif 'section' in item:
                                     break
@@ -418,6 +446,15 @@ def load_track_history(target_race_key):
 # ------------------------
 def train_models(X, y_class):
     """Train classification model with balanced feature importance"""
+    # Check if we have enough data and variation
+    if len(X) < 5:
+        print("❌ Not enough data to train model")
+        return None
+    
+    if len(set(y_class)) < 2:
+        print("❌ Not enough class variation to train model")
+        return None
+    
     # RandomForest with parameters to balance features properly
     rf = RandomForestClassifier(
         n_estimators=300,  # More trees for stability
@@ -428,18 +465,23 @@ def train_models(X, y_class):
         random_state=42,
         class_weight='balanced'  # Balance classes
     )
-    rf.fit(X, y_class)
     
-    # Print feature importance
-    feature_names = X.columns
-    importances = rf.feature_importances_
-    feature_importance = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
-    
-    print("\n📊 Feature Importance:")
-    for feature, importance in feature_importance:
-        print(f"   {feature}: {importance:.3f} ({importance*100:.1f}%)")
-    
-    return rf
+    try:
+        rf.fit(X, y_class)
+        
+        # Print feature importance
+        feature_names = X.columns
+        importances = rf.feature_importances_
+        feature_importance = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
+        
+        print("\n📊 Feature Importance:")
+        for feature, importance in feature_importance:
+            print(f"   {feature}: {importance:.3f} ({importance*100:.1f}%)")
+        
+        return rf
+    except Exception as e:
+        print(f"❌ Error training model: {e}")
+        return None
 
 # ------------------------
 # Section: Prediction & Output
@@ -448,13 +490,17 @@ def predict_and_output(drivers_df, rf, target_race_name, races_used):
     """Make predictions and output results with enhanced analysis"""
     X_pred = drivers_df.drop(columns=['driver', 'team'])
     
-    # Get probabilities
-    probs = rf.predict_proba(X_pred)
-    # Handle both binary and multiclass cases
-    if probs.shape[1] > 1:
-        drivers_df['podium_prob'] = probs[:, 1]
-    else:
-        drivers_df['podium_prob'] = probs[:, 0]
+    try:
+        # Get probabilities
+        probs = rf.predict_proba(X_pred)
+        # Handle both binary and multiclass cases
+        if probs.shape[1] > 1:
+            drivers_df['podium_prob'] = probs[:, 1]
+        else:
+            drivers_df['podium_prob'] = probs[:, 0]
+    except Exception as e:
+        print(f"❌ Error making predictions: {e}")
+        return
     
     # Sort by podium probability
     drivers_df = drivers_df.sort_values('podium_prob', ascending=False)
@@ -504,12 +550,15 @@ def predict_and_output(drivers_df, rf, target_race_name, races_used):
     print(json.dumps(output, indent=2))
     
     # Save to file in the Podium folder
-    race_filename = target_race_name.replace(" ", "_").lower() + "_enhanced_prediction_2024.json"
-    output_path = os.path.join(OUTPUT_DIR, race_filename)
-    with open(output_path, 'w') as f:
-        json.dump(output, f, indent=2)
-    
-    print(f"\n✅ Enhanced prediction saved to {output_path}")
+    try:
+        race_filename = target_race_name.replace(" ", "_").lower() + "_enhanced_prediction_2024.json"
+        output_path = os.path.join(OUTPUT_DIR, race_filename)
+        with open(output_path, 'w') as f:
+            json.dump(output, f, indent=2)
+        
+        print(f"\n✅ Enhanced prediction saved to {output_path}")
+    except Exception as e:
+        print(f"❌ Error saving prediction: {e}")
 
 # ------------------------
 # Main Execution
@@ -523,40 +572,40 @@ def main():
         season_data = load_season(2024)
         
         if not season_data:
-            print("[ERROR] No season data loaded")
+            print("❌ No season data loaded - please check DataBase folder location")
             return
         
-        print(f"Found {len(season_data)} races in season")
+        print(f"✅ Found {len(season_data)} races in season")
         
         # Find target race position
         target_race_idx, target_race_name = find_target_race_position(season_data, target_race_key)
         
         if target_race_idx is None:
-            print(f"[ERROR] {target_race_key} Grand Prix not found in 2024 season data")
+            print(f"❌ {target_race_key} Grand Prix not found in 2024 season data")
             print("Available races:")
             for i, race in enumerate(season_data):
                 if isinstance(race, dict) and 'race_name' in race:
                     print(f"  {i+1}. {race['race_name']}")
             return
         
-        print(f"🎯 Target race: {target_race_name} (Round {target_race_idx + 1}) (Position {target_race_idx + 1})")
+        print(f"🎯 Target race: {target_race_name} (Round {target_race_idx + 1})")
         
         # Use all races before the target race
         races_before_target = target_race_idx
         print(f"📊 Using {races_before_target} races for training")
         
         if races_before_target == 0:
-            print("[ERROR] Cannot predict first race of season - no previous data available")
+            print("❌ Cannot predict first race of season - no previous data available")
             return
         
         # Extract enhanced features from races before target
         hist_df = extract_race_features(season_data, races_before_target)
         
         if hist_df.empty:
-            print("[ERROR] No race data extracted")
+            print("❌ No race data extracted")
             return
         
-        print(f"✅ Extracted {len(hist_df)} driver records with starting position data")
+        print(f"✅ Extracted {len(hist_df)} driver records")
         
         # Build enhanced feature matrix
         drivers = hist_df['driver'].unique()
