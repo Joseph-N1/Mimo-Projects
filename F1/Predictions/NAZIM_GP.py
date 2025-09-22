@@ -1,37 +1,16 @@
 """
-NAZIM GP - 2025 F1 race predictor with ML training & evaluation
-
-Features added in this version:
-- Full dataset extractor from your 2025 JSON (robust to a few structure variants).
-- Feature engineering (qualifying position, start, practice mean, fastest lap rank, pitstops, season driver points, constructor points, track length, safety cars, weather encoding).
-- Two ML models:
-    * RandomForestRegressor -> predicts finishing position (lower is better)
-    * RandomForestClassifier -> predicts whether a driver finishes on the podium (top-3)
-- Train / evaluate pipeline with train/test split and cross-validation reporting.
-- Save trained models to disk with joblib.
-
-Usage examples:
-  # Train models and save to models/ folder
-  python NAZIM_GP.py --db "C:\\Users\\Joseph N Nimyel\\OneDrive\\Documents\\Mimo Projects\\F1\\DataBase\\F1-Seasons-2025.json" --train --model-dir ./models --test-size 0.2
-
-  # Run prediction for a specific round using saved models
-  python NAZIM_GP.py --db "..." --round 16 --predict --model-dir ./models --topk 3
-
-Requirements (install into your virtualenv):
-  pip install pandas numpy scikit-learn joblib
-
-Notes:
-- This script expects driver names to be consistent across sections (qualifying, practice, race). If they differ (e.g. "Max Verstappen" vs "Verstappen, Max"), you should normalize names centrally.
-- The modelling here is a reasonable starting point — feature set and models can be improved with more advanced engineering and cross-validation strategies.
-
+NAZIM GP - 2025 F1 race predictor with ML training & evaluation (cleaned)
+- Adds pit lap time features, weather normalization, driver name normalization,
+  and support for sprint/sprintQualifying. Includes training, evaluation,
+  model saving and round prediction.
+Requirements: pandas, numpy, scikit-learn, joblib
 """
 
 import argparse
 import json
 import os
 import math
-import statistics
-from collections import defaultdict
+import statistics  # Added missing import
 from typing import List, Dict, Any
 
 import numpy as np
@@ -51,33 +30,72 @@ def load_json(path: str) -> Any:
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-
 def parse_time_to_seconds(t: str):
-    """Parse times like '1:20.901' into seconds (float)."""
-    if not t or not isinstance(t, str):
+    """Convert time string (e.g., '1:20.901') into total seconds as float."""
+    if t is None:
+        return None
+    if isinstance(t, (int, float)):
+        return float(t)
+    if not isinstance(t, str):
         return None
     try:
         if ':' in t:
-            m, s = t.split(':')
-            return float(m) * 60.0 + float(s)
+            parts = t.split(':')
+            if len(parts) == 2:
+                m, s = parts
+                return float(m) * 60.0 + float(s)
+            # fallback join
+            total = 0.0
+            for i, part in enumerate(reversed(parts)):
+                total += float(part) * (60 ** i)
+            return total
         return float(t)
     except Exception:
         return None
 
+def normalize_weather(w: str) -> str:
+    """Normalize various weather descriptions into 'dry', 'wet', or 'mixed'."""
+    if not w:
+        return "mixed"
+    w = str(w).lower()
+    if any(k in w for k in ["dry", "sun", "clear"]):
+        return "dry"
+    if any(k in w for k in ["wet", "rain", "showers"]):
+        return "wet"
+    return "mixed"
+
+def normalize_driver_name(name: str) -> str:
+    """Normalize driver name strings to a consistent 'Firstname Lastname' form."""
+    if not name:
+        return None
+    # If name is a dict with givenName/familyName
+    if isinstance(name, dict):
+        given = name.get('givenName') or name.get('first') or ''
+        family = name.get('familyName') or name.get('last') or ''
+        full = f"{given} {family}".strip()
+        return ' '.join([p.capitalize() for p in full.split()]) if full else None
+    # Replace commas and extra spaces, then capitalize parts
+    s = str(name).strip()
+    # handle "Last, First" -> "First Last"
+    if ',' in s:
+        parts = [p.strip() for p in s.split(',') if p.strip()]
+        if len(parts) >= 2:
+            s = parts[1] + ' ' + parts[0]
+        else:
+            s = parts[0]
+    parts = [p for p in s.split() if p]
+    return ' '.join([p.capitalize() for p in parts]) if parts else None
 
 def get_rounds_list(data: Any) -> List[Dict[str, Any]]:
-    """Find rounds stored either as a list or as dict keyed by round name.
-    Returns a list of round dicts. If the source is a dict keyed by names (e.g. 'italy': {...})
-    we copy each entry and add a '_key' field with the original key.
-    """
+    """Return list of round dicts from various possible JSON structures."""
     if isinstance(data, list):
         return data
     if isinstance(data, dict):
-        # common containers
+        # common keys that contain lists
         for key in ("races", "Races", "rounds", "Rounds", "data", "season", "events"):
             if key in data and isinstance(data[key], list):
                 return data[key]
-        # else assume each key is a round
+        # otherwise treat top-level keys as rounds
         rounds = []
         for k, v in data.items():
             if isinstance(v, dict):
@@ -88,50 +106,33 @@ def get_rounds_list(data: Any) -> List[Dict[str, Any]]:
             return rounds
     raise ValueError('Could not parse rounds container in JSON file')
 
-
-def find_driver_entry(lst: List[Dict[str, Any]], driver_name: str, aliases: List[str]=None):
-    if not isinstance(lst, list):
-        return None
-    for item in lst:
-        # possible keys: 'driver', 'Driver', 'name', 'driverName', 'pos', 'position'
-        for key in ('driver', 'Driver', 'name', 'driverName'):
-            if key in item and isinstance(item[key], str):
-                if item[key].strip().lower() == driver_name.strip().lower():
-                    return item
-        # sometimes driver is under nested dict
-        if 'Driver' in item and isinstance(item['Driver'], dict):
-            drv = item['Driver']
-            name = (drv.get('givenName') or '') + ' ' + (drv.get('familyName') or '')
-            if name.strip().lower() == driver_name.strip().lower():
-                return item
-    # try aliases if provided
-    if aliases:
-        for a in aliases:
-            res = find_driver_entry(lst, a)
-            if res:
-                return res
-    return None
-
-# ----------------------------- Dataset builder -----------------------------
+# ----------------------------- Feature builder -----------------------------
 
 def build_driver_features_for_round_df(round_entry: Dict[str, Any], season_driver_points_map: Dict[str, float], constructors_map: Dict[str, float]):
-    """Return DataFrame rows (list of dicts) for every driver present in the race results of the round."""
+    """Extract per-driver features for a round (supports sprint formats).
+    Returns list of dict rows.
+    """
     rows = []
-    # Y our JSON sample nests results under 'results' then 'race' and 'qualifying' etc.
     results_block = round_entry.get('results') or round_entry
 
+    # Race and sprint results (if any)
     race_list = results_block.get('race') or []
+    sprint_list = results_block.get('sprint') or []
     if not isinstance(race_list, list):
         race_list = []
+    if not isinstance(sprint_list, list):
+        sprint_list = []
+    combined_results = race_list + sprint_list
 
-    # gather qualifying/practice/pitstops/fastest
     qualifying_list = results_block.get('qualifying') or []
+    sprint_qual_list = results_block.get('sprintQualifying') or []
+
+    # Practice sessions
     practice_p1 = results_block.get('p1') or []
     practice_p2 = results_block.get('p2') or []
     practice_p3 = results_block.get('p3') or []
-    # some rounds use 'practice' combined
     if 'practice' in round_entry and isinstance(round_entry['practice'], dict):
-        # merging p1/p2/p3 if present
+        # flatten practice.{p1,p2,p3} if present
         practice_combined = []
         for k in ('p1', 'p2', 'p3'):
             practice_combined.extend(round_entry['practice'].get(k, []))
@@ -148,14 +149,19 @@ def build_driver_features_for_round_df(round_entry: Dict[str, Any], season_drive
     except Exception:
         track_length = None
     safety_cars = round_entry.get('safetyCars') or 0
-    weather = round_entry.get('weather') or ''
+    weather = normalize_weather(round_entry.get('weather'))
 
-    for r in race_list:
+    # Build rows for every driver appearing in combined_results
+    for r in combined_results:
+        # driver extraction (support dict or string)
         driver = r.get('driver') or r.get('Driver') or r.get('driverName') or r.get('name')
         if isinstance(driver, dict):
-            driver = (driver.get('givenName','') + ' ' + driver.get('familyName','')).strip()
+            driver = normalize_driver_name(driver)
+        else:
+            driver = normalize_driver_name(driver)
         if not driver:
             continue
+
         row = {
             'round': round_entry.get('round') or round_entry.get('_key'),
             'event_name': round_entry.get('name') or round_entry.get('_key'),
@@ -171,71 +177,106 @@ def build_driver_features_for_round_df(round_entry: Dict[str, Any], season_drive
             'weather': weather
         }
 
-        # qualifying position for this driver
-        q = find_driver_entry(qualifying_list, driver)
-        row['qual_pos'] = q.get('pos') if q and q.get('pos') is not None else (q.get('position') if q and q.get('position') is not None else None)
+        # Qualifying position (match normalized names)
+        q = None
+        for qent in qualifying_list:
+            qname = qent.get('driver') or qent.get('Driver') or qent.get('name')
+            if normalize_driver_name(qname) == driver:
+                q = qent
+                break
+        if q:
+            row['qual_pos'] = q.get('pos') or q.get('position')
 
-        # practice mean from all practice sessions available
+        # Sprint qualifying
+        sq = None
+        for sqent in sprint_qual_list:
+            sqname = sqent.get('driver') or sqent.get('Driver') or sqent.get('name')
+            if normalize_driver_name(sqname) == driver:
+                sq = sqent
+                break
+        if sq:
+            row['sprint_qual_pos'] = sq.get('pos') or sq.get('position')
+
+        # Practice mean (times in seconds preferred)
         practice_positions = []
         for p_list in (practice_p1, practice_p2, practice_p3):
-            ent = find_driver_entry(p_list, driver)
-            if ent:
-                # sometimes practice lists don't have explicit 'pos' but have 'time'; we can approximate by ordering index
-                pos = ent.get('pos') or ent.get('position')
-                if pos is None and 'time' in ent:
-                    # we won't compute pos here; instead store time in seconds
-                    t = parse_time_to_seconds(ent.get('time'))
+            for pent in p_list:
+                pname = pent.get('driver') or pent.get('Driver') or pent.get('name')
+                if normalize_driver_name(pname) == driver:
+                    t = parse_time_to_seconds(pent.get('time'))
                     if t is not None:
                         practice_positions.append(t)
-                elif pos is not None:
-                    practice_positions.append(pos)
-        if practice_positions:
-            # if measured in times (seconds) lower is better; we'll take mean
-            row['practice_mean'] = float(statistics.mean(practice_positions))
-        else:
-            row['practice_mean'] = None
+                    elif pent.get('pos') is not None:
+                        try:
+                            practice_positions.append(float(pent.get('pos')))
+                        except Exception:
+                            pass
+        row['practice_mean'] = float(statistics.mean(practice_positions)) if practice_positions else None
 
-        # fastest lap rank or lap time
-        fl = find_driver_entry(fastest_list, driver)
+        # Fastest lap time/rank for the round
+        fl = None
+        for fent in fastest_list:
+            fname = fent.get('driver') or fent.get('Driver') or fent.get('name')
+            if normalize_driver_name(fname) == driver:
+                fl = fent
+                break
         if fl:
-            row['fastest_lap_time'] = parse_time_to_seconds(fl.get('lapTime') or fl.get('time') or fl.get('lap_time'))
-            # store rank if present
+            row['fastest_lap_time'] = parse_time_to_seconds(fl.get('lapTime') or fl.get('time'))
             row['fastest_lap_rank'] = fl.get('rank') or fl.get('position')
-        else:
-            row['fastest_lap_time'] = None
-            row['fastest_lap_rank'] = None
 
-        # pitstops count
+        # Pit stops: count and per-stop times (if available)
         pit_entry = None
         if isinstance(pitstops, list):
-            for p in pitstops:
-                # p may be {driver: 'name', stops: n}
-                dname = p.get('driver') or p.get('Driver') or p.get('driverName')
-                if isinstance(dname, dict):
-                    dname = (dname.get('givenName','') + ' ' + dname.get('familyName','')).strip()
-                if dname and dname.strip().lower() == driver.strip().lower():
-                    pit_entry = p
+            for pent in pitstops:
+                pname = pent.get('driver') or pent.get('Driver') or pent.get('name')
+                if normalize_driver_name(pname) == driver:
+                    pit_entry = pent
                     break
         elif isinstance(pitstops, dict):
-            # driver -> list
-            if driver in pitstops:
-                pit_entry = {'stops': len(pitstops[driver])}
-        row['pitstops'] = pit_entry.get('stops') if pit_entry else 0
+            # dict keyed by driver name -> list of stops
+            for key, val in pitstops.items():
+                if normalize_driver_name(key) == driver:
+                    pit_entry = {'stops': len(val), 'stopsDetail': val}
+                    break
+        if pit_entry:
+            stops_detail = pit_entry.get('stopsDetail') or []
+            times = []
+            for d in stops_detail:
+                t = d.get('time')
+                tsec = None
+                if isinstance(t, (int, float)):
+                    tsec = float(t)
+                else:
+                    try:
+                        tsec = float(t)
+                    except Exception:
+                        tsec = None
+                if tsec is not None:
+                    times.append(tsec)
+            row['pitstops'] = pit_entry.get('stops') or len(stops_detail)
+            if times:
+                row['pit_avg_time'] = float(np.mean(times))
+                row['pit_min_time'] = float(np.min(times))
+                row['pit_total_time'] = float(np.sum(times))
+            else:
+                row['pit_avg_time'] = row['pit_min_time'] = row['pit_total_time'] = None
+        else:
+            row['pitstops'] = 0
+            row['pit_avg_time'] = row['pit_min_time'] = row['pit_total_time'] = None
 
-        # season points for driver
+        # Season / constructor points maps (may be None)
         row['season_points'] = season_driver_points_map.get(driver, None)
-        # constructor points (team-level)
-        row['constructor_points'] = constructors_map.get(row['team'], None)
+        row['constructor_points'] = constructors_map.get(row.get('team'), None)  # Fixed: use row.get('team')
 
         rows.append(row)
     return rows
 
-
 def build_dataset_from_json(path: str) -> pd.DataFrame:
+    """Load JSON and build a cleaned DataFrame with engineered features."""
     data = load_json(path)
     rounds = get_rounds_list(data)
 
-    # build season-level maps (drivers points, constructors points) from any 'standings' found
+    # Build season-level maps from first available standings encountered
     season_driver_points = {}
     constructors_points = {}
     for r in rounds:
@@ -247,8 +288,7 @@ def build_dataset_from_json(path: str) -> pd.DataFrame:
         if s and isinstance(s.get('drivers'), list):
             for d in s['drivers']:
                 name = d.get('driver') or d.get('Driver') or d.get('name')
-                if isinstance(name, dict):
-                    name = (name.get('givenName','') + ' ' + name.get('familyName','')).strip()
+                name = normalize_driver_name(name)
                 points = d.get('points') or d.get('pts')
                 if name and points is not None:
                     try:
@@ -265,18 +305,16 @@ def build_dataset_from_json(path: str) -> pd.DataFrame:
                     except Exception:
                         pass
 
-    # iterate and build rows
+    # iterate rounds and build rows
     all_rows = []
     for r in rounds:
         rows = build_driver_features_for_round_df(r, season_driver_points, constructors_points)
         all_rows.extend(rows)
 
     df = pd.DataFrame(all_rows)
-
-    # Basic cleaning: convert types
-    # convert boolean/strings etc.
-    # If fastest_lap_time is in seconds or practice_mean in seconds, it's fine. For positions ensure numeric
-    for col in ('target_pos', 'start_pos', 'qual_pos', 'pitstops', 'season_points', 'constructor_points', 'laps', 'fastest_lap_rank'):
+    # coerce numeric columns
+    numeric_cols = ['target_pos', 'start_pos', 'qual_pos', 'pitstops', 'season_points', 'constructor_points', 'laps', 'fastest_lap_rank', 'pit_avg_time', 'pit_min_time', 'pit_total_time']
+    for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
 
@@ -285,53 +323,51 @@ def build_dataset_from_json(path: str) -> pd.DataFrame:
 # ----------------------------- Modelling -----------------------------
 
 def train_and_evaluate(df: pd.DataFrame, model_dir: str, test_size: float = 0.2, random_state: int = 42):
+    """Train regressor and classifier; evaluate and save models."""
     os.makedirs(model_dir, exist_ok=True)
 
-    # Filter only rows with a target (some DNS/DNF may have null pos)
+    # keep only rows with defined target position
     df = df[df['target_pos'].notnull()].copy()
-    # Feature columns
-    numeric_feats = ['qual_pos', 'start_pos', 'practice_mean', 'fastest_lap_time', 'fastest_lap_rank', 'pitstops', 'season_points', 'constructor_points', 'track_length', 'safety_cars', 'laps']
+
+    # features (include new pit time features)
+    numeric_feats = ['qual_pos', 'start_pos', 'practice_mean', 'fastest_lap_time', 'fastest_lap_rank', 'pitstops', 'pit_avg_time', 'pit_min_time', 'pit_total_time', 'season_points', 'constructor_points', 'track_length', 'safety_cars', 'laps']
     categorical_feats = ['weather', 'team', 'event_name']
 
-    # target regression: finishing position
+    # targets
     df['target_pos'] = pd.to_numeric(df['target_pos'], errors='coerce')
-    # target classification: podium or not
     df['target_podium'] = (df['target_pos'] <= 3).astype(int)
 
     X = df[numeric_feats + categorical_feats]
     y_reg = df['target_pos']
     y_clf = df['target_podium']
 
-    # train/test split where we stratify by event_name for classifier balancing
+    # train/test split
+    stratify_col = df['event_name'] if 'event_name' in df else None
     X_train, X_test, y_reg_train, y_reg_test, y_clf_train, y_clf_test = train_test_split(
-        X, y_reg, y_clf, test_size=test_size, random_state=random_state, stratify=X['event_name'] if 'event_name' in X else None)
+        X, y_reg, y_clf, test_size=test_size, random_state=random_state, stratify=stratify_col)
 
-    # Preprocessing pipelines
+    # preprocessing
     numeric_transform = Pipeline(steps=[('imputer', SimpleImputer(strategy='median')), ('scaler', StandardScaler())])
     categorical_transform = Pipeline(steps=[('imputer', SimpleImputer(strategy='constant', fill_value='missing')), ('onehot', OneHotEncoder(handle_unknown='ignore'))])
+    preproc = ColumnTransformer(transformers=[('num', numeric_transform, numeric_feats), ('cat', categorical_transform, categorical_feats)])
 
-    preproc = ColumnTransformer(transformers=[
-        ('num', numeric_transform, numeric_feats),
-        ('cat', categorical_transform, categorical_feats)
-    ])
-
-    # Models
+    # pipelines
     regressor = Pipeline(steps=[('preproc', preproc), ('model', RandomForestRegressor(n_estimators=200, random_state=random_state))])
     classifier = Pipeline(steps=[('preproc', preproc), ('model', RandomForestClassifier(n_estimators=200, class_weight='balanced', random_state=random_state))])
 
-    # Fit models
+    # fit
     print('Training regressor...')
     regressor.fit(X_train, y_reg_train)
     print('Training classifier...')
     classifier.fit(X_train, y_clf_train)
 
-    # Evaluate regressor
+    # evaluate regressor
     y_reg_pred = regressor.predict(X_test)
     mae = mean_absolute_error(y_reg_test, y_reg_pred)
     rmse = math.sqrt(mean_squared_error(y_reg_test, y_reg_pred))
     print(f'Regressor MAE: {mae:.4f}, RMSE: {rmse:.4f}')
 
-    # Evaluate classifier
+    # evaluate classifier
     y_clf_pred = classifier.predict(X_test)
     acc = accuracy_score(y_clf_test, y_clf_pred)
     prec = precision_score(y_clf_test, y_clf_pred, zero_division=0)
@@ -339,20 +375,19 @@ def train_and_evaluate(df: pd.DataFrame, model_dir: str, test_size: float = 0.2,
     f1 = f1_score(y_clf_test, y_clf_pred, zero_division=0)
     print(f'Classifier accuracy: {acc:.4f}, precision: {prec:.4f}, recall: {rec:.4f}, f1: {f1:.4f}')
 
-    # Cross-validated estimates (optional, smaller folds due to dataset size)
+    # cross-validation (best-effort)
     try:
         cv_scores = cross_val_score(regressor, X, y_reg, scoring='neg_mean_absolute_error', cv=5)
         print('Regressor CV MAE (5-fold):', -cv_scores.mean())
     except Exception:
         print('Skipping regressor cross-validation (possibly small dataset / error)')
-
     try:
         cv_scores_clf = cross_val_score(classifier, X, y_clf, scoring='accuracy', cv=5)
         print('Classifier CV accuracy (5-fold):', cv_scores_clf.mean())
     except Exception:
         print('Skipping classifier cross-validation (possibly small dataset / error)')
 
-    # Save models
+    # save models
     reg_path = os.path.join(model_dir, 'nazim_regressor.joblib')
     clf_path = os.path.join(model_dir, 'nazim_classifier.joblib')
     joblib.dump(regressor, reg_path)
@@ -360,14 +395,10 @@ def train_and_evaluate(df: pd.DataFrame, model_dir: str, test_size: float = 0.2,
     print(f'Saved regressor to: {reg_path}')
     print(f'Saved classifier to: {clf_path}')
 
-    # Return trained objects and test metrics for possible programmatic use
-    metrics = {
-        'regression': {'mae': mae, 'rmse': rmse},
-        'classification': {'accuracy': acc, 'precision': prec, 'recall': rec, 'f1': f1}
-    }
+    metrics = {'regression': {'mae': mae, 'rmse': rmse}, 'classification': {'accuracy': acc, 'precision': prec, 'recall': rec, 'f1': f1}}
     return regressor, classifier, metrics
 
-# ----------------------------- Prediction utilities -----------------------------
+# ----------------------------- Prediction -----------------------------
 
 def load_models(model_dir: str):
     reg_path = os.path.join(model_dir, 'nazim_regressor.joblib')
@@ -378,16 +409,26 @@ def load_models(model_dir: str):
     clf = joblib.load(clf_path)
     return reg, clf
 
-
 def predict_for_round(round_entry: Dict[str, Any], regressor, classifier, season_driver_points_map: Dict[str, float], constructors_map: Dict[str, float], topk: int = 3):
     rows = build_driver_features_for_round_df(round_entry, season_driver_points_map, constructors_map)
     df = pd.DataFrame(rows)
     if df.empty:
         return []
-    numeric_feats = ['qual_pos', 'start_pos', 'practice_mean', 'fastest_lap_time', 'fastest_lap_rank', 'pitstops', 'season_points', 'constructor_points', 'track_length', 'safety_cars', 'laps']
+    
+    # Define expected features
+    numeric_feats = ['qual_pos', 'start_pos', 'practice_mean', 'fastest_lap_time', 'fastest_lap_rank', 'pitstops', 'pit_avg_time', 'pit_min_time', 'pit_total_time', 'season_points', 'constructor_points', 'track_length', 'safety_cars', 'laps']
     categorical_feats = ['weather', 'team', 'event_name']
-    features = df[numeric_feats + categorical_feats]
-    # some drivers may have missing features; the pipeline handles this
+    all_feats = numeric_feats + categorical_feats
+    
+    # Ensure all expected columns exist
+    for feat in all_feats:
+        if feat not in df.columns:
+            if feat in numeric_feats:
+                df[feat] = np.nan
+            else:
+                df[feat] = 'missing'
+    
+    features = df[all_feats]
 
     pred_pos = regressor.predict(features)
     pred_podium_prob = None
@@ -401,17 +442,14 @@ def predict_for_round(round_entry: Dict[str, Any], regressor, classifier, season
 
     df['pred_pos'] = pred_pos
     df['pred_podium_prob'] = pred_podium_prob
-
-    # rank by predicted position (lower predicted pos -> better)
     df_sorted = df.sort_values(by='pred_pos')
-    # return topk drivers
     return df_sorted.head(topk)[['driver', 'team', 'pred_pos', 'pred_podium_prob']].to_dict(orient='records')
 
 # ----------------------------- CLI -----------------------------
 
 def main():
     parser = argparse.ArgumentParser(description='NAZIM GP - 2025 predictor and trainer')
-    parser.add_argument('--db', type=str, required=False, default="C:\\Users\\Joseph N Nimyel\\OneDrive\\Documents\\Mimo Projects\\F1\\DataBase\\F1-Seasons-2025.json")
+    parser.add_argument('--db', type=str, required=False, default=r"C:\Users\Joseph N Nimyel\OneDrive\Documents\Mimo Projects\F1\DataBase\F1-Seasons-2025.json")
     parser.add_argument('--train', action='store_true', help='Build dataset, train models and save them')
     parser.add_argument('--model-dir', type=str, default='./models', help='Where to save / load models')
     parser.add_argument('--test-size', type=float, default=0.2, help='Train/test split for evaluation')
@@ -430,7 +468,6 @@ def main():
         print('Training completed. Metrics:', metrics)
 
     if args.predict:
-        # prepare season-level maps again to pass into predictor
         data = load_json(args.db)
         rounds = get_rounds_list(data)
         season_driver_points = {}
@@ -440,8 +477,7 @@ def main():
             if s and isinstance(s, dict):
                 for d in s.get('drivers', []) if isinstance(s.get('drivers', []), list) else []:
                     name = d.get('driver') or d.get('Driver') or d.get('name')
-                    if isinstance(name, dict):
-                        name = (name.get('givenName','') + ' ' + name.get('familyName','')).strip()
+                    name = normalize_driver_name(name)
                     pts = d.get('points')
                     if name and pts is not None:
                         try:
@@ -457,11 +493,10 @@ def main():
                         except Exception:
                             pass
 
-        # pick round entry
+        # pick round
         if args.round is None:
             target_round = rounds[-1]
         else:
-            # try to find by 'round' field
             found = None
             for r in rounds:
                 if r.get('round') == args.round or r.get('Round') == args.round:
