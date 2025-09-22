@@ -10,7 +10,7 @@ import argparse
 import json
 import os
 import math
-import statistics  # Added missing import
+import statistics
 from typing import List, Dict, Any
 
 import numpy as np
@@ -27,6 +27,9 @@ import joblib
 # ----------------------------- Helpers -----------------------------
 
 def load_json(path: str) -> Any:
+    """Load JSON file from local filesystem."""
+    # Convert to absolute path if relative
+    path = os.path.abspath(path)
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
@@ -266,7 +269,7 @@ def build_driver_features_for_round_df(round_entry: Dict[str, Any], season_drive
 
         # Season / constructor points maps (may be None)
         row['season_points'] = season_driver_points_map.get(driver, None)
-        row['constructor_points'] = constructors_map.get(row.get('team'), None)  # Fixed: use row.get('team')
+        row['constructor_points'] = constructors_map.get(row['team'], None)
 
         rows.append(row)
     return rows
@@ -324,6 +327,8 @@ def build_dataset_from_json(path: str) -> pd.DataFrame:
 
 def train_and_evaluate(df: pd.DataFrame, model_dir: str, test_size: float = 0.2, random_state: int = 42):
     """Train regressor and classifier; evaluate and save models."""
+    # Create model directory with absolute path
+    model_dir = os.path.abspath(model_dir)
     os.makedirs(model_dir, exist_ok=True)
 
     # keep only rows with defined target position
@@ -401,10 +406,12 @@ def train_and_evaluate(df: pd.DataFrame, model_dir: str, test_size: float = 0.2,
 # ----------------------------- Prediction -----------------------------
 
 def load_models(model_dir: str):
+    """Load models from local filesystem."""
+    model_dir = os.path.abspath(model_dir)
     reg_path = os.path.join(model_dir, 'nazim_regressor.joblib')
     clf_path = os.path.join(model_dir, 'nazim_classifier.joblib')
     if not os.path.exists(reg_path) or not os.path.exists(clf_path):
-        raise FileNotFoundError('Model files not found in model_dir. Train models first using --train')
+        raise FileNotFoundError(f'Model files not found in {model_dir}. Train models first using --train')
     reg = joblib.load(reg_path)
     clf = joblib.load(clf_path)
     return reg, clf
@@ -414,21 +421,9 @@ def predict_for_round(round_entry: Dict[str, Any], regressor, classifier, season
     df = pd.DataFrame(rows)
     if df.empty:
         return []
-    
-    # Define expected features
     numeric_feats = ['qual_pos', 'start_pos', 'practice_mean', 'fastest_lap_time', 'fastest_lap_rank', 'pitstops', 'pit_avg_time', 'pit_min_time', 'pit_total_time', 'season_points', 'constructor_points', 'track_length', 'safety_cars', 'laps']
     categorical_feats = ['weather', 'team', 'event_name']
-    all_feats = numeric_feats + categorical_feats
-    
-    # Ensure all expected columns exist
-    for feat in all_feats:
-        if feat not in df.columns:
-            if feat in numeric_feats:
-                df[feat] = np.nan
-            else:
-                df[feat] = 'missing'
-    
-    features = df[all_feats]
+    features = df[numeric_feats + categorical_feats]
 
     pred_pos = regressor.predict(features)
     pred_podium_prob = None
@@ -448,15 +443,26 @@ def predict_for_round(round_entry: Dict[str, Any], regressor, classifier, season
 # ----------------------------- CLI -----------------------------
 
 def main():
-    parser = argparse.ArgumentParser(description='NAZIM GP - 2025 predictor and trainer')
-    parser.add_argument('--db', type=str, required=False, default=r"C:\Users\Joseph N Nimyel\OneDrive\Documents\Mimo Projects\F1\DataBase\F1-Seasons-2025.json")
+    parser = argparse.ArgumentParser(description='NAZIM GP - 2025 F1 predictor and trainer')
+    
+    # Default path for Windows - you can change this default or always specify via --db
+    default_db = r"C:\Users\Joseph N Nimyel\OneDrive\Documents\Mimo Projects\F1\DataBase\F1-Seasons-2025.json"
+    
+    parser.add_argument('--db', type=str, required=False, default=default_db,
+                       help='Path to F1 season JSON database file')
     parser.add_argument('--train', action='store_true', help='Build dataset, train models and save them')
-    parser.add_argument('--model-dir', type=str, default='./models', help='Where to save / load models')
+    parser.add_argument('--model-dir', type=str, default='./models', help='Where to save/load models')
     parser.add_argument('--test-size', type=float, default=0.2, help='Train/test split for evaluation')
     parser.add_argument('--predict', action='store_true', help='Load models and predict for a round')
     parser.add_argument('--round', type=int, default=None, help='Round number to use for prediction (1-based). Default: latest available')
     parser.add_argument('--topk', type=int, default=3, help='How many top predictions to return')
     args = parser.parse_args()
+
+    # Verify database file exists
+    if not os.path.exists(args.db):
+        print(f"Error: Database file not found at {args.db}")
+        print("Please specify the correct path using --db parameter")
+        return
 
     print('Loading dataset from:', args.db)
     df = build_dataset_from_json(args.db)
