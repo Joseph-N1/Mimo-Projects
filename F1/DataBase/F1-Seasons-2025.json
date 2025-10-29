@@ -1,4 +1,283 @@
 { 
+  "singapore": {
+    "round": 18,
+    "name": "Singapore Grand Prix",
+    "date": "Oct 03-05, 2025",
+    "track": "Marina Bay Street Circuit, Marina Bay",
+    "trackLength": 4.94,
+    "weather": "Dry",
+    "safetyCars": 0,
+    "winner": {
+      "driver": "George Russell",
+      "team": "Mercedes"
+    },
+    "fastestLap": {
+      "driver": "Lewis Hamilton",
+      "time": "1:33.808",
+      "lap": 48
+    },
+    "results": {
+      "qualifying": [
+        {"pos": 1, "driver": "George Russell", "team": "Mercedes", "q1": "1:29.928", "q2": "1:29.562", "q3": "1:29.158"},
+        {"pos": 2, "driver": "Max Verstappen", "team": "Red Bull", "q1": "1:30.028", "q2": "1:29.572", "q3": "1:29.340"},
+        {"pos": 3, "driver": "Oscar Piastri", "team": "McLaren", "q1": "1:30.313", "q2": "1:29.813", "q3": "1:29.524"},
+        {"pos": 4, "driver": "Kimi Antonelli", "team": "Mercedes", "q1": "1:30.036", "q2": "1:29.649", "q3": "1:29.537"},
+        {"pos": 5, "driver": "Lando Norris", "team": "McLaren", "q1": "1:29.932", "q2": "1:29.809", "q3": "1:29.586"},
+        {"pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "q1": "1:29.765", "q2": "1:29.936", "q3": "1:29.688"},
+        {"pos": 7, "driver": "Charles Leclerc", "team": "Ferrari", "q1": "1:30.370", "q2": "1:29.914", "q3": "1:29.784"},
+        {"pos": 8, "driver": "Isack Hadjar", "team": "Racing Bulls", "q1": "1:30.214", "q2": "1:30.016", "q3": "1:29.846"},
+        {"pos": 9, "driver": "Oliver Bearman", "team": "Haas", "q1": "1:30.420", "q2": "1:30.076", "q3": "1:29.868"},
+        {"pos": 10, "driver": "Fernando Alonso", "team": "Aston Martin", "q1": "1:30.745", "q2": "1:30.054", "q3": "1:29.955"},
+        {"pos": 11, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "q1": "1:30.715", "q2": "1:30.141", "q3": null},
+        {"pos": 12, "driver": "Liam Lawson", "team": "Racing Bulls", "q1": "1:30.681", "q2": "1:30.320", "q3": null},
+        {"pos": 13, "driver": "Yuki Tsunoda", "team": "Red Bull", "q1": "1:30.574", "q2": "1:30.353", "q3": null},
+        {"pos": 14, "driver": "Gabriel Bortoleto", "team": "Kick Sauber", "q1": "1:30.820", "q2": null, "q3": null},
+        {"pos": 15, "driver": "Lance Stroll", "team": "Aston Martin", "q1": "1:30.949", "q2": null, "q3": null},
+        {"pos": 16, "driver": "Franco Colapinto", "team": "Alpine", "q1": "1:30.982", "q2": null, "q3": null},
+        {"pos": 17, "driver": "Esteban Ocon", "team": "Haas", "q1": "1:30.989", "q2": null, "q3": null},
+        {"pos": 18, "driver": "Pierre Gasly", "team": "Alpine", "q1": "1:31.261", "q2": null, "q3": null},
+        {"pos": 19, "driver": "Alexander Albon", "team": "Williams", "q1": "1:30.202", "q2": null, "q3": null, "penalty": "DQ - rear wing infringement"},
+        {"pos": 20, "driver": "Carlos Sainz", "team": "Williams", "q1": "1:30.235", "q2": null, "q3": null, "penalty": "DQ - rear wing infringement"}
+      ],
+      "race": [
+        {"pos": 1, "driver": "George Russell", "team": "Mercedes", "start": 1, "laps": 62, "points": 25},
+        {"pos": 2, "driver": "Max Verstappen", "team": "Red Bull", "start": 2, "laps": 62, "points": 18},
+        {"pos": 3, "driver": "Lando Norris", "team": "McLaren", "start": 5, "laps": 62, "points": 15},
+        {"pos": 4, "driver": "Oscar Piastri", "team": "McLaren", "start": 3, "laps": 62, "points": 12},
+        {"pos": 5, "driver": "Kimi Antonelli", "team": "Mercedes", "start": 4, "laps": 62, "points": 10},
+        {"pos": 6, "driver": "Charles Leclerc", "team": "Ferrari", "start": 7, "laps": 62, "points": 8},
+        {"pos": 7, "driver": "Fernando Alonso", "team": "Aston Martin", "start": 10, "laps": 62, "points": 6},
+        {"pos": 8, "driver": "Lewis Hamilton", "team": "Ferrari", "start": 6, "laps": 62, "points": 4, "penalty": "5s for track limits"},
+        {"pos": 9, "driver": "Oliver Bearman", "team": "Haas", "start": 9, "laps": 62, "points": 2},
+        {"pos": 10, "driver": "Carlos Sainz", "team": "Williams", "start": 18, "laps": 61, "points": 1},
+        {"pos": 11, "driver": "Isack Hadjar", "team": "Racing Bulls", "start": 8, "laps": 61, "points": 0},
+        {"pos": 12, "driver": "Yuki Tsunoda", "team": "Red Bull", "start": 13, "laps": 61, "points": 0},
+        {"pos": 13, "driver": "Lance Stroll", "team": "Aston Martin", "start": 15, "laps": 61, "points": 0},
+        {"pos": 14, "driver": "Alexander Albon", "team": "Williams", "start": 19, "laps": 61, "points": 0},
+        {"pos": 15, "driver": "Liam Lawson", "team": "Racing Bulls", "start": 12, "laps": 61, "points": 0},
+        {"pos": 16, "driver": "Franco Colapinto", "team": "Alpine", "start": 16, "laps": 61, "points": 0},
+        {"pos": 17, "driver": "Gabriel Bortoleto", "team": "Kick Sauber", "start": 14, "laps": 61, "points": 0},
+        {"pos": 18, "driver": "Esteban Ocon", "team": "Haas", "start": 17, "laps": 61, "points": 0},
+        {"pos": 19, "driver": "Pierre Gasly", "team": "Alpine", "start": 20, "laps": 61, "points": 0},
+        {"pos": 20, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "start": 11, "laps": 61, "points": 0}
+      ]
+    },
+    "highlights": [
+      "Russell takes surprise victory in Singapore",
+      "Mercedes double points finish",
+      "McLaren secure double podium with Norris and Piastri",
+      "Hamilton penalized for track limits",
+      "Williams drivers start from back after qualifying DQ"
+    ],
+    "practice": {
+      "p1": [
+        {"driver": "Fernando Alonso", "team": "Aston Martin", "time": "1:31.116", "laps": 23},
+        {"driver": "Charles Leclerc", "team": "Ferrari", "time": "1:31.266", "laps": 25},
+        {"driver": "Max Verstappen", "team": "Red Bull", "time": "1:31.392", "laps": 24},
+        {"driver": "Lewis Hamilton", "team": "Ferrari", "time": "1:31.480", "laps": 23},
+        {"driver": "Oscar Piastri", "team": "McLaren", "time": "1:31.481", "laps": 25},
+        {"driver": "Lando Norris", "team": "McLaren", "time": "1:31.698", "laps": 22},
+        {"driver": "Isack Hadjar", "team": "Racing Bulls", "time": "1:31.755", "laps": 28},
+        {"driver": "Carlos Sainz", "team": "Williams", "time": "1:31.812", "laps": 27},
+        {"driver": "Yuki Tsunoda", "team": "Red Bull", "time": "1:31.860", "laps": 25},
+        {"driver": "Esteban Ocon", "team": "Haas", "time": "1:32.128", "laps": 24},
+        {"driver": "George Russell", "team": "Mercedes", "time": "1:32.139", "laps": 22},
+        {"driver": "Nico Hulkenberg", "team": "Kick Sauber", "time": "1:32.315", "laps": 29},
+        {"driver": "Pierre Gasly", "team": "Alpine", "time": "1:32.378", "laps": 26},
+        {"driver": "Kimi Antonelli", "team": "Mercedes", "time": "1:32.399", "laps": 24},
+        {"driver": "Liam Lawson", "team": "Racing Bulls", "time": "1:32.461", "laps": 27},
+        {"driver": "Oliver Bearman", "team": "Haas", "time": "1:32.538", "laps": 25},
+        {"driver": "Gabriel Bortoleto", "team": "Kick Sauber", "time": "1:32.611", "laps": 27},
+        {"driver": "Lance Stroll", "team": "Aston Martin", "time": "1:33.034", "laps": 18},
+        {"driver": "Franco Colapinto", "team": "Alpine", "time": "1:33.324", "laps": 26},
+        {"driver": "Alexander Albon", "team": "Williams", "time": "No time", "laps": 2}
+      ],
+      "p2": [
+        {"driver": "Oscar Piastri", "team": "McLaren", "time": "1:30.714", "laps": 19},
+        {"driver": "Isack Hadjar", "team": "Racing Bulls", "time": "1:30.846", "laps": 19},
+        {"driver": "Max Verstappen", "team": "Red Bull", "time": "1:30.857", "laps": 19},
+        {"driver": "Fernando Alonso", "team": "Aston Martin", "time": "1:30.877", "laps": 19},
+        {"driver": "Lando Norris", "team": "McLaren", "time": "1:31.197", "laps": 18},
+        {"driver": "Lance Stroll", "team": "Aston Martin", "time": "1:31.222", "laps": 18},
+        {"driver": "Esteban Ocon", "team": "Haas", "time": "1:31.298", "laps": 19},
+        {"driver": "Carlos Sainz", "team": "Williams", "time": "1:31.299", "laps": 20},
+        {"driver": "Charles Leclerc", "team": "Ferrari", "time": "1:31.466", "laps": 18},
+        {"driver": "Lewis Hamilton", "team": "Ferrari", "time": "1:31.491", "laps": 17},
+        {"driver": "Yuki Tsunoda", "team": "Red Bull", "time": "1:31.708", "laps": 18},
+        {"driver": "Oliver Bearman", "team": "Haas", "time": "1:31.711", "laps": 18},
+        {"driver": "Alexander Albon", "team": "Williams", "time": "1:32.060", "laps": 19},
+        {"driver": "Nico Hulkenberg", "team": "Kick Sauber", "time": "1:32.069", "laps": 19},
+        {"driver": "Gabriel Bortoleto", "team": "Kick Sauber", "time": "1:32.319", "laps": 19},
+        {"driver": "Pierre Gasly", "team": "Alpine", "time": "1:32.458", "laps": 20},
+        {"driver": "Liam Lawson", "team": "Racing Bulls", "time": "1:32.645", "laps": 10},
+        {"driver": "Kimi Antonelli", "team": "Mercedes", "time": "1:32.719", "laps": 18},
+        {"driver": "Franco Colapinto", "team": "Alpine", "time": "1:33.139", "laps": 20},
+        {"driver": "George Russell", "team": "Mercedes", "time": "1:33.231", "laps": 6}
+      ],
+      "p3": [
+        {"driver": "Max Verstappen", "team": "Red Bull", "time": "1:30.148", "laps": 16},
+        {"driver": "Oscar Piastri", "team": "McLaren", "time": "1:30.165", "laps": 26},
+        {"driver": "George Russell", "team": "Mercedes", "time": "1:30.197", "laps": 18},
+        {"driver": "Kimi Antonelli", "team": "Mercedes", "time": "1:30.237", "laps": 19},
+        {"driver": "Lando Norris", "team": "McLaren", "time": "1:30.237", "laps": 26},
+        {"driver": "Carlos Sainz", "team": "Williams", "time": "1:30.392", "laps": 23},
+        {"driver": "Isack Hadjar", "team": "Racing Bulls", "time": "1:30.489", "laps": 25},
+        {"driver": "Lewis Hamilton", "team": "Ferrari", "time": "1:30.559", "laps": 23},
+        {"driver": "Nico Hulkenberg", "team": "Kick Sauber", "time": "1:30.637", "laps": 22},
+        {"driver": "Charles Leclerc", "team": "Ferrari", "time": "1:30.651", "laps": 23},
+        {"driver": "Alexander Albon", "team": "Williams", "time": "1:30.668", "laps": 23},
+        {"driver": "Gabriel Bortoleto", "team": "Kick Sauber", "time": "1:30.697", "laps": 25},
+        {"driver": "Esteban Ocon", "team": "Haas", "time": "1:30.784", "laps": 23},
+        {"driver": "Oliver Bearman", "team": "Haas", "time": "1:30.799", "laps": 24},
+        {"driver": "Fernando Alonso", "team": "Aston Martin", "time": "1:30.923", "laps": 22},
+        {"driver": "Franco Colapinto", "team": "Alpine", "time": "1:31.047", "laps": 23},
+        {"driver": "Lance Stroll", "team": "Aston Martin", "time": "1:31.260", "laps": 24},
+        {"driver": "Yuki Tsunoda", "team": "Red Bull", "time": "1:31.440", "laps": 25},
+        {"driver": "Pierre Gasly", "team": "Alpine", "time": "1:31.643", "laps": 23},
+        {"driver": "Liam Lawson", "team": "Racing Bulls", "time": "1:33.628", "laps": 7}
+      ]
+    },
+    "pitStops": [
+      {
+        "driver": "Gabriel Bortoleto", "team": "Kick Sauber", "stops": 1, "totalTime": 32.856,
+        "stopsDetail": [{"lap": 13, "time": 32.856}]
+      },
+      {
+        "driver": "Yuki Tsunoda", "team": "Red Bull", "stops": 1, "totalTime": 24.610,
+        "stopsDetail": [{"lap": 13, "time": 24.610}]
+      },
+      {
+        "driver": "Franco Colapinto", "team": "Alpine", "stops": 1, "totalTime": 24.040,
+        "stopsDetail": [{"lap": 14, "time": 24.040}]
+      },
+      {
+        "driver": "Max Verstappen", "team": "Red Bull", "stops": 1, "totalTime": 24.008,
+        "stopsDetail": [{"lap": 19, "time": 24.008}]
+      },
+      {
+        "driver": "Isack Hadjar", "team": "Racing Bulls", "stops": 1, "totalTime": 23.827,
+        "stopsDetail": [{"lap": 20, "time": 23.827}]
+      },
+      {
+        "driver": "Charles Leclerc", "team": "Ferrari", "stops": 1, "totalTime": 23.630,
+        "stopsDetail": [{"lap": 21, "time": 23.630}]
+      },
+      {
+        "driver": "Oliver Bearman", "team": "Haas", "stops": 1, "totalTime": 23.979,
+        "stopsDetail": [{"lap": 23, "time": 23.979}]
+      },
+      {
+        "driver": "Lewis Hamilton", "team": "Ferrari", "stops": 2, "totalTime": 48.138,
+        "stopsDetail": [{"lap": 24, "time": 24.794}, {"lap": 46, "time": 23.344}]
+      },
+      {
+        "driver": "Pierre Gasly", "team": "Alpine", "stops": 2, "totalTime": 50.771,
+        "stopsDetail": [{"lap": 24, "time": 25.583}, {"lap": 51, "time": 25.188}]
+      },
+      {
+        "driver": "George Russell", "team": "Mercedes", "stops": 1, "totalTime": 23.966,
+        "stopsDetail": [{"lap": 25, "time": 23.966}]
+      },
+      {
+        "driver": "Kimi Antonelli", "team": "Mercedes", "stops": 1, "totalTime": 23.806,
+        "stopsDetail": [{"lap": 25, "time": 23.806}]
+      },
+      {
+        "driver": "Nico Hulkenberg", "team": "Kick Sauber", "stops": 2, "totalTime": 56.087,
+        "stopsDetail": [{"lap": 25, "time": 24.193}, {"lap": 44, "time": 31.894}]
+      },
+      {
+        "driver": "Lando Norris", "team": "McLaren", "stops": 1, "totalTime": 23.314,
+        "stopsDetail": [{"lap": 26, "time": 23.314}]
+      },
+      {
+        "driver": "Oscar Piastri", "team": "McLaren", "stops": 1, "totalTime": 26.637,
+        "stopsDetail": [{"lap": 27, "time": 26.637}]
+      },
+      {
+        "driver": "Fernando Alonso", "team": "Aston Martin", "stops": 1, "totalTime": 30.749,
+        "stopsDetail": [{"lap": 27, "time": 30.749}]
+      },
+      {
+        "driver": "Esteban Ocon", "team": "Haas", "stops": 1, "totalTime": 25.078,
+        "stopsDetail": [{"lap": 30, "time": 25.078}]
+      },
+      {
+        "driver": "Lance Stroll", "team": "Aston Martin", "stops": 1, "totalTime": 24.012,
+        "stopsDetail": [{"lap": 38, "time": 24.012}]
+      },
+      {
+        "driver": "Alexander Albon", "team": "Williams", "stops": 1, "totalTime": 25.732,
+        "stopsDetail": [{"lap": 42, "time": 25.732}]
+      },
+      {
+        "driver": "Liam Lawson", "team": "Racing Bulls", "stops": 1, "totalTime": 24.027,
+        "stopsDetail": [{"lap": 48, "time": 24.027}]
+      },
+      {
+        "driver": "Carlos Sainz", "team": "Williams", "stops": 1, "totalTime": 24.075,
+        "stopsDetail": [{"lap": 50, "time": 24.075}]
+      }
+    ],
+    "fastestLaps": [
+      {"driver": "Lewis Hamilton", "team": "Ferrari", "lapTime": "1:33.808", "lap": 48, "avgSpeed": "189.079 km/h"},
+      {"driver": "Pierre Gasly", "team": "Alpine", "lapTime": "1:34.573", "lap": 54, "avgSpeed": "187.550 km/h"},
+      {"driver": "Carlos Sainz", "team": "Williams", "lapTime": "1:34.963", "lap": 62, "avgSpeed": "186.780 km/h"},
+      {"driver": "Kimi Antonelli", "team": "Mercedes", "lapTime": "1:35.303", "lap": 27, "avgSpeed": "186.113 km/h"},
+      {"driver": "Nico Hulkenberg", "team": "Kick Sauber", "lapTime": "1:35.404", "lap": 48, "avgSpeed": "185.916 km/h"},
+      {"driver": "Oscar Piastri", "team": "McLaren", "lapTime": "1:35.408", "lap": 31, "avgSpeed": "185.908 km/h"},
+      {"driver": "Lando Norris", "team": "McLaren", "lapTime": "1:35.555", "lap": 36, "avgSpeed": "185.622 km/h"},
+      {"driver": "Liam Lawson", "team": "Racing Bulls", "lapTime": "1:35.641", "lap": 62, "avgSpeed": "185.456 km/h"},
+      {"driver": "Alexander Albon", "team": "Williams", "lapTime": "1:35.648", "lap": 61, "avgSpeed": "185.442 km/h"},
+      {"driver": "Max Verstappen", "team": "Red Bull", "lapTime": "1:35.649", "lap": 30, "avgSpeed": "185.440 km/h"},
+      {"driver": "George Russell", "team": "Mercedes", "lapTime": "1:35.676", "lap": 27, "avgSpeed": "185.388 km/h"},
+      {"driver": "Lance Stroll", "team": "Aston Martin", "lapTime": "1:35.851", "lap": 61, "avgSpeed": "185.049 km/h"},
+      {"driver": "Fernando Alonso", "team": "Aston Martin", "lapTime": "1:35.862", "lap": 52, "avgSpeed": "185.028 km/h"},
+      {"driver": "Charles Leclerc", "team": "Ferrari", "lapTime": "1:35.983", "lap": 41, "avgSpeed": "184.795 km/h"},
+      {"driver": "Oliver Bearman", "team": "Haas", "lapTime": "1:36.201", "lap": 56, "avgSpeed": "184.376 km/h"},
+      {"driver": "Esteban Ocon", "team": "Haas", "lapTime": "1:36.646", "lap": 32, "avgSpeed": "183.527 km/h"},
+      {"driver": "Yuki Tsunoda", "team": "Red Bull", "lapTime": "1:36.831", "lap": 45, "avgSpeed": "183.176 km/h"},
+      {"driver": "Isack Hadjar", "team": "Racing Bulls", "lapTime": "1:36.938", "lap": 55, "avgSpeed": "182.974 km/h"},
+      {"driver": "Gabriel Bortoleto", "team": "Kick Sauber", "lapTime": "1:37.126", "lap": 16, "avgSpeed": "182.620 km/h"},
+      {"driver": "Franco Colapinto", "team": "Alpine", "lapTime": "1:37.182", "lap": 17, "avgSpeed": "182.515 km/h"}
+    ],
+    "standings": {
+      "drivers": [
+        {"pos": 1, "driver": "Oscar Piastri", "team": "McLaren", "points": 336},
+        {"pos": 2, "driver": "Lando Norris", "team": "McLaren", "points": 314},
+        {"pos": 3, "driver": "Max Verstappen", "team": "Red Bull", "points": 273},
+        {"pos": 4, "driver": "George Russell", "team": "Mercedes", "points": 237},
+        {"pos": 5, "driver": "Charles Leclerc", "team": "Ferrari", "points": 173},
+        {"pos": 6, "driver": "Lewis Hamilton", "team": "Ferrari", "points": 125},
+        {"pos": 7, "driver": "Kimi Antonelli", "team": "Mercedes", "points": 88},
+        {"pos": 8, "driver": "Alexander Albon", "team": "Williams", "points": 70},
+        {"pos": 9, "driver": "Isack Hadjar", "team": "Racing Bulls", "points": 39},
+        {"pos": 10, "driver": "Nico Hulkenberg", "team": "Kick Sauber", "points": 37},
+        {"pos": 11, "driver": "Fernando Alonso", "team": "Aston Martin", "points": 36},
+        {"pos": 12, "driver": "Carlos Sainz", "team": "Williams", "points": 32},
+        {"pos": 12, "driver": "Lance Stroll", "team": "Aston Martin", "points": 32},
+        {"pos": 14, "driver": "Liam Lawson", "team": "Racing Bulls", "points": 30},
+        {"pos": 15, "driver": "Esteban Ocon", "team": "Haas", "points": 28},
+        {"pos": 16, "driver": "Pierre Gasly", "team": "Alpine", "points": 20},
+        {"pos": 16, "driver": "Yuki Tsunoda", "team": "Red Bull", "points": 20},
+        {"pos": 18, "driver": "Oliver Bearman", "team": "Haas", "points": 18},
+        {"pos": 18, "driver": "Gabriel Bortoleto", "team": "Kick Sauber", "points": 18}
+      ],
+      "constructors": [
+        {"pos": 1, "team": "McLaren", "fullTeam": "McLaren Mercedes", "points": 650},
+        {"pos": 2, "team": "Mercedes", "points": 325},
+        {"pos": 3, "team": "Ferrari", "points": 298},
+        {"pos": 4, "team": "Red Bull", "fullTeam": "Red Bull Honda RBPT", "points": 290},
+        {"pos": 5, "team": "Williams", "fullTeam": "Williams Mercedes", "points": 102},
+        {"pos": 6, "team": "Racing Bulls", "fullTeam": "Racing Bulls Honda RBPT", "points": 72},
+        {"pos": 7, "team": "Aston Martin", "fullTeam": "Aston Martin Mercedes", "points": 68},
+        {"pos": 8, "team": "Kick Sauber", "fullTeam": "Kick Sauber Ferrari", "points": 55},
+        {"pos": 9, "team": "Haas", "fullTeam": "Haas Ferrari", "points": 46},
+        {"pos": 10, "team": "Alpine", "fullTeam": "Alpine Renault", "points": 20}
+      ]
+    }
+  },
+
    
   "azerbaijan": {
     "round": 17,
