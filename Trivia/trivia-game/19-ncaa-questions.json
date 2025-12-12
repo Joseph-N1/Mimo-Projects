@@ -1,0 +1,322 @@
+[
+  {
+    "section": 1,
+    "questions": [
+      {
+        "question": "Which of the following is an essential element of Nigeria’s airworthiness regulatory system?",
+        "options": ["Issuance of pilot licences", "Registration of aircraft", "Airport security screening", "Air traffic control services"],
+        "correctAnswer": "Registration of aircraft",
+        "hint": "It relates to keeping the national register of aircraft.",
+        "funFact": "The PPM lists registration of aircraft as a core element of the airworthiness system."
+      },
+      {
+        "question": "Who is responsible for appointing Principal Airworthiness Inspectors (PAIs) and allocating ASIs?",
+        "options": ["Director General of Civil Aviation", "Head of Regional Office", "Director, Airworthiness Standards (DAWS)", "Chief Pilot"],
+        "correctAnswer": "Director, Airworthiness Standards (DAWS)",
+        "hint": "This is the internal directorate that manages DAWS staff and appointments.",
+        "funFact": "PAIs are nominated by sectional management and approved by the Director, DAWS."
+      },
+      {
+        "question": "Which document should an inspector consult for guidance on technical inspection procedures?",
+        "options": ["Technical Guidance Manual Vol. IV", "Operator's in-house newsletter", "Civil Aviation Appeals Guide", "Aircraft lease agreement"],
+        "correctAnswer": "Technical Guidance Manual Vol. IV",
+        "hint": "It’s the Airworthiness Inspector Handbook volume.",
+        "funFact": "DAWS points inspectors to the Technical Guidance Manuals for inspector procedures."
+      },
+      {
+        "question": "Which activity is explicitly included in DAWS functions?",
+        "options": ["Issuance of passports", "Issuance/renewal of Certificates of Airworthiness", "Issuance of driving licences", "Building airport terminals"],
+        "correctAnswer": "Issuance/renewal of Certificates of Airworthiness",
+        "hint": "Think certificate that says an aircraft is fit to fly.",
+        "funFact": "The PPM lists issue/renewal of Certificates of Airworthiness as a primary DAWS task."
+      },
+      {
+        "question": "Which of these is NOT listed as a DAWS governing material?",
+        "options": ["Civil Aviation Act", "Nigeria Civil Aviation Regulations (Nig.CARs)", "Technical Guidance Manual Vol. I", "International Shipping Code"],
+        "correctAnswer": "International Shipping Code",
+        "hint": "DAWS references aviation-specific legal and guidance documents.",
+        "funFact": "DAWS references the Civil Aviation Act, Nig.CARs and several Technical Guidance Manuals."
+      }
+    ]
+  },
+  {
+    "section": 2,
+    "questions": [
+      {
+        "question": "What is the TFCC/Registry responsible for?",
+        "options": ["Safe custody of files and register of file movements", "Issuing pilot licences", "Operating air traffic control", "Aircraft maintenance tasks"],
+        "correctAnswer": "Safe custody of files and register of file movements",
+        "hint": "TFCC handles file movement and storage.",
+        "funFact": "TFCC must keep a movement register recording who took/returned files and when."
+      },
+      {
+        "question": "If an ASI takes a file for action, within how many working days should it normally be returned to TFCC?",
+        "options": ["1 working day", "5 working days", "30 working days", "60 working days"],
+        "correctAnswer": "5 working days",
+        "hint": "Short timeframe to keep files circulating.",
+        "funFact": "The manual specifies a 5-working-day normal return period for files."
+      },
+      {
+        "question": "Which files may only be opened by the TFCC/Registry?",
+        "options": ["Operator files, AOC/AMO files and Special Purpose/Project files", "Personal diaries of ASIs", "Newspaper clippings", "External vendor invoices"],
+        "correctAnswer": "Operator files, AOC/AMO files and Special Purpose/Project files",
+        "hint": "These are formal technical files used by DAWS.",
+        "funFact": "TFCC opens official operator and project files and assigns file numbers."
+      },
+      {
+        "question": "What must TFCC/Registry do if a file is too bulky (over 100 folios)?",
+        "options": ["Shred it", "Close it and open a new volume", "Send it to the archive immediately", "Email it to operators"],
+        "correctAnswer": "Close it and open a new volume",
+        "hint": "They manage physical volumes to avoid oversized files.",
+        "funFact": "Large files (over ~100 folios) are closed and a new volume created by TFCC."
+      },
+      {
+        "question": "When files are dispatched between regional offices and headquarters, what should accompany them?",
+        "options": ["No documentation", "Proper bagging, addressing and a recorded receipt", "A phone call only", "A social media post"],
+        "correctAnswer": "Proper bagging, addressing and a recorded receipt",
+        "hint": "Records and packaging are required for safe custody.",
+        "funFact": "Dispatch requires proper bagging and acknowledgement of receipt."
+      }
+    ]
+  },
+  {
+    "section": 3,
+    "questions": [
+      {
+        "question": "What is Mandatory Occurrence Reporting (MOR) primarily used for?",
+        "options": ["Payroll admin", "Safety reporting and incident analysis", "Organising social events", "Scheduling vacations"],
+        "correctAnswer": "Safety reporting and incident analysis",
+        "hint": "MOR feeds into safety deficiency programmes.",
+        "funFact": "MORs support the Safety Deficiency and Incident Analysis programme under the State Safety Programme."
+      },
+      {
+        "question": "Who should be informed when major defects are discovered in aircraft?",
+        "options": ["Local newspaper", "Aircraft operators/owners and approved airworthiness organisations", "Foreign embassies", "The catering company"],
+        "correctAnswer": "Aircraft operators/owners and approved airworthiness organisations",
+        "hint": "Defects must be reported to those responsible for corrective action.",
+        "funFact": "The PPM requires reporting defects to operators and approved organisations for remedial action."
+      },
+      {
+        "question": "Which activity is part of DAWS actions after discovering a defect trend?",
+        "options": ["Ignore it", "Establish a Service Difficulty Reporting (SDR) system and analyze trends", "Delay for one year", "Transfer responsibility to another ministry"],
+        "correctAnswer": "Establish a Service Difficulty Reporting (SDR) system and analyze trends",
+        "hint": "They must analyze defect experience to detect and correct trends.",
+        "funFact": "DAWS uses SDRs and defect analysis to identify areas needing airworthiness improvement."
+      },
+      {
+        "question": "If an aircraft is suspected of not being airworthy, what should be done?",
+        "options": ["Continue operations until proven unsafe", "Treat it as unairworthy and withdraw from service", "Sell the aircraft immediately", "Replace the crew only"],
+        "correctAnswer": "Treat it as unairworthy and withdraw from service",
+        "hint": "Safety-first approach when airworthiness is in doubt.",
+        "funFact": "Suspected unairworthy aircraft should have their Certificate of Airworthiness revoked until inspected and corrected."
+      },
+      {
+        "question": "Which DAWS duty directly supports safety response to service bulletins and airworthiness directives?",
+        "options": ["Monitoring service bulletins and issuing airworthiness directives where necessary", "Designing flight uniforms", "Scheduling staff parties", "Managing cafeteria menus"],
+        "correctAnswer": "Monitoring service bulletins and issuing airworthiness directives where necessary",
+        "hint": "This protects the national fleet when foreign directives apply.",
+        "funFact": "DAWS reviews foreign directives and directs corrective action if national aircraft are affected."
+      }
+    ]
+  },
+  {
+    "section": 4,
+    "questions": [
+      {
+        "question": "Which DAWS function covers approval of Approved Maintenance Organisations (AMOs)?",
+        "options": ["Issuing pilot licences", "Approval of AMOs and periodic surveillance of AMOs", "Managing airport parking", "Operating air traffic control"],
+        "correctAnswer": "Approval of AMOs and periodic surveillance of AMOs",
+        "hint": "This concerns maintenance organisations’ certification and surveillance.",
+        "funFact": "DAWS surveys maintenance facilities and approves AMOs (domestic & foreign)."
+      },
+      {
+        "question": "What activity is specifically listed under AMOC&S responsibilities?",
+        "options": ["Organising airport entertainment", "Inspection of fuel farms and aviation fuelling equipment", "Printing boarding passes", "Selling tickets"],
+        "correctAnswer": "Inspection of fuel farms and aviation fuelling equipment",
+        "hint": "Fuel handling procedures fall under airworthiness surveillance.",
+        "funFact": "Fuel farm inspections are included in AMOC&S surveillance duties."
+      },
+      {
+        "question": "Which approval is DAWS involved in for continuing airworthiness management?",
+        "options": ["Approval of operator in-flight meals", "Approval of Continuing Airworthiness Management Exposition (CAME) and CAMO activities", "Approval of passenger baggage", "Approval of airport retail shops"],
+        "correctAnswer": "Approval of Continuing Airworthiness Management Exposition (CAME) and CAMO activities",
+        "hint": "This is about the operator's continuing airworthiness management system.",
+        "funFact": "DAWS reviews and approves CAME and CAMO functions for operators."
+      },
+      {
+        "question": "What action does DAWS take when an inspection indicates non-compliance that may require enforcement?",
+        "options": ["Proceed with compliance and enforcement procedures", "Ignore the issue", "Publish a press release immediately", "Transfer the aircraft to another operator"],
+        "correctAnswer": "Proceed with compliance and enforcement procedures",
+        "hint": "Serious breaches trigger formal enforcement steps.",
+        "funFact": "DAWS coordinates compliance/enforcement activities and sanctions per regulations."
+      },
+      {
+        "question": "Which of these is part of DAWS surveillance of AOC holders?",
+        "options": ["Monitoring operator maintenance training programs and reliability programmes", "Organising passenger lists", "Designing in-flight entertainment", "Airport landscaping"],
+        "correctAnswer": "Monitoring operator maintenance training programs and reliability programmes",
+        "hint": "Surveillance includes operators' maintenance systems and training.",
+        "funFact": "DAWS evaluates maintenance systems, MELs and reliability programmes for operators."
+      }
+    ]
+  },
+  {
+    "section": 5,
+    "questions": [
+      {
+        "question": "What basic qualifications are required for Airworthiness Aviation Safety Inspectors (ASI)?",
+        "options": ["No qualifications", "Either experienced licensed maintenance engineers with ~5 years experience or relevant engineering graduates", "Only accounts degree", "Only pilot licence"],
+        "correctAnswer": "Either experienced licensed maintenance engineers with ~5 years experience or relevant engineering graduates",
+        "hint": "Inspector qualifications emphasize technical competence and experience.",
+        "funFact": "Inspectors should be as qualified as the staff they oversee; five years’ industry experience is cited."
+      },
+      {
+        "question": "What must inspectors submit to the training coordinator after completing a course?",
+        "options": ["Nothing", "Course certificates within two weeks", "A selfie", "A food receipt"],
+        "correctAnswer": "Course certificates within two weeks",
+        "hint": "Training records must be kept up to date.",
+        "funFact": "Training folders are updated upon receipt of certificates and kept for two years after an inspector leaves."
+      },
+      {
+        "question": "Which documents are listed as part of an inspector's training folder?",
+        "options": ["Movie tickets", "Copy of NCAA ID, credentials, CV, licences and training records", "Car registration", "Personal bank statements"],
+        "correctAnswer": "Copy of NCAA ID, credentials, CV, licences and training records",
+        "hint": "The folder holds professional credentials and training history.",
+        "funFact": "Training folders include Inspector credentials, CV, licences and OJT progress charts."
+      },
+      {
+        "question": "What is an ASI expected to do if asked for an interpretation of regulations outside their expertise?",
+        "options": ["Provide an immediate public statement", "Require a written request so it can be coordinated with DAWS and Legal", "Ignore the question", "Publish it on social media"],
+        "correctAnswer": "Require a written request so it can be coordinated with DAWS and Legal",
+        "hint": "Complex interpretations must be coordinated centrally.",
+        "funFact": "The PPM advises that significant regulatory interpretations be coordinated with DAWS and Legal."
+      },
+      {
+        "question": "Which personal attributes does the PPM emphasise for ASIs?",
+        "options": ["Impartiality, tact, integrity and good interpersonal skills", "Extroversion and comedic talent", "Extreme risk-taking", "No soft skills required"],
+        "correctAnswer": "Impartiality, tact, integrity and good interpersonal skills",
+        "hint": "Inspectors must win operators' respect and act professionally.",
+        "funFact": "Beyond technical competence, high integrity and tact are core inspector qualities in the PPM."
+      }
+    ]
+  },
+  {
+    "section": 6,
+    "questions": [
+      {
+        "question": "Which is a listed step for preparing for a technical audit of a regional office?",
+        "options": ["Acquire the latest technical manuals and study recent DAWS monthly reports", "Book a holiday", "Sell audit documents", "Ignore regional records"],
+        "correctAnswer": "Acquire the latest technical manuals and study recent DAWS monthly reports",
+        "hint": "Preparation includes updating technical references and reviewing recent reports.",
+        "funFact": "Audit teams must obtain updated technical manuals and study prior monthly reports before departure."
+      },
+      {
+        "question": "During a regional office audit, what should be checked about operator documents?",
+        "options": ["Presence and currency of approved documents like AMO PM, MCM and C of A photocopies", "Whether staff have company merch", "Parking space availability", "Local food menus"],
+        "correctAnswer": "Presence and currency of approved documents like AMO PM, MCM and C of A photocopies",
+        "hint": "Auditors verify that required documents are available and current.",
+        "funFact": "Audits include checking mini-library documents and operators' maintenance manuals for currency."
+      },
+      {
+        "question": "How often should HODAWS send updates of aircraft file changes to corporate HQ?",
+        "options": ["Daily", "Quarterly (every 3 months)", "Once every 10 years", "Only on request"],
+        "correctAnswer": "Quarterly (every 3 months)",
+        "hint": "Periodic (3-month) updates are required.",
+        "funFact": "Regional offices must send quarterly updates (e.g., C of A status, inspection findings) to HQ."
+      },
+      {
+        "question": "What is the role of the Principal Airworthiness Inspector (PAI)?",
+        "options": ["Primary point of contact and lead inspector for an operator or AMO", "Arrange catering for crews", "Sell aircraft parts", "Manage the airport's retail outlets"],
+        "correctAnswer": "Primary point of contact and lead inspector for an operator or AMO",
+        "hint": "PAI leads the team assigned to an operator and handles oversight services.",
+        "funFact": "PAIs lead surveillance and approval activities for assigned operators and AMOs."
+      },
+      {
+        "question": "What should be included in the team's preparation before an audit departure?",
+        "options": ["List of aircraft types in operator fleets and expected documents to audit", "Nothing special", "Only leisure plans", "Only hotel bookings"],
+        "correctAnswer": "List of aircraft types in operator fleets and expected documents to audit",
+        "hint": "Audit teams must know what they will check on arrival.",
+        "funFact": "Teams should note fleet composition and documents expected in the regional office mini-libraries."
+      }
+    ]
+  },
+  {
+    "section": 7,
+    "questions": [
+      {
+        "question": "Which DAWS duty covers RPAS (drones)?",
+        "options": ["Certification and surveillance of RPAS operators and ROC issuance (airworthiness aspect)", "Running drone racing events", "Selling drone parts", "Managing drone social clubs"],
+        "correctAnswer": "Certification and surveillance of RPAS operators and ROC issuance (airworthiness aspect)",
+        "hint": "DAWS handles the airworthiness side of RPAS operations.",
+        "funFact": "The manual includes RPAS certification and surveillance under ACCA responsibilities."
+      },
+      {
+        "question": "Which activity ensures traceability and control of aircraft parts?",
+        "options": ["Issuing meal vouchers", "Traceability of aircraft parts and monitoring of service bulletins", "Scheduling parties", "Publishing newsletters"],
+        "correctAnswer": "Traceability of aircraft parts and monitoring of service bulletins",
+        "hint": "Traceability helps ensure parts are legitimate and airworthy.",
+        "funFact": "DAWS monitors service bulletins and enforces traceability of parts to protect continued airworthiness."
+      },
+      {
+        "question": "What action may DAWS publish when an inspection finds a mandatory safety corrective item?",
+        "options": ["An informative blog post only", "An Airworthiness Directive directed to all operators", "No action", "A social media update"],
+        "correctAnswer": "An Airworthiness Directive directed to all operators",
+        "hint": "Mandatory corrective actions are formalised and issued to operators.",
+        "funFact": "If inspections reveal a defect requiring action, DAWS can publish an airworthiness directive for compliance."
+      },
+      {
+        "question": "Which of these is part of DAWS’ role in relation to foreign airworthiness directives?",
+        "options": ["Ignore them", "Review and determine applicability, then direct corrective action if needed", "Automatically adopt them without review", "Publish in a newspaper"],
+        "correctAnswer": "Review and determine applicability, then direct corrective action if needed",
+        "hint": "Foreign directives are assessed for relevance to national aircraft.",
+        "funFact": "DAWS analyzes foreign ADs/SBs and decides national applicability and corrective steps."
+      },
+      {
+        "question": "What must an ASI do if they learn of a suspected regulatory contravention during an inspection?",
+        "options": ["Inform supervisor and take appropriate enforcement or legal steps", "Ignore it", "Leak it to media", "Take a picture and post on social media"],
+        "correctAnswer": "Inform supervisor and take appropriate enforcement or legal steps",
+        "hint": "Serious contraventions require escalation and enforcement action.",
+        "funFact": "The PPM requires notifying supervisors and following compliance/enforcement procedures when contraventions are found."
+      }
+    ]
+  },
+  {
+    "section": 8,
+    "questions": [
+      {
+        "question": "Which of the following is a recommended content of an ASI's monthly record of activities?",
+        "options": ["How their time was used and tasks performed", "Favourite songs", "Personal shopping lists", "Holiday photos"],
+        "correctAnswer": "How their time was used and tasks performed",
+        "hint": "Records should show workload and time allocation.",
+        "funFact": "Each ASI must submit a monthly record of activities showing how their time was utilised (minimum 40 hrs/week)."
+      },
+      {
+        "question": "What should be included in an executive summary of technical assignments sent to DAWS?",
+        "options": ["Only findings and recommendations", "Every single technical page verbatim", "Personal opinions unrelated to the task", "Nothing at all"],
+        "correctAnswer": "Only findings and recommendations",
+        "hint": "Detail stays in the technical file; summary highlights findings/recommendations.",
+        "funFact": "Executive summaries should stress findings and recommendations and reference details kept in technical files."
+      },
+      {
+        "question": "Who is the only person authorised to approve amendments to the DAWS PPM?",
+        "options": ["Any ASI", "Director of Airworthiness Standards", "The cafeteria manager", "The public relations officer"],
+        "correctAnswer": "Director of Airworthiness Standards",
+        "hint": "Amendments must be authorised at directorate leadership level.",
+        "funFact": "The PPM states the Director of Airworthiness Standards authorises amendments; staff can propose changes using the feedback sheet."
+      },
+      {
+        "question": "Which item is part of DAWS internal functions for office duties?",
+        "options": ["Record of Activities sheets and annual work programme submission", "Organising sporting events", "Decorating offices", "Hosting TV shows"],
+        "correctAnswer": "Record of Activities sheets and annual work programme submission",
+        "hint": "These are administrative duties listed in the manual.",
+        "funFact": "ASIs must submit an annual work programme and monthly records of activity as part of internal functions."
+      },
+      {
+        "question": "What should an inspector do before deviating substantially from prescribed PPM procedures?",
+        "options": ["Notify Director, DAWS as soon as possible and provide full details", "Do nothing and hope for the best", "Tell a friend privately", "Post about it online"],
+        "correctAnswer": "Notify Director, DAWS as soon as possible and provide full details",
+        "hint": "Major deviations must be reported and justified.",
+        "funFact": "If a staff member needs to deviate from procedure, the DAWS Director must be notified with full reasons."
+      }
+    ]
+  }
+]

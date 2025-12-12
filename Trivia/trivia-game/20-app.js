@@ -25,7 +25,8 @@ class TriviaGame {
             geography: '15-geography-questions.json',
             worldhistory: '16-worldhistory-questions.json',
             sports: '17-sports-questions.json',
-            literature: '18-literature-questions.json'
+            literature: '18-literature-questions.json',
+            ncaa: '19-ncaa-questions.json'
         };
         
         try {
@@ -239,7 +240,8 @@ window.addEventListener('load', () => {
         'geography-game': 'geography',
         'worldhistory-game': 'worldhistory',
         'sports-game': 'sports',
-        'literature-game': 'literature'
+        'literature-game': 'literature',
+        'ncaa-game': 'ncaa'
     };
 
     const gameMode = Object.entries(gameModes).find(([key]) => path.includes(key))?.[1] || 'math';
