@@ -6,13 +6,12 @@ class TriviaGame {
         this.score = 0;
         this.wrongAttempts = 0;
         this.gameMode = gameMode;
-        this.timer = 30 + (this.currentSection * 10);
+        this.timer = 60;
         this.timerInterval = null;
 
         this.loadQuestions().then(() => {
             this.initGame();
             this.displayQuestion();
-            this.startTimer();
         });
     }
 
@@ -68,13 +67,24 @@ class TriviaGame {
 
     handleIncorrectAnswer(feedback) {
         this.wrongAttempts++;
-        feedback.textContent = 'Not quite. Try again!';
+        feedback.textContent = 'Incorrect!';
         feedback.className = 'incorrect';
-        document.getElementById('try-again-btn').style.display = 'block';
+        document.getElementById('next-btn').style.display = 'block';
+        this.highlightCorrectAnswer();
+        this.showAIFact();
+    }
+
+    highlightCorrectAnswer() {
+        const question = this.getCurrentQuestion();
+        const correctAnswer = question.correctAnswer || question.answer;
+        const options = document.querySelectorAll('.material-checkbox');
         
-        if (this.currentSection >= 6 && this.wrongAttempts >= 2) {
-            this.provideHint();
-        }
+        options.forEach(label => {
+            const input = label.querySelector('input');
+            if (input.value === correctAnswer) {
+                label.classList.add('correct-answer');
+            }
+        });
     }
 
     showAIFact() {
@@ -100,7 +110,7 @@ class TriviaGame {
             this.currentQuestion = 0;
             if (this.currentSection >= this.sections.length) return this.endGame();
         }
-        this.timer = 30 + (this.currentSection * 10);
+        this.timer = 60;
         this.displayQuestion();
     }
 
@@ -112,10 +122,17 @@ class TriviaGame {
 
     resetQuestion() {
         document.getElementById('feedback').innerHTML = '';
+        document.getElementById('feedback').className = '';
         document.getElementById('ai-fact').innerHTML = '';
+        document.getElementById('ai-fact').classList.remove('visible');
         document.getElementById('try-again-btn').style.display = 'none';
-        this.timer = 30 + (this.currentSection * 10);
+        document.getElementById('restart-btn').style.display = 'none';
+        this.timer = 60;
         this.startTimer();
+        // Re-enable checkboxes for retry
+        document.querySelectorAll('.material-checkbox input').forEach(checkbox => {
+            checkbox.checked = false;
+        });
     }
 
     // ========== UTILITY METHODS ========== //
@@ -174,7 +191,7 @@ class TriviaGame {
         this.currentQuestion = 0;
         this.score = 0;
         this.wrongAttempts = 0;
-        this.timer = 30 + (this.currentSection * 10);
+        this.timer = 60;
     }
 
     resetUIState() {
@@ -185,7 +202,6 @@ class TriviaGame {
         document.getElementById('ai-fact').innerHTML = '';
         document.getElementById('ai-fact').classList.remove('visible'); // Hide AI fact
         document.getElementById('next-btn').style.display = 'none';
-        document.getElementById('try-again-btn').style.display = 'none';
     }
 
     updateDisplayHeaders() {
@@ -203,6 +219,7 @@ class TriviaGame {
 
     // ========== TIMER METHODS ========== //
     startTimer() {
+        this.stopTimer(); // Clear any existing timer to prevent overlap
         this.timerInterval = setInterval(() => {
             this.timer = Math.max(0, this.timer - 1);
             document.getElementById('timer').textContent = this.timer;

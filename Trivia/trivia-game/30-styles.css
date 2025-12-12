@@ -353,3 +353,27 @@ button:hover { opacity: 0.8; }
 #ai-fact.visible {
     display: block; /* Show when visible class is added */
 }
+
+/* ========== CORRECT ANSWER HIGHLIGHT ========== */
+.material-checkbox.correct-answer {
+    background-color: rgba(76, 175, 80, 0.3);
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+}
+
+.material-checkbox.correct-answer .checkmark {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
+}
+
+.material-checkbox.correct-answer .checkmark:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
