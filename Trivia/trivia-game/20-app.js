@@ -264,3 +264,16 @@ window.addEventListener('load', () => {
     const gameMode = Object.entries(gameModes).find(([key]) => path.includes(key))?.[1] || 'math';
     new TriviaGame(gameMode);
 });
+
+playSound(name) {
+    if (!GAME_FEATURES[this.gameMode]?.sounds) return;
+    const audio = new Audio(`assets/sounds/${name}.mp3`);
+    audio.volume = 0.6;
+    audio.play().catch(() => {});
+}
+
+this.playSound('correct');
+this.playSound('wrong');
+this.playSound('heart-gain');
+this.playSound('shield');
+this.playSound('gameover');
