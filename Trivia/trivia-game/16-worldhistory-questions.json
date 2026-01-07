@@ -1,172 +1,530 @@
 [
-    {
-        "section": 1,
-        "questions": [
-            {
-                "question": "Who was the first emperor of China?",
-                "options": ["Qin Shi Huang", "Kublai Khan", "Sun Yat-sen", "Mao Zedong"],
-                "answer": "Qin Shi Huang",
-                "fact": "Qin Shi Huang unified China in 221 BCE and built the first version of the Great Wall."
-            },
-            {
-                "question": "What year did the French Revolution begin?",
-                "options": ["1776", "1789", "1804", "1815"],
-                "answer": "1789",
-                "fact": "The French Revolution started in 1789, leading to the fall of the monarchy and the rise of Napoleon."
-            }
-        ]
-    },
-    {
-        "section": 2,
-        "questions": [
-            {
-                "question": "Which ancient civilization built Machu Picchu?",
-                "options": ["Aztecs", "Mayans", "Incas", "Olmecs"],
-                "answer": "Incas",
-                "fact": "Machu Picchu was built by the Inca civilization in the 15th century and is located in modern-day Peru."
-            },
-            {
-                "question": "Who was the first President of the United States?",
-                "options": ["Thomas Jefferson", "John Adams", "George Washington", "Benjamin Franklin"],
-                "answer": "George Washington",
-                "fact": "George Washington served as the first U.S. President from 1789 to 1797."
-            }
-        ]
-    },
-    {
-        "section": 3,
-        "questions": [
-            {
-                "question": "What was the name of the ship that carried the Pilgrims to America in 1620?",
-                "options": ["Mayflower", "Santa Maria", "HMS Beagle", "Endeavour"],
-                "answer": "Mayflower",
-                "fact": "The Mayflower transported the Pilgrims to North America in 1620, landing at Plymouth Rock."
-            },
-            {
-                "question": "💡 Which empire was ruled by Genghis Khan?",
-                "options": ["Ottoman Empire", "Mongol Empire", "Roman Empire", "Persian Empire"],
-                "answer": "Mongol Empire",
-                "fact": "Genghis Khan founded the Mongol Empire, the largest contiguous empire in history."
-            }
-        ]
-    },
-    {
-        "section": 4,
-        "questions": [
-            {
-                "question": "💡 What ancient wonder was located in Alexandria, Egypt?",
-                "options": ["Hanging Gardens", "Colossus of Rhodes", "Lighthouse of Alexandria", "Great Pyramid of Giza"],
-                "answer": "Lighthouse of Alexandria",
-                "fact": "The Lighthouse of Alexandria was one of the Seven Wonders of the Ancient World."
-            },
-            {
-                "question": "💡 Who wrote the 95 Theses that sparked the Protestant Reformation?",
-                "options": ["John Calvin", "Martin Luther", "Henry VIII", "Ignatius of Loyola"],
-                "answer": "Martin Luther",
-                "fact": "Martin Luther nailed his 95 Theses to a church door in 1517, challenging Catholic practices."
-            }
-        ]
-    },
-    {
-        "section": 5,
-        "questions": [
-            {
-                "question": "💡 Which war ended with the Treaty of Versailles in 1919?",
-                "options": ["World War I", "World War II", "Napoleonic Wars", "Cold War"],
-                "answer": "World War I",
-                "fact": "The Treaty of Versailles formally ended World War I and imposed harsh penalties on Germany."
-            },
-            {
-                "question": "💡 Who was the leader of the Soviet Union during WWII?",
-                "options": ["Vladimir Lenin", "Joseph Stalin", "Mikhail Gorbachev", "Nikita Khrushchev"],
-                "answer": "Joseph Stalin",
-                "fact": "Joseph Stalin led the USSR from 1924 until his death in 1953."
-            }
-        ]
-    },
-    {
-        "section": 6,
-        "questions": [
-            {
-                "question": "💡 What was the capital of the Byzantine Empire?",
-                "options": ["Athens", "Rome", "Constantinople", "Alexandria"],
-                "answer": "Constantinople",
-                "fact": "Constantinople (modern-day Istanbul) was the heart of the Byzantine Empire."
-            },
-            {
-                "question": "💡 Which civilization invented the concept of zero?",
-                "options": ["Ancient Greeks", "Ancient Egyptians", "Mayans", "Ancient Indians"],
-                "answer": "Ancient Indians",
-                "fact": "Indian mathematicians developed the concept of zero around the 5th century CE."
-            }
-        ]
-    },
-    {
-        "section": 7,
-        "questions": [
-            {
-                "question": "💡 What event began in 1492 when Columbus reached the Americas?",
-                "options": ["Age of Exploration", "Industrial Revolution", "Renaissance", "Crusades"],
-                "answer": "Age of Exploration",
-                "fact": "Columbus's voyage marked the start of European exploration and colonization of the Americas."
-            },
-            {
-                "question": "💡 Who was the last active ruler of Ancient Egypt?",
-                "options": ["Nefertiti", "Cleopatra VII", "Hatshepsut", "Ramses II"],
-                "answer": "Cleopatra VII",
-                "fact": "Cleopatra VII allied with Rome but died in 30 BCE, ending Egypt's independence."
-            }
-        ]
-    },
-    {
-        "section": 8,
-        "questions": [
-            {
-                "question": "💡 Which empire built the Taj Mahal?",
-                "options": ["Mughal Empire", "Ottoman Empire", "Gupta Empire", "Maurya Empire"],
-                "answer": "Mughal Empire",
-                "fact": "The Mughal Emperor Shah Jahan built the Taj Mahal as a mausoleum for his wife."
-            },
-            {
-                "question": "💡 What ancient city was destroyed by Mount Vesuvius in 79 CE?",
-                "options": ["Athens", "Pompeii", "Troy", "Babylon"],
-                "answer": "Pompeii",
-                "fact": "Pompeii was buried under volcanic ash, preserving it for centuries."
-            }
-        ]
-    },
-    {
-        "section": 9,
-        "questions": [
-            {
-                "question": "💡 Which treaty ended the Thirty Years' War in 1648?",
-                "options": ["Treaty of Paris", "Peace of Westphalia", "Treaty of Utrecht", "Treaty of Tordesillas"],
-                "answer": "Peace of Westphalia",
-                "fact": "This treaty reshaped European borders and established state sovereignty."
-            },
-            {
-                "question": "💡 Who led the Haitian Revolution (1791–1804)?",
-                "options": ["Simón Bolívar", "Toussaint Louverture", "José de San Martín", "Miguel Hidalgo"],
-                "answer": "Toussaint Louverture",
-                "fact": "Louverture led the first successful slave revolt, establishing Haiti's independence."
-            }
-        ]
-    },
-    {
-        "section": 10,
-        "questions": [
-            {
-                "question": "💡 What was the main cause of the Cold War?",
-                "options": ["Economic rivalry", "Ideological conflict", "Religious differences", "Territorial disputes"],
-                "answer": "Ideological conflict",
-                "fact": "The Cold War was a clash between capitalist democracies and communist states."
-            },
-            {
-                "question": "💡 Which African kingdom was known for its wealth in gold and salt trade?",
-                "options": ["Mali Empire", "Kingdom of Aksum", "Songhai Empire", "Zulu Kingdom"],
-                "answer": "Mali Empire",
-                "fact": "Mansa Musa, Mali's ruler, was one of history’s wealthiest individuals."
-            }
-        ]
-    }
+  {
+    "section": 1,
+    "title": "Ancient Civilizations",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "Who was the first emperor to unify China?",
+        "options": [
+          "Qin Shi Huang",
+          "Han Wudi",
+          "Sun Yat-sen",
+          "Kublai Khan"
+        ],
+        "answer": "Qin Shi Huang",
+        "fact": "Qin Shi Huang unified China in 221 BCE, standardizing laws, currency, and measurements."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which ancient civilization developed cuneiform writing?",
+        "options": [
+          "Ancient Egypt",
+          "Sumerians",
+          "Indus Valley Civilization",
+          "Shang Dynasty"
+        ],
+        "answer": "Sumerians",
+        "fact": "Cuneiform is one of the earliest known writing systems, developed in Mesopotamia."
+      },
+      {
+        "difficulty": "medium",
+        "question": "The Code of Hammurabi is best described as:",
+        "options": [
+          "A religious text",
+          "A military strategy guide",
+          "A written legal code",
+          "A trade agreement"
+        ],
+        "answer": "A written legal code",
+        "fact": "Hammurabi’s Code established standardized laws and punishments."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which feature most distinguished the Indus Valley Civilization from its contemporaries?",
+        "options": [
+          "Monumental stone temples",
+          "Advanced urban drainage systems",
+          "Large standing armies",
+          "Extensive written literature"
+        ],
+        "answer": "Advanced urban drainage systems",
+        "fact": "Cities like Mohenjo-daro had remarkably advanced sanitation infrastructure."
+      },
+      {
+        "difficulty": "hard",
+        "question": "The Great Pyramid of Giza was constructed primarily during which Egyptian period?",
+        "options": [
+          "Early Dynastic Period",
+          "Old Kingdom",
+          "Middle Kingdom",
+          "New Kingdom"
+        ],
+        "answer": "Old Kingdom",
+        "fact": "The Old Kingdom is often called the 'Age of the Pyramids'."
+      }
+    ]
+  },
+  {
+    "section": 2,
+    "title": "Classical Empires",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "Which empire built an extensive road network across Europe?",
+        "options": [
+          "Greek Empire",
+          "Roman Empire",
+          "Persian Empire",
+          "Byzantine Empire"
+        ],
+        "answer": "Roman Empire",
+        "fact": "Roman roads enabled military control and trade across the empire."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Who was the first emperor of the Roman Empire?",
+        "options": [
+          "Julius Caesar",
+          "Augustus",
+          "Nero",
+          "Tiberius"
+        ],
+        "answer": "Augustus",
+        "fact": "Augustus established imperial rule after the fall of the Roman Republic."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which Chinese dynasty is associated with the Silk Road’s expansion?",
+        "options": [
+          "Qin Dynasty",
+          "Han Dynasty",
+          "Tang Dynasty",
+          "Song Dynasty"
+        ],
+        "answer": "Han Dynasty",
+        "fact": "The Han Dynasty promoted long-distance trade between East and West."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which factor most contributed to the fall of the Western Roman Empire?",
+        "options": [
+          "Single decisive invasion",
+          "Economic strain and internal instability",
+          "Religious conversion",
+          "Immediate loss of military technology"
+        ],
+        "answer": "Economic strain and internal instability",
+        "fact": "The collapse was gradual and multifactorial."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Ashoka the Great is best remembered for:",
+        "options": [
+          "Expanding military conquests",
+          "Promoting Buddhism and nonviolence",
+          "Overthrowing the caste system",
+          "Establishing democratic rule"
+        ],
+        "answer": "Promoting Buddhism and nonviolence",
+        "fact": "After the Kalinga War, Ashoka adopted Buddhist principles."
+      }
+    ]
+  },
+  {
+    "section": 3,
+    "title": "Religion, Philosophy & Ideas",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "Who is traditionally considered the founder of Buddhism?",
+        "options": [
+          "Confucius",
+          "Siddhartha Gautama",
+          "Laozi",
+          "Ashoka"
+        ],
+        "answer": "Siddhartha Gautama",
+        "fact": "He is known as the Buddha, meaning 'the Enlightened One'."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Confucianism primarily emphasizes:",
+        "options": [
+          "Spiritual salvation",
+          "Harmony through social roles",
+          "Withdrawal from society",
+          "Divine law"
+        ],
+        "answer": "Harmony through social roles",
+        "fact": "Confucian thought focuses on ethics, duty, and hierarchy."
+      },
+      {
+        "difficulty": "medium",
+        "question": "The Protestant Reformation began in 1517 with:",
+        "options": [
+          "The Council of Trent",
+          "Martin Luther’s 95 Theses",
+          "The Edict of Milan",
+          "The Peace of Augsburg"
+        ],
+        "answer": "Martin Luther’s 95 Theses",
+        "fact": "Luther challenged the sale of indulgences."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which concept most distinguishes Islam from Christianity?",
+        "options": [
+          "Monotheism",
+          "Revelation through prophets",
+          "Rejection of the Trinity",
+          "Sacred texts"
+        ],
+        "answer": "Rejection of the Trinity",
+        "fact": "Islam emphasizes absolute monotheism (Tawhid)."
+      },
+      {
+        "difficulty": "hard",
+        "question": "The Enlightenment primarily promoted:",
+        "options": [
+          "Religious authority",
+          "Tradition and monarchy",
+          "Reason and individual rights",
+          "Feudal obligations"
+        ],
+        "answer": "Reason and individual rights",
+        "fact": "Thinkers like Locke and Voltaire challenged absolutism."
+      }
+    ]
+  },
+  {
+    "section": 4,
+    "title": "Medieval World",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "What system dominated medieval European society?",
+        "options": [
+          "Capitalism",
+          "Feudalism",
+          "Socialism",
+          "Mercantilism"
+        ],
+        "answer": "Feudalism",
+        "fact": "Feudalism was based on land ownership and mutual obligations."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which empire preserved much of Roman law and culture?",
+        "options": [
+          "Ottoman Empire",
+          "Byzantine Empire",
+          "Holy Roman Empire",
+          "Frankish Empire"
+        ],
+        "answer": "Byzantine Empire",
+        "fact": "Constantinople served as Rome’s eastern continuation."
+      },
+      {
+        "difficulty": "medium",
+        "question": "The primary goal of the Crusades was to:",
+        "options": [
+          "Expand trade routes",
+          "Spread Islam",
+          "Capture Jerusalem",
+          "Unify Europe politically"
+        ],
+        "answer": "Capture Jerusalem",
+        "fact": "Crusaders sought control of holy sites."
+      },
+      {
+        "difficulty": "hard",
+        "question": "The Islamic Golden Age is best characterized by:",
+        "options": [
+          "Military conquest alone",
+          "Scientific and cultural advancement",
+          "Strict isolationism",
+          "Agricultural decline"
+        ],
+        "answer": "Scientific and cultural advancement",
+        "fact": "Scholars preserved and expanded ancient knowledge."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which factor enabled the Mongol Empire’s rapid expansion?",
+        "options": [
+          "Naval superiority",
+          "Gunpowder weapons",
+          "Highly mobile cavalry",
+          "Centralized bureaucracy"
+        ],
+        "answer": "Highly mobile cavalry",
+        "fact": "Mongol horse archers were tactically dominant."
+      }
+    ]
+  },
+  {
+    "section": 5,
+    "title": "Exploration, Colonization & Empire",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "Christopher Columbus reached the Americas in:",
+        "options": [
+          "1453",
+          "1492",
+          "1517",
+          "1607"
+        ],
+        "answer": "1492",
+        "fact": "His voyage marked a turning point in global history."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which empire controlled large parts of South America in the 16th century?",
+        "options": [
+          "British Empire",
+          "Portuguese Empire",
+          "Spanish Empire",
+          "French Empire"
+        ],
+        "answer": "Spanish Empire",
+        "fact": "Spain dominated the Americas after defeating the Aztecs and Incas."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Mercantilism encouraged nations to:",
+        "options": [
+          "Import more than export",
+          "Accumulate gold and silver",
+          "Eliminate colonies",
+          "Adopt free trade"
+        ],
+        "answer": "Accumulate gold and silver",
+        "fact": "Colonies supplied raw materials to the mother country."
+      },
+      {
+        "difficulty": "hard",
+        "question": "The Columbian Exchange most directly resulted in:",
+        "options": [
+          "Immediate political equality",
+          "Global transfer of crops and diseases",
+          "End of slavery",
+          "Technological stagnation"
+        ],
+        "answer": "Global transfer of crops and diseases",
+        "fact": "Smallpox devastated Indigenous populations."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which treaty divided newly discovered lands between Spain and Portugal?",
+        "options": [
+          "Treaty of Paris",
+          "Treaty of Utrecht",
+          "Treaty of Tordesillas",
+          "Treaty of Versailles"
+        ],
+        "answer": "Treaty of Tordesillas",
+        "fact": "Signed in 1494 under papal authority."
+      }
+    ]
+  },
+  {
+    "section": 6,
+    "title": "Revolutions & Nation-Building",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "Which revolution led to the creation of the United States?",
+        "options": [
+          "French Revolution",
+          "American Revolution",
+          "Glorious Revolution",
+          "Russian Revolution"
+        ],
+        "answer": "American Revolution",
+        "fact": "It resulted in independence from Britain in 1776."
+      },
+      {
+        "difficulty": "medium",
+        "question": "The French Revolution began primarily due to:",
+        "options": [
+          "Foreign invasion",
+          "Economic inequality and political injustice",
+          "Religious conflict",
+          "Industrial decline"
+        ],
+        "answer": "Economic inequality and political injustice",
+        "fact": "The Estates-General exposed deep social divisions."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Who led the Haitian Revolution?",
+        "options": [
+          "Simón Bolívar",
+          "Toussaint Louverture",
+          "Jean-Jacques Dessalines",
+          "Napoleon Bonaparte"
+        ],
+        "answer": "Toussaint Louverture",
+        "fact": "It was the first successful slave revolt."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which ideology most influenced 19th-century nationalist movements?",
+        "options": [
+          "Feudalism",
+          "Liberalism",
+          "Absolutism",
+          "Mercantilism"
+        ],
+        "answer": "Liberalism",
+        "fact": "Ideas of self-rule and constitutional government spread widely."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Latin American independence movements were most influenced by:",
+        "options": [
+          "Industrial Revolution",
+          "European Enlightenment ideas",
+          "Medn Theocratic rule",
+          "Ottoman reforms"
+        ],
+        "answer": "European Enlightenment ideas",
+        "fact": "Thinkers like Locke shaped revolutionary leaders."
+      }
+    ]
+  },
+  {
+    "section": 7,
+    "title": "World Wars & Global Conflict",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "World War I began in which year?",
+        "options": [
+          "1912",
+          "1914",
+          "1917",
+          "1939"
+        ],
+        "answer": "1914",
+        "fact": "The assassination of Archduke Franz Ferdinand triggered it."
+      },
+      {
+        "difficulty": "medium",
+        "question": "The Treaty of Versailles officially ended:",
+        "options": [
+          "World War I",
+          "World War II",
+          "The Cold War",
+          "The Franco-Prussian War"
+        ],
+        "answer": "World War I",
+        "fact": "It imposed heavy penalties on Germany."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which alliance fought against the Axis powers?",
+        "options": [
+          "Central Powers",
+          "Allied Powers",
+          "Triple Alliance",
+          "Warsaw Pact"
+        ],
+        "answer": "Allied Powers",
+        "fact": "The Allies included the US, UK, and USSR."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which factor most contributed to the rise of Nazi Germany?",
+        "options": [
+          "Strong democratic institutions",
+          "Economic hardship and resentment",
+          "Military superiority",
+          "Colonial expansion"
+        ],
+        "answer": "Economic hardship and resentment",
+        "fact": "The Great Depression destabilized Germany."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which event brought the United States into WWII?",
+        "options": [
+          "Battle of Britain",
+          "Invasion of Poland",
+          "Attack on Pearl Harbor",
+          "Fall of France"
+        ],
+        "answer": "Attack on Pearl Harbor",
+        "fact": "The attack occurred in December 1941."
+      }
+    ]
+  },
+  {
+    "section": 8,
+    "title": "Cold War & Modern World",
+    "questions": [
+      {
+        "difficulty": "easy",
+        "question": "The Cold War was primarily a conflict between:",
+        "options": [
+          "Democracy and monarchy",
+          "Capitalism and communism",
+          "Colonial powers",
+          "Religious ideologies"
+        ],
+        "answer": "Capitalism and communism",
+        "fact": "The US and USSR were the main rivals."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Which organization was formed to counter NATO?",
+        "options": [
+          "European Union",
+          "Warsaw Pact",
+          "League of Nations",
+          "United Nations"
+        ],
+        "answer": "Warsaw Pact",
+        "fact": "It unified Eastern Bloc militaries."
+      },
+      {
+        "difficulty": "medium",
+        "question": "Decolonization after WWII primarily occurred in:",
+        "options": [
+          "Europe",
+          "Africa and Asia",
+          "North America",
+          "Oceania"
+        ],
+        "answer": "Africa and Asia",
+        "fact": "Former colonies gained independence."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Which event symbolized the end of the Cold War?",
+        "options": [
+          "Cuban Missile Crisis",
+          "Fall of the Berlin Wall",
+          "Korean War",
+          "Formation of NATO"
+        ],
+        "answer": "Fall of the Berlin Wall",
+        "fact": "It occurred in 1989."
+      },
+      {
+        "difficulty": "hard",
+        "question": "Globalization in the late 20th century was driven most by:",
+        "options": [
+          "Agricultural reform",
+          "Technological advancement",
+          "Religious movements",
+          "Military alliances"
+        ],
+        "answer": "Technological advancement",
+        "fact": "Computing and communication reshaped economies."
+      }
+    ]
+  }
 ]

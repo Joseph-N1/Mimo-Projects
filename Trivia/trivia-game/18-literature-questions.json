@@ -1,172 +1,440 @@
 [
-    {
-        "section": 1,
-        "questions": [
-            {
-                "question": "Who wrote the novel '1984'?",
-                "options": ["Aldous Huxley", "George Orwell", "Ray Bradbury", "J.R.R. Tolkien"],
-                "answer": "George Orwell",
-                "fact": "Published in 1949, '1984' is a dystopian novel that explores themes of totalitarianism, surveillance, and individual freedom."
-            },
-            {
-                "question": "Which Shakespearean play features the famous 'To be or not to be' soliloquy?",
-                "options": ["Macbeth", "Hamlet", "Othello", "King Lear"],
-                "answer": "Hamlet",
-                "fact": "In Act 3, Scene 1 of 'Hamlet', the title character contemplates existence and the nature of life and death."
-            }
-        ]
-    },
-    {
-        "section": 2,
-        "questions": [
-            {
-                "question": "What is the name of the fictional town in Harper Lee's 'To Kill a Mockingbird'?",
-                "options": ["Maycomb", "Hannibal", "Salem", "Avonlea"],
-                "answer": "Maycomb",
-                "fact": "Maycomb, Alabama, serves as the backdrop for Harper Lee's novel, which deals with themes of racial injustice and moral growth."
-            },
-            {
-                "question": "Which epic poem begins with the line 'Sing, goddess, of the wrath of Achilles'?",
-                "options": ["The Odyssey", "The Iliad", "Paradise Lost", "The Aeneid"],
-                "answer": "The Iliad",
-                "fact": "'The Iliad', attributed to Homer, tells the story of the Trojan War and the anger of the Greek hero Achilles."
-            }
-        ]
-    },
-    {
-        "section": 3,
-        "questions": [
-            {
-                "question": "Who is the author of 'Pride and Prejudice'?",
-                "options": ["Emily Brontë", "Jane Austen", "Charlotte Brontë", "Louisa May Alcott"],
-                "answer": "Jane Austen",
-                "fact": "First published in 1813, 'Pride and Prejudice' is one of Jane Austen’s most famous novels, featuring Elizabeth Bennet and Mr. Darcy."
-            },
-            {
-                "question": "Which novel features a young girl named Scout Finch?",
-                "options": ["Jane Eyre", "Wuthering Heights", "To Kill a Mockingbird", "Anne of Green Gables"],
-                "answer": "To Kill a Mockingbird",
-                "fact": "Scout Finch is the narrator of 'To Kill a Mockingbird', a novel by Harper Lee that explores themes of racial injustice in the American South."
-            }
-        ]
-    },
-    {
-        "section": 4,
-        "questions": [
-            {
-                "question": "Who is the detective in Sir Arthur Conan Doyle’s novels?",
-                "options": ["Hercule Poirot", "Sherlock Holmes", "Philip Marlowe", "Miss Marple"],
-                "answer": "Sherlock Holmes",
-                "fact": "Sherlock Holmes, created by Sir Arthur Conan Doyle, is one of the most famous fictional detectives in literature."
-            },
-            {
-                "question": "Which book series features the character Katniss Everdeen?",
-                "options": ["Divergent", "The Maze Runner", "The Hunger Games", "Percy Jackson"],
-                "answer": "The Hunger Games",
-                "fact": "Katniss Everdeen is the protagonist of 'The Hunger Games' series by Suzanne Collins, set in a dystopian future."
-            }
-        ]
-    },
-    {
-        "section": 5,
-        "questions": [
-            {
-                "question": "Which Russian author wrote 'Crime and Punishment'?",
-                "options": ["Leo Tolstoy", "Fyodor Dostoevsky", "Anton Chekhov", "Vladimir Nabokov"],
-                "answer": "Fyodor Dostoevsky",
-                "fact": "'Crime and Punishment', published in 1866, is a psychological novel about guilt and redemption."
-            },
-            {
-                "question": "Who wrote 'The Great Gatsby'?",
-                "options": ["Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck", "William Faulkner"],
-                "answer": "F. Scott Fitzgerald",
-                "fact": "Published in 1925, 'The Great Gatsby' is a classic American novel that explores themes of wealth, love, and the American Dream."
-            }
-        ]
-    },
-    {
-        "section": 6,
-        "questions": [
-            {
-                "question": "💡 Who wrote the Gothic novel 'Frankenstein'?",
-                "options": ["Mary Shelley", "Bram Stoker", "Edgar Allan Poe", "Emily Brontë"],
-                "answer": "Mary Shelley",
-                "fact": "Mary Shelley wrote 'Frankenstein' at age 18, pioneering the science fiction genre."
-            },
-            {
-                "question": "💡 Which dystopian novel features 'Big Brother'?",
-                "options": ["Brave New World", "1984", "Fahrenheit 451", "The Handmaid's Tale"],
-                "answer": "1984",
-                "fact": "'Big Brother' is a symbol of oppressive surveillance in George Orwell’s '1984'."
-            }
-        ]
-    },
-    {
-        "section": 7,
-        "questions": [
-            {
-                "question": "💡 What is the sequel to 'The Hunger Games' trilogy?",
-                "options": ["Catching Fire", "Mockingjay", "The Ballad of Songbirds and Snakes", "Divergent"],
-                "answer": "Mockingjay",
-                "fact": "'Mockingjay' concludes Katniss Everdeen’s rebellion against the Capitol."
-            },
-            {
-                "question": "💡 Who wrote the poem 'The Raven'?",
-                "options": ["Walt Whitman", "Emily Dickinson", "Edgar Allan Poe", "Robert Frost"],
-                "answer": "Edgar Allan Poe",
-                "fact": "Poe’s 'The Raven' is famous for its melancholic rhythm and repeated 'Nevermore.'"
-            }
-        ]
-    },
-    {
-        "section": 8,
-        "questions": [
-            {
-                "question": "💡 Which novel opens with 'Call me Ishmael'?",
-                "options": ["Moby Dick", "Pride and Prejudice", "The Old Man and the Sea", "Ulysses"],
-                "answer": "Moby Dick",
-                "fact": "Herman Melville’s 'Moby Dick' explores obsession through Captain Ahab’s hunt for a white whale."
-            },
-            {
-                "question": "💡 Who created the fantasy world of Middle-earth?",
-                "options": ["C.S. Lewis", "J.K. Rowling", "J.R.R. Tolkien", "George R.R. Martin"],
-                "answer": "J.R.R. Tolkien",
-                "fact": "Tolkien’s 'The Lord of the Rings' and 'The Hobbit' are set in Middle-earth."
-            }
-        ]
-    },
-    {
-        "section": 9,
-        "questions": [
-            {
-                "question": "💡 What is the setting of 'Pride and Prejudice'?",
-                "options": ["Victorian London", "Rural England", "Colonial India", "Revolutionary France"],
-                "answer": "Rural England",
-                "fact": "The novel revolves around the Bennet family in 19th-century rural England."
-            },
-            {
-                "question": "💡 Which author wrote 'Beloved'?",
-                "options": ["Toni Morrison", "Maya Angelou", "Alice Walker", "Zora Neale Hurston"],
-                "answer": "Toni Morrison",
-                "fact": "'Beloved' addresses the trauma of slavery and won the Pulitzer Prize in 1988."
-            }
-        ]
-    },
-    {
-        "section": 10,
-        "questions": [
-            {
-                "question": "💡 Who is the protagonist of 'The Catcher in the Rye'?",
-                "options": ["Holden Caulfield", "Jay Gatsby", "Atticus Finch", "Huckleberry Finn"],
-                "answer": "Holden Caulfield",
-                "fact": "J.D. Salinger’s novel follows Holden’s journey through alienation in New York City."
-            },
-            {
-                "question": "💡 Which play by Arthur Miller critiques the American Dream?",
-                "options": ["Death of a Salesman", "The Crucible", "A View from the Bridge", "All My Sons"],
-                "answer": "Death of a Salesman",
-                "fact": "Willy Loman’s tragic story questions the cost of relentless ambition."
-            }
-        ]
-    }
+  {
+    "section": 1,
+    "title": "Literary Foundations & Classics",
+    "questions": [
+      {
+        "question": "Who wrote the epic poem 'The Odyssey'?",
+        "options": ["Virgil", "Homer", "Sophocles", "Aristotle"],
+        "correctAnswer": "Homer",
+        "difficulty": "easy",
+        "funFact": "'The Odyssey' was originally passed down orally before being written down in ancient Greece.",
+        "hint": "Think ancient Greek epics."
+      },
+      {
+        "question": "Which ancient civilization produced the Epic of Gilgamesh?",
+        "options": ["Egyptian", "Greek", "Roman", "Mesopotamian"],
+        "correctAnswer": "Mesopotamian",
+        "difficulty": "medium",
+        "funFact": "The Epic of Gilgamesh is considered one of the earliest surviving works of literature.",
+        "hint": "It predates Homer by centuries."
+      },
+      {
+        "question": "Who is the tragic hero of Sophocles’ play 'Oedipus Rex'?",
+        "options": ["Creon", "Oedipus", "Tiresias", "Laius"],
+        "correctAnswer": "Oedipus",
+        "difficulty": "medium",
+        "funFact": "The play popularized the concept later known as the Oedipus complex.",
+        "hint": "He unknowingly fulfills a prophecy."
+      },
+      {
+        "question": "Which Roman poet wrote 'The Aeneid'?",
+        "options": ["Ovid", "Horace", "Virgil", "Cicero"],
+        "correctAnswer": "Virgil",
+        "difficulty": "hard",
+        "funFact": "'The Aeneid' was commissioned to glorify Rome’s origins.",
+        "hint": "He is Rome’s answer to Homer."
+      },
+      {
+        "question": "What literary form is 'Beowulf'?",
+        "options": ["Novel", "Lyric poem", "Epic poem", "Play"],
+        "correctAnswer": "Epic poem",
+        "difficulty": "hard",
+        "funFact": "'Beowulf' is the most significant surviving Old English literary work.",
+        "hint": "It features monsters and heroic deeds."
+      }
+    ]
+  },
+  {
+    "section": 2,
+    "title": "Shakespeare & Renaissance Literature",
+    "questions": [
+      {
+        "question": "Who wrote 'Romeo and Juliet'?",
+        "options": ["Christopher Marlowe", "Ben Jonson", "William Shakespeare", "John Donne"],
+        "correctAnswer": "William Shakespeare",
+        "difficulty": "easy",
+        "funFact": "The play was written early in Shakespeare’s career.",
+        "hint": "England’s most famous playwright."
+      },
+      {
+        "question": "Which Shakespeare play features the character Iago?",
+        "options": ["Macbeth", "Hamlet", "Othello", "King Lear"],
+        "correctAnswer": "Othello",
+        "difficulty": "medium",
+        "funFact": "Iago is often considered one of literature’s greatest villains.",
+        "hint": "It centers on jealousy and betrayal."
+      },
+      {
+        "question": "What type of play is 'A Midsummer Night’s Dream'?",
+        "options": ["Tragedy", "Comedy", "History", "Romance"],
+        "correctAnswer": "Comedy",
+        "difficulty": "medium",
+        "funFact": "The play blends magic, love, and mistaken identity.",
+        "hint": "It features fairies."
+      },
+      {
+        "question": "Which playwright was Shakespeare’s major contemporary rival?",
+        "options": ["Ben Jonson", "John Milton", "Francis Bacon", "Thomas More"],
+        "correctAnswer": "Ben Jonson",
+        "difficulty": "hard",
+        "funFact": "Jonson famously said Shakespeare had 'small Latin and less Greek.'",
+        "hint": "Also a poet and dramatist."
+      },
+      {
+        "question": "What does the term 'soliloquy' mean?",
+        "options": [
+          "A dialogue between two characters",
+          "A speech revealing inner thoughts",
+          "A song within a play",
+          "A comic aside"
+        ],
+        "correctAnswer": "A speech revealing inner thoughts",
+        "difficulty": "hard",
+        "funFact": "Hamlet’s 'To be or not to be' is the most famous soliloquy.",
+        "hint": "The character speaks alone."
+      }
+    ]
+  },
+  {
+    "section": 3,
+    "title": "19th-Century British Literature",
+    "questions": [
+      {
+        "question": "Who wrote 'Pride and Prejudice'?",
+        "options": ["Emily Brontë", "Jane Austen", "Charlotte Brontë", "Mary Shelley"],
+        "correctAnswer": "Jane Austen",
+        "difficulty": "easy",
+        "funFact": "The novel was first published anonymously in 1813.",
+        "hint": "She wrote about manners and marriage."
+      },
+      {
+        "question": "Which novel features the character Heathcliff?",
+        "options": ["Jane Eyre", "Wuthering Heights", "Great Expectations", "Emma"],
+        "correctAnswer": "Wuthering Heights",
+        "difficulty": "medium",
+        "funFact": "Emily Brontë’s only novel is known for its dark tone.",
+        "hint": "Set on the Yorkshire moors."
+      },
+      {
+        "question": "Who wrote 'Frankenstein'?",
+        "options": ["Mary Shelley", "Bram Stoker", "Jane Austen", "George Eliot"],
+        "correctAnswer": "Mary Shelley",
+        "difficulty": "medium",
+        "funFact": "Shelley conceived the idea during a ghost-story challenge.",
+        "hint": "Written when the author was just 18."
+      },
+      {
+        "question": "Which Dickens novel features the character Pip?",
+        "options": ["Oliver Twist", "Great Expectations", "David Copperfield", "Bleak House"],
+        "correctAnswer": "Great Expectations",
+        "difficulty": "hard",
+        "funFact": "The novel critiques social class and ambition.",
+        "hint": "Its title refers to social aspirations."
+      },
+      {
+        "question": "George Eliot was the pen name of which author?",
+        "options": [
+          "Mary Ann Evans",
+          "Charlotte Brontë",
+          "Elizabeth Gaskell",
+          "Jane Austen"
+        ],
+        "correctAnswer": "Mary Ann Evans",
+        "difficulty": "hard",
+        "funFact": "She used a male pen name to ensure her work was taken seriously.",
+        "hint": "Victorian realist novelist."
+      }
+    ]
+  },
+  {
+    "section": 4,
+    "title": "American Literature",
+    "questions": [
+      {
+        "question": "Who wrote 'The Great Gatsby'?",
+        "options": ["Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck", "William Faulkner"],
+        "correctAnswer": "F. Scott Fitzgerald",
+        "difficulty": "easy",
+        "funFact": "The novel gained popularity only after Fitzgerald’s death.",
+        "hint": "A Jazz Age novel."
+      },
+      {
+        "question": "Which novel features the character Atticus Finch?",
+        "options": [
+          "The Catcher in the Rye",
+          "To Kill a Mockingbird",
+          "Of Mice and Men",
+          "Beloved"
+        ],
+        "correctAnswer": "To Kill a Mockingbird",
+        "difficulty": "medium",
+        "funFact": "Atticus Finch is often cited as a moral role model.",
+        "hint": "Set in the American South."
+      },
+      {
+        "question": "Who wrote 'Moby-Dick'?",
+        "options": ["Nathaniel Hawthorne", "Herman Melville", "Edgar Allan Poe", "Mark Twain"],
+        "correctAnswer": "Herman Melville",
+        "difficulty": "medium",
+        "funFact": "The novel was a commercial failure during Melville’s lifetime.",
+        "hint": "It opens with 'Call me Ishmael.'"
+      },
+      {
+        "question": "Which author wrote 'Beloved'?",
+        "options": ["Alice Walker", "Toni Morrison", "Maya Angelou", "Zora Neale Hurston"],
+        "correctAnswer": "Toni Morrison",
+        "difficulty": "hard",
+        "funFact": "'Beloved' won the Pulitzer Prize in 1988.",
+        "hint": "She later won the Nobel Prize."
+      },
+      {
+        "question": "What movement is associated with writers like Jack Kerouac?",
+        "options": ["Modernism", "Romanticism", "Beat Generation", "Realism"],
+        "correctAnswer": "Beat Generation",
+        "difficulty": "hard",
+        "funFact": "The Beat writers rejected traditional social norms.",
+        "hint": "Post–World War II counterculture."
+      }
+    ]
+  },
+  {
+    "section": 5,
+    "title": "World Literature",
+    "questions": [
+      {
+        "question": "Who wrote 'One Hundred Years of Solitude'?",
+        "options": [
+          "Isabel Allende",
+          "Gabriel García Márquez",
+          "Mario Vargas Llosa",
+          "Jorge Luis Borges"
+        ],
+        "correctAnswer": "Gabriel García Márquez",
+        "difficulty": "easy",
+        "funFact": "The novel is a landmark of magical realism.",
+        "hint": "A Colombian author."
+      },
+      {
+        "question": "Which country is the author Franz Kafka associated with?",
+        "options": ["Germany", "Austria", "Czech Republic", "Poland"],
+        "correctAnswer": "Czech Republic",
+        "difficulty": "medium",
+        "funFact": "Kafka wrote primarily in German while living in Prague.",
+        "hint": "Central Europe."
+      },
+      {
+        "question": "Which novel begins with a man turning into an insect?",
+        "options": ["The Trial", "The Stranger", "The Metamorphosis", "Nausea"],
+        "correctAnswer": "The Metamorphosis",
+        "difficulty": "medium",
+        "funFact": "Gregor Samsa wakes up transformed.",
+        "hint": "A Kafka work."
+      },
+      {
+        "question": "Who wrote 'The Stranger'?",
+        "options": ["Albert Camus", "Jean-Paul Sartre", "Simone de Beauvoir", "Victor Hugo"],
+        "correctAnswer": "Albert Camus",
+        "difficulty": "hard",
+        "funFact": "The novel explores existentialism and absurdism.",
+        "hint": "French-Algerian philosopher."
+      },
+      {
+        "question": "Which literary movement blends the real and the supernatural?",
+        "options": [
+          "Surrealism",
+          "Magical realism",
+          "Romanticism",
+          "Naturalism"
+        ],
+        "correctAnswer": "Magical realism",
+        "difficulty": "hard",
+        "funFact": "It became popular in Latin American fiction.",
+        "hint": "Reality plus fantasy."
+      }
+    ]
+  },
+  {
+    "section": 6,
+    "title": "Poetry & Poets",
+    "questions": [
+      {
+        "question": "Who wrote the poem 'The Raven'?",
+        "options": ["Walt Whitman", "Emily Dickinson", "Edgar Allan Poe", "Robert Frost"],
+        "correctAnswer": "Edgar Allan Poe",
+        "difficulty": "easy",
+        "funFact": "The poem is known for its rhythmic repetition.",
+        "hint": "Gothic American poet."
+      },
+      {
+        "question": "Which poet wrote 'O Captain! My Captain!'?",
+        "options": ["Robert Frost", "Walt Whitman", "Emily Dickinson", "T.S. Eliot"],
+        "correctAnswer": "Walt Whitman",
+        "difficulty": "medium",
+        "funFact": "The poem was written after Abraham Lincoln’s death.",
+        "hint": "Leaves of Grass."
+      },
+      {
+        "question": "Which poetic form has 14 lines?",
+        "options": ["Haiku", "Sonnet", "Ode", "Limerick"],
+        "correctAnswer": "Sonnet",
+        "difficulty": "medium",
+        "funFact": "Shakespeare popularized the English sonnet.",
+        "hint": "Love poems often use it."
+      },
+      {
+        "question": "Who wrote 'The Waste Land'?",
+        "options": ["Ezra Pound", "W.B. Yeats", "T.S. Eliot", "Sylvia Plath"],
+        "correctAnswer": "T.S. Eliot",
+        "difficulty": "hard",
+        "funFact": "The poem reflects post–World War I disillusionment.",
+        "hint": "Modernist poetry."
+      },
+      {
+        "question": "Emily Dickinson is best known for which poetic style?",
+        "options": [
+          "Epic narrative",
+          "Free verse",
+          "Short lyrical poems",
+          "Ballads"
+        ],
+        "correctAnswer": "Short lyrical poems",
+        "difficulty": "hard",
+        "funFact": "Many of her poems were published posthumously.",
+        "hint": "Brief and introspective."
+      }
+    ]
+  },
+  {
+    "section": 7,
+    "title": "Modern & Contemporary Literature",
+    "questions": [
+      {
+        "question": "Who wrote '1984'?",
+        "options": ["Aldous Huxley", "George Orwell", "Ray Bradbury", "Anthony Burgess"],
+        "correctAnswer": "George Orwell",
+        "difficulty": "easy",
+        "funFact": "The novel introduced the concept of Big Brother.",
+        "hint": "Dystopian future."
+      },
+      {
+        "question": "Which novel features the society of Gilead?",
+        "options": [
+          "Brave New World",
+          "1984",
+          "The Handmaid’s Tale",
+          "Fahrenheit 451"
+        ],
+        "correctAnswer": "The Handmaid’s Tale",
+        "difficulty": "medium",
+        "funFact": "Margaret Atwood wrote it in 1985.",
+        "hint": "Dystopian women’s rights."
+      },
+      {
+        "question": "Who wrote 'The Catcher in the Rye'?",
+        "options": [
+          "J.D. Salinger",
+          "John Steinbeck",
+          "Ernest Hemingway",
+          "F. Scott Fitzgerald"
+        ],
+        "correctAnswer": "J.D. Salinger",
+        "difficulty": "medium",
+        "funFact": "Holden Caulfield became an iconic narrator.",
+        "hint": "Teen alienation."
+      },
+      {
+        "question": "Which author is associated with stream of consciousness?",
+        "options": [
+          "Virginia Woolf",
+          "Agatha Christie",
+          "George Orwell",
+          "Ayn Rand"
+        ],
+        "correctAnswer": "Virginia Woolf",
+        "difficulty": "hard",
+        "funFact": "Her novels focus on inner thoughts.",
+        "hint": "Modernist British writer."
+      },
+      {
+        "question": "Which novel is set in the fictional county of Yoknapatawpha?",
+        "options": [
+          "East of Eden",
+          "The Sound and the Fury",
+          "Invisible Man",
+          "Slaughterhouse-Five"
+        ],
+        "correctAnswer": "The Sound and the Fury",
+        "difficulty": "hard",
+        "funFact": "William Faulkner created the county as a literary universe.",
+        "hint": "Southern Gothic."
+      }
+    ]
+  },
+  {
+    "section": 8,
+    "title": "Literary Terms, Devices & Analysis",
+    "questions": [
+      {
+        "question": "What is a metaphor?",
+        "options": [
+          "A direct comparison",
+          "An exaggerated statement",
+          "A symbolic story",
+          "A humorous remark"
+        ],
+        "correctAnswer": "A direct comparison",
+        "difficulty": "easy",
+        "funFact": "Metaphors imply similarity without using 'like' or 'as.'",
+        "hint": "Not a simile."
+      },
+      {
+        "question": "What is foreshadowing?",
+        "options": [
+          "A flashback",
+          "A prediction",
+          "A hint of future events",
+          "A moral lesson"
+        ],
+        "correctAnswer": "A hint of future events",
+        "difficulty": "medium",
+        "funFact": "It builds suspense and anticipation.",
+        "hint": "A clue ahead."
+      },
+      {
+        "question": "Which term refers to a story within a story?",
+        "options": ["Allegory", "Frame narrative", "Paradox", "Satire"],
+        "correctAnswer": "Frame narrative",
+        "difficulty": "medium",
+        "funFact": "'The Canterbury Tales' uses a frame narrative.",
+        "hint": "Stories layered."
+      },
+      {
+        "question": "What is dramatic irony?",
+        "options": [
+          "When characters know more than the reader",
+          "When the reader knows more than the characters",
+          "When events repeat",
+          "When humor is exaggerated"
+        ],
+        "correctAnswer": "When the reader knows more than the characters",
+        "difficulty": "hard",
+        "funFact": "Common in tragedies like 'Oedipus Rex.'",
+        "hint": "Audience advantage."
+      },
+      {
+        "question": "An allegory primarily functions to:",
+        "options": [
+          "Entertain",
+          "Describe reality",
+          "Convey symbolic meaning",
+          "Provide humor"
+        ],
+        "correctAnswer": "Convey symbolic meaning",
+        "difficulty": "hard",
+        "funFact": "'Animal Farm' is a political allegory.",
+        "hint": "Hidden meaning."
+      }
+    ]
+  }
 ]

@@ -6,6 +6,8 @@
     <title>Math Trivia</title>
     <link rel="stylesheet" href="30-styles.css">
     <link rel="stylesheet" href="assets/animations/hearts.css">
+    <link rel="stylesheet" href="assets/animations/toasts.css">
+    <link rel="stylesheet" href="assets/animations/gameover.css">
 </head>
 <body>
     <a href="01-index.html" id="main-menu-btn" class="frutiger-button">
@@ -19,7 +21,12 @@
         <div class="card">
             <div class="tools">
                 <div id="section-display">Section: <span id="current-section">1</span></div>
-                <div id="timer">Time left: 30</div>
+
+                 <!-- timer + hearts wrapper (JS will place hearts here if not present) -->
+                <div class="timer-hearts">
+                    <div id="timer">Time left: 30</div>
+                    <div id="hearts-container" class="heart-container"></div>
+                </div>
             </div>
             <div class="card__content">
                 <div id="game-container">
@@ -41,5 +48,7 @@
         </div>
     </div>
     <script src="20-app.js"></script>
+    <!-- Toasts -->
+    <div id="toast-container"></div>
 </body>
 </html>

@@ -3,18 +3,49 @@
     "section": 1,
     "questions": [
       {
-        "question": "What is the force that pulls objects toward the Earth?",
-        "options": ["Magnetism", "Gravity", "Friction", "Momentum"],
-        "correctAnswer": "Gravity",
-        "funFact": "Gravity is what keeps the planets in orbit around the sun!",
-        "hint": "It starts with 'G'."
+        "question": "What force pulls objects toward the Earth?",
+        "options": ["Magnetism", "Gravity", "Friction", "Inertia"],
+        "answer": "Gravity",
+        "fact": "Gravity gives objects weight and governs planetary motion.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the speed of light in a vacuum?",
-        "options": ["299,792 km/s", "150,000 km/s", "1,080 km/h", "300,000 m/s"],
-        "correctAnswer": "299,792 km/s",
-        "funFact": "Light from the Sun takes about 8 minutes to reach Earth.",
-        "hint": "It's very close to 300,000 km/s."
+        "question": "What is the SI unit of force?",
+        "options": ["Pascal", "Newton", "Joule", "Watt"],
+        "answer": "Newton",
+        "fact": "One newton is the force required to accelerate 1 kg by 1 m/s².",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which law explains why rockets move forward when gas is expelled backward?",
+        "options": [
+          "Newton’s First Law",
+          "Newton’s Second Law",
+          "Newton’s Third Law",
+          "Law of Conservation of Energy"
+        ],
+        "answer": "Newton’s Third Law",
+        "fact": "Every action has an equal and opposite reaction.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What quantity is conserved in a closed mechanical system with no external forces?",
+        "options": [
+          "Velocity",
+          "Momentum",
+          "Acceleration",
+          "Displacement"
+        ],
+        "answer": "Momentum",
+        "fact": "Momentum conservation is fundamental in collision analysis.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Which term describes resistance to a change in motion?",
+        "options": ["Friction", "Inertia", "Drag", "Impulse"],
+        "answer": "Inertia",
+        "fact": "Inertia increases with mass and is central to Newton’s First Law.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -23,17 +54,48 @@
     "questions": [
       {
         "question": "What is the chemical symbol for gold?",
-        "options": ["Go", "Gd", "Ag", "Au"],
-        "correctAnswer": "Au",
-        "funFact": "The symbol 'Au' comes from the Latin word 'Aurum,' meaning 'shining dawn.'",
-        "hint": "It's not 'Ag', which is for silver."
+        "options": ["Go", "Ag", "Au", "Gd"],
+        "answer": "Au",
+        "fact": "Au comes from the Latin word 'aurum'.",
+        "difficulty": "easy"
       },
       {
-        "question": "What gas do plants absorb from the atmosphere?",
-        "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-        "correctAnswer": "Carbon Dioxide",
-        "funFact": "Plants use carbon dioxide in photosynthesis to produce oxygen and energy.",
-        "hint": "It's a compound that humans exhale."
+        "question": "Which bond involves the sharing of electrons?",
+        "options": ["Ionic", "Covalent", "Hydrogen", "Metallic"],
+        "answer": "Covalent",
+        "fact": "Covalent bonds form most organic molecules.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What determines an element’s chemical properties?",
+        "options": [
+          "Number of neutrons",
+          "Atomic mass",
+          "Valence electrons",
+          "Atomic radius"
+        ],
+        "answer": "Valence electrons",
+        "fact": "Valence electrons control bonding behavior.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which pH value indicates a strong acid?",
+        "options": ["1", "7", "9", "14"],
+        "answer": "1",
+        "fact": "Lower pH values indicate higher acidity.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What law states that mass is neither created nor destroyed in a reaction?",
+        "options": [
+          "Law of Definite Proportions",
+          "Law of Conservation of Mass",
+          "Avogadro’s Law",
+          "Boyle’s Law"
+        ],
+        "answer": "Law of Conservation of Mass",
+        "fact": "Proposed by Antoine Lavoisier.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -41,18 +103,39 @@
     "section": 3,
     "questions": [
       {
-        "question": "What is the powerhouse of the cell?",
-        "options": ["Nucleus", "Ribosome", "Mitochondria", "Golgi Apparatus"],
-        "correctAnswer": "Mitochondria",
-        "funFact": "Mitochondria produce energy in the form of ATP, essential for cell function.",
-        "hint": "It starts with 'M'."
+        "question": "What is the basic unit of life?",
+        "options": ["Atom", "Cell", "Tissue", "Organ"],
+        "answer": "Cell",
+        "fact": "All living organisms are made of cells.",
+        "difficulty": "easy"
       },
       {
-        "question": "Which organ pumps blood throughout the human body?",
-        "options": ["Lungs", "Brain", "Liver", "Heart"],
-        "correctAnswer": "Heart",
-        "funFact": "The human heart beats about 100,000 times per day!",
-        "hint": "It's often associated with love."
+        "question": "What organelle produces ATP?",
+        "options": ["Nucleus", "Ribosome", "Mitochondria", "Golgi body"],
+        "answer": "Mitochondria",
+        "fact": "ATP is the cell’s main energy currency.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which molecule carries genetic information?",
+        "options": ["RNA", "Protein", "DNA", "Lipid"],
+        "answer": "DNA",
+        "fact": "DNA stores instructions for protein synthesis.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which phase of mitosis involves chromosome alignment at the cell equator?",
+        "options": ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        "answer": "Metaphase",
+        "fact": "Metaphase ensures accurate chromosome separation.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What process produces genetically identical daughter cells?",
+        "options": ["Meiosis", "Binary fission", "Mitosis", "Fertilization"],
+        "answer": "Mitosis",
+        "fact": "Mitosis is essential for growth and tissue repair.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -60,18 +143,54 @@
     "section": 4,
     "questions": [
       {
-        "question": "What is the smallest unit of life?",
-        "options": ["Atom", "Cell", "Molecule", "Organ"],
-        "correctAnswer": "Cell",
-        "funFact": "Cells were first discovered by Robert Hooke in 1665.",
-        "hint": "It starts with 'C'."
+        "question": "What planet is closest to the Sun?",
+        "options": ["Venus", "Earth", "Mercury", "Mars"],
+        "answer": "Mercury",
+        "fact": "Mercury has the shortest year in the solar system.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the chemical formula for water?",
-        "options": ["H2O", "CO2", "NaCl", "O2"],
-        "correctAnswer": "H2O",
-        "funFact": "Water covers about 71% of the Earth's surface.",
-        "hint": "It has two hydrogen atoms and one oxygen atom."
+        "question": "What keeps planets in orbit around the Sun?",
+        "options": [
+          "Solar wind",
+          "Magnetic force",
+          "Gravity",
+          "Centrifugal force"
+        ],
+        "answer": "Gravity",
+        "fact": "Gravity balances orbital motion.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which planet has the most extensive ring system?",
+        "options": ["Jupiter", "Uranus", "Saturn", "Neptune"],
+        "answer": "Saturn",
+        "fact": "Saturn’s rings are made mostly of ice.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What type of galaxy is the Milky Way?",
+        "options": [
+          "Elliptical",
+          "Irregular",
+          "Spiral",
+          "Lenticular"
+        ],
+        "answer": "Spiral",
+        "fact": "The Milky Way has a barred spiral structure.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What event marks the boundary of a black hole?",
+        "options": [
+          "Singularity",
+          "Photon sphere",
+          "Event horizon",
+          "Accretion disk"
+        ],
+        "answer": "Event horizon",
+        "fact": "Beyond this point, nothing can escape.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -79,18 +198,59 @@
     "section": 5,
     "questions": [
       {
-        "question": "What is the hardest natural substance on Earth?",
-        "options": ["Gold", "Iron", "Diamond", "Quartz"],
-        "correctAnswer": "Diamond",
-        "funFact": "Diamonds are formed under high pressure and temperature deep within the Earth.",
-        "hint": "It's often used in jewelry."
+        "question": "What gas do plants absorb for photosynthesis?",
+        "options": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+        "answer": "Carbon dioxide",
+        "fact": "CO₂ is converted into glucose during photosynthesis.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the process by which plants make their own food?",
-        "options": ["Respiration", "Photosynthesis", "Transpiration", "Fermentation"],
-        "correctAnswer": "Photosynthesis",
-        "funFact": "Photosynthesis produces oxygen as a byproduct, which is essential for life on Earth.",
-        "hint": "It involves sunlight and chlorophyll."
+        "question": "Which biome has the highest biodiversity?",
+        "options": [
+          "Tundra",
+          "Desert",
+          "Rainforest",
+          "Savanna"
+        ],
+        "answer": "Rainforest",
+        "fact": "Rainforests host over half of Earth’s species.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What cycle regulates Earth’s climate by moving carbon?",
+        "options": [
+          "Nitrogen cycle",
+          "Water cycle",
+          "Carbon cycle",
+          "Phosphorus cycle"
+        ],
+        "answer": "Carbon cycle",
+        "fact": "Carbon moves between air, land, oceans, and organisms.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which gas contributes most to the greenhouse effect?",
+        "options": [
+          "Oxygen",
+          "Nitrogen",
+          "Carbon dioxide",
+          "Argon"
+        ],
+        "answer": "Carbon dioxide",
+        "fact": "CO₂ traps heat and drives climate change.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What term describes species loss in an ecosystem?",
+        "options": [
+          "Succession",
+          "Extinction",
+          "Adaptation",
+          "Speciation"
+        ],
+        "answer": "Extinction",
+        "fact": "Human activity has accelerated extinction rates.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -98,18 +258,54 @@
     "section": 6,
     "questions": [
       {
-        "question": "What is the largest planet in our solar system?",
-        "options": ["Earth", "Mars", "Jupiter", "Saturn"],
-        "correctAnswer": "Jupiter",
-        "funFact": "Jupiter is so large that all the other planets in the solar system could fit inside it.",
-        "hint": "It starts with 'J'."
+        "question": "What is the unit of electrical resistance?",
+        "options": ["Volt", "Ampere", "Ohm", "Watt"],
+        "answer": "Ohm",
+        "fact": "Resistance limits current flow.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the freezing point of water in Celsius?",
-        "options": ["0°C", "32°C", "100°C", "-10°C"],
-        "correctAnswer": "0°C",
-        "funFact": "Water freezes at 0°C and boils at 100°C at sea level.",
-        "hint": "It's the same as the melting point of ice."
+        "question": "What does a battery supply in a circuit?",
+        "options": ["Resistance", "Voltage", "Current", "Power"],
+        "answer": "Voltage",
+        "fact": "Voltage provides the driving force for electrons.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What device converts electrical energy into mechanical motion?",
+        "options": [
+          "Generator",
+          "Transformer",
+          "Motor",
+          "Resistor"
+        ],
+        "answer": "Motor",
+        "fact": "Electric motors power most modern machines.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which law relates voltage, current, and resistance?",
+        "options": [
+          "Faraday’s Law",
+          "Ohm’s Law",
+          "Kirchhoff’s Law",
+          "Coulomb’s Law"
+        ],
+        "answer": "Ohm’s Law",
+        "fact": "V = IR describes basic circuit behavior.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What happens to total resistance in a parallel circuit?",
+        "options": [
+          "Increases",
+          "Decreases",
+          "Remains constant",
+          "Becomes infinite"
+        ],
+        "answer": "Decreases",
+        "fact": "Parallel paths reduce overall resistance.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -117,18 +313,59 @@
     "section": 7,
     "questions": [
       {
-        "question": "What is the chemical symbol for sodium?",
-        "options": ["So", "Na", "Sd", "Ni"],
-        "correctAnswer": "Na",
-        "funFact": "Sodium is a highly reactive metal that explodes in water.",
-        "hint": "It's derived from the Latin word 'Natrium'."
+        "question": "What is the freezing point of water in Celsius?",
+        "options": ["0°C", "32°C", "100°C", "-10°C"],
+        "answer": "0°C",
+        "fact": "Water freezes at 0°C at sea level.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the unit of electrical resistance?",
-        "options": ["Volt", "Ampere", "Ohm", "Watt"],
-        "correctAnswer": "Ohm",
-        "funFact": "The unit 'Ohm' is named after the German physicist Georg Simon Ohm.",
-        "hint": "It starts with 'O'."
+        "question": "What type of heat transfer occurs without a medium?",
+        "options": [
+          "Conduction",
+          "Convection",
+          "Radiation",
+          "Insulation"
+        ],
+        "answer": "Radiation",
+        "fact": "Heat from the Sun reaches Earth by radiation.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What increases when temperature rises at the molecular level?",
+        "options": [
+          "Mass",
+          "Kinetic energy",
+          "Density",
+          "Volume"
+        ],
+        "answer": "Kinetic energy",
+        "fact": "Temperature measures average kinetic energy.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What law explains gas expansion when temperature increases?",
+        "options": [
+          "Boyle’s Law",
+          "Charles’s Law",
+          "Avogadro’s Law",
+          "Dalton’s Law"
+        ],
+        "answer": "Charles’s Law",
+        "fact": "Volume is proportional to temperature at constant pressure.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What phase change absorbs heat without temperature change?",
+        "options": [
+          "Freezing",
+          "Condensation",
+          "Melting",
+          "Deposition"
+        ],
+        "answer": "Melting",
+        "fact": "Latent heat is absorbed during phase changes.",
+        "difficulty": "hard"
       }
     ]
   },
@@ -136,56 +373,64 @@
     "section": 8,
     "questions": [
       {
-        "question": "What is the primary gas in Earth's atmosphere?",
-        "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"],
-        "correctAnswer": "Nitrogen",
-        "funFact": "Nitrogen makes up about 78% of Earth's atmosphere.",
-        "hint": "It's not oxygen, which is only about 21%."
-      },
-      {
-        "question": "What is the study of fossils called?",
-        "options": ["Geology", "Paleontology", "Archaeology", "Biology"],
-        "correctAnswer": "Paleontology",
-        "funFact": "Paleontologists study fossils to understand the history of life on Earth.",
-        "hint": "It starts with 'P'."
-      }
-    ]
-  },
-  {
-    "section": 9,
-    "questions": [
-      {
-        "question": "What is the chemical symbol for carbon?",
-        "options": ["Ca", "Co", "C", "Cr"],
-        "correctAnswer": "C",
-        "funFact": "Carbon is the basis of all known life on Earth.",
-        "hint": "It's a single letter."
-      },
-      {
-        "question": "What is the process by which liquid water turns into vapor?",
-        "options": ["Condensation", "Evaporation", "Sublimation", "Freezing"],
-        "correctAnswer": "Evaporation",
-        "funFact": "Evaporation is a key part of the water cycle.",
-        "hint": "It starts with 'E'."
-      }
-    ]
-  },
-  {
-    "section": 10,
-    "questions": [
-      {
         "question": "What is the closest star to Earth?",
-        "options": ["Proxima Centauri", "Alpha Centauri", "Sirius", "The Sun"],
-        "correctAnswer": "The Sun",
-        "funFact": "The Sun is about 93 million miles away from Earth.",
-        "hint": "It's the center of our solar system."
+        "options": [
+          "Proxima Centauri",
+          "Alpha Centauri",
+          "Sirius",
+          "The Sun"
+        ],
+        "answer": "The Sun",
+        "fact": "The Sun is about 93 million miles away.",
+        "difficulty": "easy"
       },
       {
-        "question": "What is the chemical formula for table salt?",
-        "options": ["NaCl", "H2O", "CO2", "KCl"],
-        "correctAnswer": "NaCl",
-        "funFact": "Table salt is essential for human health but is often overconsumed.",
-        "hint": "It contains sodium and chlorine."
+        "question": "What branch of science studies matter and energy?",
+        "options": [
+          "Biology",
+          "Chemistry",
+          "Physics",
+          "Geology"
+        ],
+        "answer": "Physics",
+        "fact": "Physics underpins all natural sciences.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What particle has no electric charge?",
+        "options": [
+          "Electron",
+          "Proton",
+          "Neutron",
+          "Ion"
+        ],
+        "answer": "Neutron",
+        "fact": "Neutrons stabilize atomic nuclei.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "What term describes the splitting of an atomic nucleus?",
+        "options": [
+          "Fusion",
+          "Fission",
+          "Decay",
+          "Ionization"
+        ],
+        "answer": "Fission",
+        "fact": "Nuclear fission releases vast amounts of energy.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What principle limits simultaneous knowledge of position and momentum?",
+        "options": [
+          "Pauli Exclusion Principle",
+          "Uncertainty Principle",
+          "Correspondence Principle",
+          "Equivalence Principle"
+        ],
+        "answer": "Uncertainty Principle",
+        "fact": "Proposed by Werner Heisenberg.",
+        "difficulty": "hard"
       }
     ]
   }

@@ -1,172 +1,322 @@
 [
-    {
-        "section": 1,
-        "questions": [
-            {
-                "question": "What is the capital of Canada?",
-                "options": ["Toronto", "Ottawa", "Montreal", "Vancouver"],
-                "answer": "Ottawa",
-                "fact": "Ottawa is Canada’s capital, located in the province of Ontario."
-            },
-            {
-                "question": "Which river is the longest in the world?",
-                "options": ["Amazon River", "Nile River", "Yangtze River", "Mississippi River"],
-                "answer": "Nile River",
-                "fact": "The Nile stretches 6,650 km (4,130 miles) through northeastern Africa."
-            }
-        ]
-    },
-    {
-        "section": 2,
-        "questions": [
-            {
-                "question": "What is the smallest country by area?",
-                "options": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
-                "answer": "Vatican City",
-                "fact": "Vatican City, the seat of the Catholic Church, is only 0.49 km²."
-            },
-            {
-                "question": "Which desert is the largest in the world?",
-                "options": ["Sahara", "Arabian", "Gobi", "Antarctic"],
-                "answer": "Antarctic",
-                "fact": "The Antarctic Desert is the largest (14 million km²) and also the coldest."
-            }
-        ]
-    },
-    {
-        "section": 3,
-        "questions": [
-            {
-                "question": "What mountain is the highest peak in Africa?",
-                "options": ["Mount Kenya", "Mount Kilimanjaro", "Mount Elgon", "Mount Stanley"],
-                "answer": "Mount Kilimanjaro",
-                "fact": "Kilimanjaro’s summit, Uhuru Peak, stands at 5,895 meters (19,341 feet)."
-            },
-            {
-                "question": "Which country is known as the Land of the Rising Sun?",
-                "options": ["China", "South Korea", "Japan", "Vietnam"],
-                "answer": "Japan",
-                "fact": "Japan’s name (Nihon) means 'origin of the sun,' reflecting its eastern position."
-            }
-        ]
-    },
-    {
-        "section": 4,
-        "questions": [
-            {
-                "question": "What is the capital of Australia?",
-                "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
-                "answer": "Canberra",
-                "fact": "Canberra was purpose-built as Australia’s capital in 1913."
-            },
-            {
-                "question": "Which continent is the driest inhabited continent?",
-                "options": ["Africa", "Asia", "Australia", "South America"],
-                "answer": "Australia",
-                "fact": "Australia’s interior is dominated by arid deserts like the Outback."
-            }
-        ]
-    },
-    {
-        "section": 5,
-        "questions": [
-            {
-                "question": "What is the name of the sea between Greece and Turkey?",
-                "options": ["Adriatic Sea", "Aegean Sea", "Black Sea", "Mediterranean Sea"],
-                "answer": "Aegean Sea",
-                "fact": "The Aegean Sea is dotted with over 2,000 islands, including Santorini and Mykonos."
-            },
-            {
-                "question": "Which country has the most natural lakes?",
-                "options": ["Canada", "Russia", "USA", "Finland"],
-                "answer": "Canada",
-                "fact": "Canada has over 2 million lakes, covering 7.6% of its land area."
-            }
-        ]
-    },
-    {
-        "section": 6,
-        "questions": [
-            {
-                "question": "💡 What is the capital of Brazil?",
-                "options": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
-                "answer": "Brasília",
-                "fact": "Brasília became Brazil’s capital in 1960, replacing Rio de Janeiro."
-            },
-            {
-                "question": "💡 Which country is home to the Amazon Rainforest?",
-                "options": ["Colombia", "Peru", "Brazil", "Venezuela"],
-                "answer": "Brazil",
-                "fact": "60% of the Amazon Rainforest lies within Brazil’s borders."
-            }
-        ]
-    },
-    {
-        "section": 7,
-        "questions": [
-            {
-                "question": "💡 Which U.S. state is known as the 'Sunshine State'?",
-                "options": ["California", "Texas", "Florida", "Hawaii"],
-                "answer": "Florida",
-                "fact": "Florida’s warm climate and beaches make it a major tourist destination."
-            },
-            {
-                "question": "💡 What is the tallest mountain in the world?",
-                "options": ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
-                "answer": "Mount Everest",
-                "fact": "Everest’s peak is 8,848 meters (29,029 feet) above sea level."
-            }
-        ]
-    },
-    {
-        "section": 8,
-        "questions": [
-            {
-                "question": "💡 Which African country is known as the 'Pearl of Africa'?",
-                "options": ["Kenya", "Uganda", "Tanzania", "Ethiopia"],
-                "answer": "Uganda",
-                "fact": "Winston Churchill coined the term for Uganda’s natural beauty."
-            },
-            {
-                "question": "💡 What is the capital of South Africa?",
-                "options": ["Cape Town", "Johannesburg", "Pretoria", "Durban"],
-                "answer": "Pretoria",
-                "fact": "South Africa has three capitals: Pretoria (administrative), Cape Town (legislative), and Bloemfontein (judicial)."
-            }
-        ]
-    },
-    {
-        "section": 9,
-        "questions": [
-            {
-                "question": "💡 Which European country has the most islands?",
-                "options": ["Greece", "Sweden", "Norway", "Finland"],
-                "answer": "Sweden",
-                "fact": "Sweden has over 267,000 islands, though only 1,000 are inhabited."
-            },
-            {
-                "question": "💡 What is the largest ocean on Earth?",
-                "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
-                "answer": "Pacific Ocean",
-                "fact": "The Pacific covers 165 million km², larger than all landmasses combined."
-            }
-        ]
-    },
-    {
-        "section": 10,
-        "questions": [
-            {
-                "question": "💡 Which country is shaped like a boot?",
-                "options": ["Greece", "Italy", "Spain", "France"],
-                "answer": "Italy",
-                "fact": "Italy’s distinctive boot shape extends into the Mediterranean Sea."
-            },
-            {
-                "question": "💡 What is the capital of Iceland?",
-                "options": ["Reykjavik", "Oslo", "Helsinki", "Stockholm"],
-                "answer": "Reykjavik",
-                "fact": "Reykjavik is the world’s northernmost capital city."
-            }
-        ]
-    }
+  {
+    "section": 1,
+    "questions": [
+      {
+        "question": "What is the capital city of Canada?",
+        "options": ["Toronto", "Ottawa", "Montreal", "Vancouver"],
+        "answer": "Ottawa",
+        "fact": "Ottawa was chosen as Canada’s capital in 1857 as a compromise between major cities.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What is the capital of Australia?",
+        "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+        "answer": "Canberra",
+        "fact": "Canberra was purpose-built to resolve rivalry between Sydney and Melbourne.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What is the capital of Brazil?",
+        "options": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+        "answer": "Brasília",
+        "fact": "Brasília became Brazil’s capital in 1960 to promote inland development.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which city is the capital of Japan?",
+        "options": ["Kyoto", "Osaka", "Tokyo", "Hiroshima"],
+        "answer": "Tokyo",
+        "fact": "Tokyo became Japan’s capital in 1868 during the Meiji Restoration.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What is the capital of South Africa’s administrative branch?",
+        "options": ["Cape Town", "Pretoria", "Johannesburg", "Bloemfontein"],
+        "answer": "Pretoria",
+        "fact": "South Africa uniquely has three capitals serving different government functions.",
+        "difficulty": "easy"
+      }
+    ]
+  },
+  {
+    "section": 2,
+    "questions": [
+      {
+        "question": "Which river is traditionally considered the longest in the world?",
+        "options": ["Amazon", "Nile", "Yangtze", "Mississippi"],
+        "answer": "Nile",
+        "fact": "The Nile stretches approximately 6,650 km through northeastern Africa.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What is the tallest mountain above sea level?",
+        "options": ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+        "answer": "Mount Everest",
+        "fact": "Mount Everest rises 8,848 meters above sea level.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which desert is the largest in the world?",
+        "options": ["Sahara", "Gobi", "Arabian", "Antarctic"],
+        "answer": "Antarctic",
+        "fact": "Deserts are defined by low precipitation, not temperature.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which ocean is the largest by surface area?",
+        "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
+        "answer": "Pacific",
+        "fact": "The Pacific Ocean covers more area than all land combined.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What is the deepest known ocean trench?",
+        "options": ["Java Trench", "Tonga Trench", "Mariana Trench", "Puerto Rico Trench"],
+        "answer": "Mariana Trench",
+        "fact": "Challenger Deep lies nearly 11,000 meters below sea level.",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  {
+    "section": 3,
+    "questions": [
+      {
+        "question": "Which continent is the driest inhabited continent?",
+        "options": ["Africa", "Australia", "Asia", "South America"],
+        "answer": "Australia",
+        "fact": "Much of Australia’s interior consists of arid and semi-arid land.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which continent contains the most countries?",
+        "options": ["Asia", "Europe", "Africa", "South America"],
+        "answer": "Africa",
+        "fact": "Africa has 54 internationally recognized countries.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which continent has no permanent human population?",
+        "options": ["Arctic", "Antarctica", "Greenland", "Iceland"],
+        "answer": "Antarctica",
+        "fact": "Only scientists temporarily reside there for research.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which continent is home to the Amazon Rainforest?",
+        "options": ["Africa", "Asia", "South America", "North America"],
+        "answer": "South America",
+        "fact": "The Amazon spans multiple countries but lies mostly in Brazil.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which continent is both a country and a continent?",
+        "options": ["Greenland", "Australia", "Iceland", "New Zealand"],
+        "answer": "Australia",
+        "fact": "Australia is the smallest continent by land area.",
+        "difficulty": "easy"
+      }
+    ]
+  },
+  {
+    "section": 4,
+    "questions": [
+      {
+        "question": "Which country is landlocked?",
+        "options": ["Peru", "Bolivia", "Chile", "Ecuador"],
+        "answer": "Bolivia",
+        "fact": "Bolivia lost its coastline after the War of the Pacific.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which country shares the most borders with other countries?",
+        "options": ["China", "Russia", "Brazil", "Germany"],
+        "answer": "China",
+        "fact": "China borders 14 countries.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which two countries share the longest international border?",
+        "options": ["Russia–China", "USA–Canada", "Argentina–Chile", "India–Bangladesh"],
+        "answer": "USA–Canada",
+        "fact": "The border spans about 8,891 km including water boundaries.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which European country is completely landlocked?",
+        "options": ["Austria", "Portugal", "Belgium", "Netherlands"],
+        "answer": "Austria",
+        "fact": "Austria is surrounded entirely by other European nations.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which country has no official capital?",
+        "options": ["Switzerland", "Nauru", "Liechtenstein", "Iceland"],
+        "answer": "Nauru",
+        "fact": "Nauru operates without a designated capital city.",
+        "difficulty": "hard"
+      }
+    ]
+  },
+  {
+    "section": 5,
+    "questions": [
+      {
+        "question": "Which sea lies between Greece and Turkey?",
+        "options": ["Adriatic Sea", "Aegean Sea", "Black Sea", "Ionian Sea"],
+        "answer": "Aegean Sea",
+        "fact": "The Aegean Sea contains thousands of islands.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which sea is the saltiest major body of water?",
+        "options": ["Red Sea", "Caspian Sea", "Dead Sea", "Baltic Sea"],
+        "answer": "Dead Sea",
+        "fact": "Its high salinity allows people to float effortlessly.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which gulf lies between Iran and the Arabian Peninsula?",
+        "options": ["Gulf of Oman", "Persian Gulf", "Red Sea", "Gulf of Aden"],
+        "answer": "Persian Gulf",
+        "fact": "It is a critical global oil transport route.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which sea separates Europe and Africa?",
+        "options": ["Black Sea", "Mediterranean Sea", "Red Sea", "Baltic Sea"],
+        "answer": "Mediterranean Sea",
+        "fact": "It connects to the Atlantic via the Strait of Gibraltar.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which ocean surrounds Antarctica?",
+        "options": ["Atlantic", "Indian", "Southern", "Pacific"],
+        "answer": "Southern",
+        "fact": "The Southern Ocean was officially recognized in 2000.",
+        "difficulty": "hard"
+      }
+    ]
+  },
+  {
+    "section": 6,
+    "questions": [
+      {
+        "question": "Which biome is characterized by permafrost?",
+        "options": ["Savanna", "Tundra", "Taiga", "Grassland"],
+        "answer": "Tundra",
+        "fact": "Permafrost remains frozen year-round.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Which climate zone lies near the equator?",
+        "options": ["Temperate", "Polar", "Tropical", "Subarctic"],
+        "answer": "Tropical",
+        "fact": "Tropical regions receive intense sunlight year-round.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which rainforest is the largest in the world?",
+        "options": ["Congo", "Amazon", "Daintree", "Borneo"],
+        "answer": "Amazon",
+        "fact": "The Amazon produces roughly 20% of Earth’s oxygen.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "What tectonic zone causes frequent earthquakes and volcanoes?",
+        "options": ["Mid-Atlantic Ridge", "Ring of Fire", "Alpine Belt", "Great Rift Valley"],
+        "answer": "Ring of Fire",
+        "fact": "It surrounds the Pacific Ocean basin.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Which biome dominates northern Canada?",
+        "options": ["Tundra", "Taiga", "Desert", "Savanna"],
+        "answer": "Taiga",
+        "fact": "The taiga is the world’s largest land biome.",
+        "difficulty": "hard"
+      }
+    ]
+  },
+  {
+    "section": 7,
+    "questions": [
+      {
+        "question": "Which city has the highest population globally?",
+        "options": ["New York", "Shanghai", "Tokyo", "Delhi"],
+        "answer": "Tokyo",
+        "fact": "Tokyo’s metro area exceeds 37 million people.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which country has the highest population density?",
+        "options": ["India", "Monaco", "Japan", "Bangladesh"],
+        "answer": "Monaco",
+        "fact": "Monaco has over 19,000 people per square kilometer.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What term describes the movement of people from rural to urban areas?",
+        "options": ["Migration", "Urbanization", "Globalization", "Industrialization"],
+        "answer": "Urbanization",
+        "fact": "Urbanization increases demand for housing and infrastructure.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which country has the largest population?",
+        "options": ["China", "India", "USA", "Indonesia"],
+        "answer": "India",
+        "fact": "India surpassed China in population in 2023.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which city is known as a megacity?",
+        "options": ["Paris", "Rome", "Tokyo", "Vienna"],
+        "answer": "Tokyo",
+        "fact": "Megacities have populations over 10 million.",
+        "difficulty": "easy"
+      }
+    ]
+  },
+  {
+    "section": 8,
+    "questions": [
+      {
+        "question": "Which country has the most islands?",
+        "options": ["Indonesia", "Norway", "Philippines", "Sweden"],
+        "answer": "Sweden",
+        "fact": "Sweden has over 267,000 islands.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Which desert is NOT hot?",
+        "options": ["Sahara", "Gobi", "Antarctic", "Arabian"],
+        "answer": "Antarctic",
+        "fact": "Cold deserts receive very little precipitation.",
+        "difficulty": "medium"
+      },
+      {
+        "question": "Which country lies in both Europe and Asia?",
+        "options": ["Spain", "Turkey", "Italy", "Greece"],
+        "answer": "Turkey",
+        "fact": "The Bosporus Strait divides its continents.",
+        "difficulty": "easy"
+      },
+      {
+        "question": "Which lake is the largest freshwater lake by surface area?",
+        "options": ["Lake Victoria", "Lake Superior", "Lake Baikal", "Lake Tanganyika"],
+        "answer": "Lake Superior",
+        "fact": "Lake Baikal is deepest, not largest by area.",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Which country technically has the longest coastline?",
+        "options": ["USA", "Australia", "Canada", "Russia"],
+        "answer": "Canada",
+        "fact": "Canada’s irregular coastline stretches over 200,000 km.",
+        "difficulty": "hard"
+      }
+    ]
+  }
 ]
