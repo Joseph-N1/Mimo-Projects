@@ -1,0 +1,61 @@
+/* Basic styling for PDF upload and preview */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+}
+h1 {
+    text-align: center;
+    color: #2c4357;
+}
+#pdf-upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+#pdf-file {
+    padding: 8px;
+}
+button[type="submit"] {
+    background: #2196F3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 24px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button[type="submit"]:hover {
+    background: #1769aa;
+}
+#generation-status {
+    margin: 16px 0;
+    color: #4CAF50;
+    text-align: center;
+}
+#questions-preview {
+    margin-top: 24px;
+}
+.question-block {
+    background: #f9fafb;
+    border: 1px solid #e0e4ea;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+.question-block h3 {
+    margin: 0 0 8px 0;
+    color: #2c4357;
+}

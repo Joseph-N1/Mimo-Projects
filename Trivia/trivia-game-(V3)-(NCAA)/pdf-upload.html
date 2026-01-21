@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Trivia Generator</title>
+    <link rel="stylesheet" href="styles/pdf-upload.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload PDF to Generate Trivia Questions</h1>
+        <form id="pdf-upload-form">
+            <input type="file" id="pdf-file" accept="application/pdf" required />
+            <button type="submit">Upload & Generate</button>
+        </form>
+        <div id="generation-status"></div>
+        <div id="questions-preview"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="js/pdf-to-trivia.js"></script>
+</body>
+</html>
