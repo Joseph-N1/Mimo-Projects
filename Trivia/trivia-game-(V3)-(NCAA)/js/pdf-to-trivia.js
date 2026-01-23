@@ -3,33 +3,41 @@
 document.getElementById('pdf-upload-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const fileInput = document.getElementById('pdf-file');
+    const nameInput = document.getElementById('question-set-name');
     const statusDiv = document.getElementById('generation-status');
     const previewDiv = document.getElementById('questions-preview');
     previewDiv.innerHTML = '';
-    statusDiv.textContent = 'Extracting text from PDF...';
+    statusDiv.textContent = 'Uploading PDF and generating questions...';
 
     if (!fileInput.files.length) {
         statusDiv.textContent = 'Please select a PDF file.';
         return;
     }
-    const file = fileInput.files[0];
-    const reader = new FileReader();
-    reader.onload = async function() {
-        const typedarray = new Uint8Array(this.result);
-        try {
-            const pdf = await pdfjsLib.getDocument({data: typedarray}).promise;
-            let fullText = '';
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const content = await page.getTextContent();
-                const strings = content.items.map(item => item.str);
-                fullText += strings.join(' ') + '\n';
-            }
-            statusDiv.textContent = 'PDF text extracted. (Question generation coming next...)';
-            previewDiv.innerHTML = `<pre style="white-space:pre-wrap;">${fullText.substring(0, 2000)}${fullText.length > 2000 ? '... (truncated)' : ''}</pre>`;
-        } catch (err) {
-            statusDiv.textContent = 'Error reading PDF: ' + err.message;
+    if (!nameInput.value.trim()) {
+        statusDiv.textContent = 'Please enter a name for the question set.';
+        nameInput.focus();
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('pdf', fileInput.files[0]);
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/generate-questions', {
+            method: 'POST',
+            body: formData
+        });
+        if (!response.ok) throw new Error('Server error');
+        const sections = await response.json();
+        // Render questions as a quiz (implement your quiz UI here)
+        previewDiv.innerHTML = `<h2>Question Set: ${nameInput.value}</h2>`;
+        // Example: show first question
+        if (sections.length && sections[0].questions.length) {
+            const q = sections[0].questions[0];
+            previewDiv.innerHTML += `<div><b>${q.question}</b><br>Options: ${q.options.join(', ')}</div>`;
         }
-    };
-    reader.readAsArrayBuffer(file);
+        statusDiv.textContent = 'Questions generated!';
+    } catch (err) {
+        statusDiv.textContent = 'Error: ' + err.message;
+    }
 });
