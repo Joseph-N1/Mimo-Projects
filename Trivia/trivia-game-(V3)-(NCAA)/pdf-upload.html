@@ -10,8 +10,11 @@
     <div class="container">
         <h1>Upload PDF to Generate Trivia Questions</h1>
         <form id="pdf-upload-form">
-            <label for="question-set-name"><b>Question Set Name:</b></label>
-            <input type="text" id="question-set-name" name="question-set-name" placeholder="e.g. NCAA Aviation Part 18" required style="width:100%;margin-bottom:12px;" />
+            <label class="toggle-row">
+                <input type="checkbox" id="use-db" />
+                Use PDF from database
+            </label>
+            <select id="db-pdf" disabled></select>
             <input type="file" id="pdf-file" accept="application/pdf" required />
             <button type="submit">Upload & Generate</button>
         </form>
