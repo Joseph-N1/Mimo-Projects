@@ -79,13 +79,38 @@ document.getElementById('pdf-upload-form').addEventListener('submit', async func
         }
         if (!response.ok) throw new Error('Server error');
         const sections = await response.json();
-        // Render questions as a quiz (implement your quiz UI here)
-        // Example: show first question
-        if (sections.length && sections[0].questions.length) {
-            const q = sections[0].questions[0];
-            previewDiv.innerHTML += `<div><b>${q.question}</b><br>Options: ${q.options.join(', ')}</div>`;
+        
+        // Render all questions from all sections
+        if (sections.length) {
+            let totalQuestions = 0;
+            for (const section of sections) {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'question-section';
+                sectionDiv.innerHTML = `<h3>Section ${section.section}</h3>`;
+                
+                for (const q of section.questions) {
+                    totalQuestions++;
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question-card';
+                    questionDiv.innerHTML = `
+                        <div class="question-number">Q${totalQuestions}</div>
+                        <div class="question-text"><b>${q.question}</b></div>
+                        <div class="question-options">
+                            ${q.options.map((opt, i) => `<div class="option ${opt === q.correctAnswer ? 'correct-answer' : ''}">${String.fromCharCode(65 + i)}. ${opt}</div>`).join('')}
+                        </div>
+                        <div class="question-meta">
+                            <span class="difficulty ${q.difficulty}">${q.difficulty}</span>
+                            <span class="hint" title="${q.hint}">💡 Hint</span>
+                        </div>
+                    `;
+                    sectionDiv.appendChild(questionDiv);
+                }
+                previewDiv.appendChild(sectionDiv);
+            }
+            statusDiv.textContent = `${totalQuestions} questions generated successfully!`;
+        } else {
+            statusDiv.textContent = 'No questions could be generated from this PDF.';
         }
-        statusDiv.textContent = 'Questions generated!';
     } catch (err) {
         statusDiv.textContent = 'Error: ' + err.message;
     }
