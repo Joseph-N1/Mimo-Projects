@@ -1,0 +1,25 @@
+Folder PATH listing for volume Local Disk
+Volume serial number is 245D-48A9
+C:.
+¦   01-index.html
+¦   02-math-game.html
+¦   03-anime-game.html
+¦   04-science-game.html
+¦   05-geography-game.html
+¦   06-worldhistory-game.html
+¦   07-sports-game.html
+¦   08-literature-game.html
+¦   12-questions.json
+¦   13-anime-questions.json
+¦   14-science-questions.json
+¦   15-geography-questions.json
+¦   16-worldhistory-questions.json
+¦   17-sports-questions.json
+¦   18-literature-questions.json
+¦   20-app.js
+¦   30-styles.css
+¦   trivia_game_structure.txt
+¦   
++---.vscode
+        settings.json
+        
