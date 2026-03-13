@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>NCAA Regulatory QA Engine</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>NCAA Regulatory QA Engine</h1>
+
+<form method="POST">
+
+<input
+type="text"
+name="question"
+placeholder="Ask a regulatory question..."
+required
+>
+
+<button type="submit">Analyze Question</button>
+
+</form>
+
+{% if result %}
+
+<div class="result">
+
+<h2>Analysis Result</h2>
+
+<p><strong>Detected Regulation:</strong> {{ result.domain }}</p>
+
+{% if result.subcontext %}
+<p><strong>Subcontext:</strong> {{ result.subcontext }}</p>
+{% endif %}
+
+{% if result.confidence %}
+<p><strong>Confidence:</strong> {{ result.confidence }}</p>
+{% endif %}
+
+{% if result.cross_refs %}
+<p><strong>Cross References:</strong></p>
+
+<ul>
+{% for ref in result.cross_refs %}
+<li>{{ ref }}</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
