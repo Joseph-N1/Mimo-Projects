@@ -64,7 +64,12 @@ def query_vector_index(doc_id: str, query: str, top_k: int = 5):
             "doc_id": chunk_data.get("doc_id"),
             "page": chunk_data.get("page"),
             "section": chunk_data.get("section"),
-            "text": chunk_data.get("text")
+            "text": chunk_data.get("text"),
+            "title": chunk_data.get("title"),
+            "document_family": chunk_data.get("document_family"),
+            "document_family_label": chunk_data.get("document_family_label"),
+            "relative_path": chunk_data.get("relative_path"),
+            "regulatory_part": chunk_data.get("regulatory_part"),
         })
 
     return results

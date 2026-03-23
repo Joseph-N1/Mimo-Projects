@@ -11,6 +11,21 @@ SECTION_REGEX = re.compile(
     r"\b(IS\s*)?\d+\.\d+(\.\d+)*\b"
 )
 
+WEAK_CHUNK_PATTERNS = [
+    re.compile(r"record\s+of\s+amendment", re.IGNORECASE),
+    re.compile(r"table\s+of\s+contents|contents", re.IGNORECASE),
+    re.compile(r"april\s+\d{4},\s*amendment\s+\d+", re.IGNORECASE),
+    re.compile(r"nigeria\s+civil\s+aviation\s+regulations", re.IGNORECASE),
+    re.compile(r"director\s+general\s+of\s+civil\s+aviation", re.IGNORECASE),
+]
+
+REGULATORY_SIGNAL_PATTERNS = [
+    re.compile(r"\bshall\b|\bmust\b|\brequired\b", re.IGNORECASE),
+    re.compile(r"\bmeans\b|\bdefined as\b|\brefers to\b", re.IGNORECASE),
+    re.compile(r"\bresponsible\b|\baccountable\b|\bapproval\b", re.IGNORECASE),
+    re.compile(r"\boperator\b|\bauthority\b|\bsafety\b|\bcertificate\b", re.IGNORECASE),
+]
+
 def extract_section_identifier(text: str):
     """Extract section identifier like 5.2.1 or IS 5.2.1 from text"""
     match = SECTION_REGEX.search(text)
@@ -18,12 +33,25 @@ def extract_section_identifier(text: str):
         return match.group(0)
     return None
 
+
+def normalize_source_text(text: str) -> str:
+    if not text:
+        return ""
+
+    text = text.replace("\n", " ")
+    text = re.sub(r"April\s+\d{4},\s*Amendment\s+\d+", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"NIGERIA\s+CIVIL\s+AVIATION\s+REGULATIONS", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\b\d{1,2}-\d+\b", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip(" -:;,.")
+
 # ============================================================================
 # PARAGRAPH FILTERING
 # ============================================================================
 
 def is_useful_paragraph(text):
     """Check if paragraph has educational content worth extracting"""
+    text = normalize_source_text(text)
     if not text or len(text.strip()) < 80:
         return False
     for pattern in UNWANTED_PATTERNS:
@@ -33,6 +61,65 @@ def is_useful_paragraph(text):
     if alpha_ratio < 0.5:
         return False
     return True
+
+
+def source_chunk_strength(text: str) -> int:
+    text = normalize_source_text(text)
+    if not text:
+        return -99
+
+    score = 0
+    words = text.split()
+
+    if len(words) >= 12:
+        score += 1
+    if any(pattern.search(text) for pattern in REGULATORY_SIGNAL_PATTERNS):
+        score += 3
+    if text.count(".") >= 1:
+        score += 1
+
+    uppercase_ratio = sum(c.isupper() for c in text) / max(1, sum(c.isalpha() for c in text))
+    if uppercase_ratio > 0.45:
+        score -= 2
+
+    digit_ratio = sum(c.isdigit() for c in text) / max(1, len(text))
+    if digit_ratio > 0.12:
+        score -= 2
+
+    if any(pattern.search(text) for pattern in WEAK_CHUNK_PATTERNS):
+        score -= 3
+
+    return score
+
+
+def is_strong_source_chunk(text: str) -> bool:
+    return is_useful_paragraph(text) and source_chunk_strength(text) >= 2
+
+
+def filter_source_chunks(chunks, min_fallback=6):
+    """Keep higher-value chunks and fall back to the strongest available ones if needed."""
+    if not chunks:
+        return []
+
+    normalized_chunks = []
+    for chunk in chunks:
+        normalized = normalize_source_text(chunk)
+        if normalized:
+            normalized_chunks.append(normalized)
+    if not normalized_chunks:
+        return []
+
+    strong_chunks = [chunk for chunk in normalized_chunks if is_strong_source_chunk(chunk)]
+    if strong_chunks:
+        return strong_chunks
+
+    scored_chunks = sorted(
+        ((source_chunk_strength(chunk), chunk) for chunk in normalized_chunks),
+        key=lambda item: item[0],
+        reverse=True,
+    )
+    fallback_count = max(1, min(min_fallback, len(scored_chunks)))
+    return [chunk for _score, chunk in scored_chunks[:fallback_count]]
 
 # ============================================================================
 # TEXT CHUNKING
@@ -57,6 +144,7 @@ def split_into_chunks(text, min_len=100, max_len=1500, return_dicts=False):
     for para in paragraphs:
         para = para.strip()
         if is_useful_paragraph(para):
+            para = normalize_source_text(para)
             if len(para) > max_len:
                 sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', para)
                 current = ""

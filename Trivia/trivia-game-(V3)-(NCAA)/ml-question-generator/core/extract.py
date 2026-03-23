@@ -4,6 +4,7 @@ import fitz  # PyMuPDF
 import re
 from .clean import clean_text
 from .chunking import extract_section_identifier
+from .hints import extract_heading_candidates
 
 # ============================================================================
 # PDF TEXT EXTRACTION
@@ -30,16 +31,7 @@ def extract_text_from_pdf(pdf_path):
         page_text = clean_text(page_text)
         
         # Try to extract section headers from this page
-        headings = []
-        heading_patterns = [
-            r'^(\d+\.\d+(?:\.\d+)?\s+[A-Z][^\n]{5,50})$',  # 1.2.3 Title
-            r'^(PART\s+\d+[^\n]{5,50})$',  # PART 1 Title
-            r'^(CHAPTER\s+\d+[^\n]{5,50})$',  # CHAPTER 1 Title
-            r'^(Section\s+\d+[^\n]{5,50})$',  # Section 1 Title
-        ]
-        for pattern in heading_patterns:
-            for match in re.finditer(pattern, page_text, re.MULTILINE | re.IGNORECASE):
-                headings.append(match.group(1).strip())
+        headings = [heading["label"] for heading in extract_heading_candidates(page_text)]
         
         pages_data.append({
             'page_num': page_num,

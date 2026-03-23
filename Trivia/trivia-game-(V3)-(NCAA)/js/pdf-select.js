@@ -1,6 +1,6 @@
 // pdf-select.js - PDF selection page logic
 
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE = window.location.origin;
 
 // Elements
 const btnDatabase = document.getElementById('btn-database');
@@ -15,12 +15,29 @@ const statusMessage = document.getElementById('status-message');
 
 let currentSource = 'database'; // 'database' or 'upload'
 
+function normalizeDocumentEntry(entry) {
+    if (typeof entry === 'string') {
+        return {
+            doc_id: entry.replace(/\.pdf$/i, ''),
+            title: entry.replace(/-/g, ' ').replace(/\.pdf$/i, ''),
+            document_family_label: 'Database PDF'
+        };
+    }
+
+    return {
+        doc_id: entry.doc_id,
+        title: entry.title || entry.doc_id,
+        document_family_label: entry.document_family_label || 'Database PDF',
+        regulatory_part: entry.regulatory_part || ''
+    };
+}
+
 // Load database PDFs on page load
 async function loadDbPdfs() {
     try {
         const response = await fetch(`${API_BASE}/list-db-pdfs`);
         if (!response.ok) throw new Error('Failed to load database PDFs');
-        const pdfs = await response.json();
+        const pdfs = (await response.json()).map(normalizeDocumentEntry);
         
         dbSelect.innerHTML = '';
         
@@ -30,11 +47,12 @@ async function loadDbPdfs() {
         }
         
         dbSelect.innerHTML = '<option value="">-- Select a PDF --</option>';
-        for (const name of pdfs) {
+        for (const doc of pdfs) {
             const opt = document.createElement('option');
-            opt.value = name;
-            // Clean up the filename for display
-            opt.textContent = name.replace(/-/g, ' ').replace('.pdf', '').replace(/nig cars /i, '');
+            opt.value = doc.doc_id;
+            opt.dataset.title = doc.title;
+            opt.dataset.familyLabel = doc.document_family_label;
+            opt.textContent = `${doc.title} • ${doc.document_family_label}`;
             dbSelect.appendChild(opt);
         }
     } catch (err) {
@@ -81,8 +99,10 @@ generateBtn.addEventListener('click', () => {
             statusMessage.className = 'status-error';
             return;
         }
-        // Navigate to questions page with database PDF
-        window.location.href = `questions.html?source=database&pdf=${encodeURIComponent(dbSelect.value)}`;
+        const selectedOption = dbSelect.options[dbSelect.selectedIndex];
+        const title = selectedOption.dataset.title || selectedOption.textContent || dbSelect.value;
+        // Navigate to questions page with database document id
+        window.location.href = `/questions.html?source=database&doc_id=${encodeURIComponent(dbSelect.value)}&title=${encodeURIComponent(title)}`;
     } else {
         if (!fileInput.files.length) {
             statusMessage.textContent = 'Please select a PDF file to upload.';
@@ -101,7 +121,7 @@ generateBtn.addEventListener('click', () => {
             try {
                 sessionStorage.setItem('uploadedPdf', e.target.result);
                 sessionStorage.setItem('uploadedPdfName', file.name);
-                window.location.href = 'questions.html?source=upload';
+                window.location.href = '/questions.html?source=upload';
             } catch (err) {
                 statusMessage.textContent = 'File too large for browser storage. Try a smaller PDF.';
                 statusMessage.className = 'status-error';

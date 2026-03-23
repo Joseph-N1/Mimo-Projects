@@ -11,6 +11,9 @@ from .embeddings import embed_texts
 def build_faiss_index(chunks: List, output_dir: str, doc_id: str):
     os.makedirs(output_dir, exist_ok=True)
 
+    if not chunks:
+        return
+
     if isinstance(chunks[0], dict):
         texts = [chunk["text"] for chunk in chunks]
     else:
@@ -27,14 +30,18 @@ def build_faiss_index(chunks: List, output_dir: str, doc_id: str):
     metadata = []
     for i, chunk in enumerate(chunks):
         if isinstance(chunk, dict):
-            metadata.append({
+            entry = {
                 "vector_id": i,
                 "chunk_id": chunk.get("chunk_id"),
                 "page": chunk.get("page"),
                 "section": chunk.get("section"),
                 "doc_id": doc_id,
-                "text": chunk.get("text")
-            })
+                "text": chunk.get("text"),
+            }
+            for key in ("title", "document_family", "document_family_label", "relative_path", "regulatory_part"):
+                if key in chunk:
+                    entry[key] = chunk.get(key)
+            metadata.append(entry)
         else:
             # chunk is just a string
             metadata.append({
@@ -58,6 +65,9 @@ def search_similar_chunks(query: str, top_k: int = 3, vector_root: str = None):
 
     if vector_root is None:
         vector_root = os.path.join(os.path.dirname(__file__), "..", "vector_index")
+
+    if not os.path.isdir(vector_root):
+        return []
 
     query_embedding = embed_texts([query])
     all_results = []

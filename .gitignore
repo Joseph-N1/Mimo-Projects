@@ -1,0 +1,37 @@
+# Global editor / Python noise
+.vscode/
+**/.vscode/
+**/.venv/
+**/venv/
+**/__pycache__/
+**/.ipynb_checkpoints/
+*.py[cod]
+
+# Scratch notebooks and local ML artifacts
+/Untitled.ipynb
+/models/
+/settings.json
+
+# F1 local-only outputs and notebook workspace
+/F1/Predictions/*.json
+/F1/Predictions/f1_prediction_env/
+/F1/*.ipynb
+/F1/run_notebook.bat
+/F1/settings.json
+
+# Older Trivia project assets and docs
+/Trivia/trivia-game/Images/
+/Trivia/trivia-game/assets/
+/Trivia/trivia-game/TRIVIA-DOCUMENTATION.md
+
+# Trivia project local corpora, indexes, and runtime artifacts
+/Trivia/trivia-game-(V3)-(NCAA)/database/
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/content_index/
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/vector_index/
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/.venv/
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/.venv-runtime/
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/startup-out.log
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/startup-err.log
+/Trivia/trivia-game-(V3)-(NCAA)/ml-question-generator/progress.txt
+/Trivia/trivia-game-(V3)-(NCAA)/tmp-*.txt
+/Trivia/trivia-game-(V3)-(NCAA)/-w

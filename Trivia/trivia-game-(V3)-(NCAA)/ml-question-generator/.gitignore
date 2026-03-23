@@ -148,6 +148,9 @@ Thumbs.db
 # Generated vector indices (FAISS, etc.)
 vector_index/
 content_index/
+.venv-runtime/
+startup-out.log
+startup-err.log
 
 # Temporary files
 progress.txt

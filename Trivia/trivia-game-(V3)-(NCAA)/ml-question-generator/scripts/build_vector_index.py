@@ -19,8 +19,8 @@ VECTOR_INDEX_DIR = os.path.join(PROJECT_ROOT, "vector_index")
 def main():
     os.makedirs(VECTOR_INDEX_DIR, exist_ok=True)
 
-    for filename in os.listdir(CONTENT_INDEX_DIR):
-        if not filename.endswith(".json"):
+    for filename in sorted(os.listdir(CONTENT_INDEX_DIR)):
+        if not filename.endswith(".json") or filename == "manifest.json":
             continue
 
         file_path = os.path.join(CONTENT_INDEX_DIR, filename)

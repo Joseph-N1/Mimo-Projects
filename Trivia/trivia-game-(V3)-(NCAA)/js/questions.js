@@ -1,6 +1,6 @@
 // questions.js - Questions display and quiz logic
 
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE = window.location.origin;
 
 // Elements
 const quizTitle = document.getElementById('quiz-title');
@@ -17,12 +17,61 @@ let allQuestions = [];
 let userAnswers = {};
 let quizSubmitted = false;
 
+function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function renderHintPanel(question, index) {
+    const hintDetails = question.hintDetails;
+
+    if (hintDetails && typeof hintDetails === 'object') {
+        const summary = escapeHtml(hintDetails.summary || question.hint || 'No hint available');
+        const clues = Array.isArray(hintDetails.clues)
+            ? hintDetails.clues.filter(Boolean).map(clue => `<li>${escapeHtml(clue)}</li>`).join('')
+            : '';
+        const keywords = Array.isArray(hintDetails.keywords)
+            ? hintDetails.keywords.filter(Boolean).map(keyword => `<span class="hint-keyword">${escapeHtml(keyword)}</span>`).join('')
+            : '';
+
+        const meta = [];
+        if (hintDetails.focus) {
+            meta.push(`<span class="hint-chip"><strong>Focus:</strong> ${escapeHtml(hintDetails.focus)}</span>`);
+        }
+        if (hintDetails.sectionRef) {
+            meta.push(`<span class="hint-chip"><strong>Section:</strong> ${escapeHtml(hintDetails.sectionRef)}</span>`);
+        }
+        if (hintDetails.pageRef) {
+            meta.push(`<span class="hint-chip"><strong>Page:</strong> ${escapeHtml(`Page ${hintDetails.pageRef}`)}</span>`);
+        }
+
+        return `
+            <div class="hint-text hint-card" id="hint-${index}" style="display: none;">
+                <div class="hint-label">Study Clue</div>
+                <div class="hint-summary">${summary}</div>
+                ${clues ? `<ul class="hint-clue-list">${clues}</ul>` : ''}
+                ${keywords ? `<div class="hint-keywords">${keywords}</div>` : ''}
+                ${meta.length ? `<div class="hint-meta">${meta.join('')}</div>` : ''}
+                ${hintDetails.referenceNote ? `<div class="hint-reference-note">${escapeHtml(hintDetails.referenceNote)}</div>` : ''}
+            </div>
+        `;
+    }
+
+    return `<div class="hint-text" id="hint-${index}" style="display: none;">${escapeHtml(question.hint || 'No hint available')}</div>`;
+}
+
 // Parse URL params
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
         source: params.get('source'),
-        pdf: params.get('pdf')
+        pdf: params.get('pdf'),
+        docId: params.get('doc_id') || params.get('doc'),
+        title: params.get('title')
     };
 }
 
@@ -33,13 +82,14 @@ function showError(message) {
     errorDiv.innerHTML = `
         <h3>Error</h3>
         <p>${message}</p>
-        <a href="pdf-upload.html" class="back-link">← Go back and try again</a>
+        <a href="/quiz" class="back-link">← Go back and try again</a>
+        <a href="/" class="back-link">Home</a>
     `;
 }
 
 // Generate questions from API
 async function generateQuestions() {
-    const { source, pdf } = getUrlParams();
+    const { source, pdf, docId, title } = getUrlParams();
     
     if (!source) {
         showError('No PDF source specified. Please go back and select a PDF.');
@@ -51,17 +101,20 @@ async function generateQuestions() {
         let pdfName = '';
         
         if (source === 'database') {
-            if (!pdf) {
-                showError('No PDF selected from database.');
+            if (!docId && !pdf) {
+                showError('No database document was selected.');
                 return;
             }
-            pdfName = pdf;
-            quizTitle.textContent = `Generating questions from: ${pdf.replace(/-/g, ' ').replace('.pdf', '')}`;
+            pdfName = title || pdf || docId;
+            quizTitle.textContent = `Generating questions from: ${pdfName}`;
             
             response = await fetch(`${API_BASE}/generate-questions-from-db`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pdf_name: pdf })
+                body: JSON.stringify({
+                    doc_id: docId,
+                    pdf_name: pdf
+                })
             });
         } else if (source === 'upload') {
             const pdfData = sessionStorage.getItem('uploadedPdf');
@@ -92,8 +145,17 @@ async function generateQuestions() {
         }
         
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Server error: ${errorText}`);
+            let message = 'The server could not generate quiz questions for this document.';
+            try {
+                const errorPayload = await response.json();
+                message = errorPayload.error || message;
+            } catch (_err) {
+                const errorText = await response.text();
+                if (errorText) {
+                    message = errorText;
+                }
+            }
+            throw new Error(message);
         }
         
         const sections = await response.json();
@@ -123,7 +185,7 @@ async function generateQuestions() {
 function displayQuestions(pdfName) {
     loadingDiv.style.display = 'none';
     
-    quizTitle.textContent = pdfName.replace(/-/g, ' ').replace('.pdf', '');
+    quizTitle.textContent = pdfName;
     quizStats.innerHTML = `<span class="total-questions">${allQuestions.length} Questions</span>`;
     
     questionsContainer.innerHTML = '';
@@ -151,8 +213,8 @@ function displayQuestions(pdfName) {
             </div>
             <div class="question-feedback" style="display: none;"></div>
             <div class="question-hint">
-                <button class="hint-btn" onclick="toggleHint(${index})">💡 Show Hint</button>
-                <div class="hint-text" id="hint-${index}" style="display: none;">${q.hint || 'No hint available'}</div>
+                <button class="hint-btn" onclick="toggleHint(${index})">Show Hint</button>
+                ${renderHintPanel(q, index)}
             </div>
         `;
         
@@ -213,10 +275,10 @@ window.toggleHint = function(index) {
     const btn = hintEl.previousElementSibling;
     if (hintEl.style.display === 'none') {
         hintEl.style.display = 'block';
-        btn.textContent = '💡 Hide Hint';
+        btn.textContent = 'Hide Hint';
     } else {
         hintEl.style.display = 'none';
-        btn.textContent = '💡 Show Hint';
+        btn.textContent = 'Show Hint';
     }
 };
 

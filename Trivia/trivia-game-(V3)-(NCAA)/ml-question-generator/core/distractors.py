@@ -7,9 +7,61 @@ import random
 # TEXT SUMMARIZATION HELPER
 # ============================================================================
 
+FRAGMENT_ENDINGS = {
+    "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "if",
+    "in", "is", "it", "of", "on", "or", "that", "the", "their", "this",
+    "to", "was", "were", "which", "who", "with",
+}
+
+
+def clean_option_text(text):
+    """Remove common PDF artifacts before using text as an answer option."""
+    if not text:
+        return ""
+
+    text = text.replace("\n", " ")
+    text = re.sub(r"April\s+\d{4},\s*Amendment\s+\d+", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"NIGERIA\s+CIVIL\s+AVIATION\s+REGULATIONS", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"Part\s+\d+\s*-\s*[A-Za-z][A-Za-z\s\-]+", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\b\d{1,2}-\d+\b", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip(" -:;,.")
+
+
+def looks_like_weak_option(text):
+    if not text:
+        return True
+
+    cleaned = clean_option_text(text)
+    words = cleaned.split()
+
+    if len(words) < 4:
+        return True
+
+    if cleaned.lower() in {"note", "notes", "example", "examples"}:
+        return True
+
+    if words[-1].lower().strip(".,;:") in FRAGMENT_ENDINGS:
+        return True
+
+    if re.search(r"(amendment|table of contents|record of amendment)", cleaned, re.IGNORECASE):
+        return True
+
+    return False
+
+
+def trim_trailing_fragments(text):
+    cleaned = clean_option_text(text)
+    words = cleaned.split()
+
+    while words and words[-1].lower().strip(".,;:") in FRAGMENT_ENDINGS:
+        words.pop()
+
+    return " ".join(words).strip(" -:;,.")
+
 def make_concept_summary(text, max_len=150):
     """Create a concise summary suitable for an answer option"""
-    text = text.strip()
+    text = clean_option_text(text)
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'^\([a-z]\)\s*', '', text)
     text = re.sub(r'^\d+\.\d+\.?\d*\s*', '', text)
@@ -22,7 +74,17 @@ def make_concept_summary(text, max_len=150):
                 result += s + " "
             else:
                 break
-        text = result.strip() if result else text[:max_len] + "..."
+        if result.strip():
+            text = result.strip()
+        else:
+            truncated = text[:max_len].rsplit(" ", 1)[0].strip()
+            text = f"{truncated}..." if truncated else text[:max_len] + "..."
+
+    text = trim_trailing_fragments(text)
+
+    if looks_like_weak_option(text):
+        return ""
+
     return text
 
 # ============================================================================
@@ -52,8 +114,9 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
         random.shuffle(others)
         for other in others[:3]:
             # Make sure it's sufficiently different but still plausible
-            if other not in distractors:
-                distractors.append(make_concept_summary(other, 150))
+            cleaned = make_concept_summary(other, 150)
+            if cleaned and cleaned not in distractors:
+                distractors.append(cleaned)
     
     elif concept_type == "responsibility" and "responsibilities" in all_concepts:
         others = [r["entity"].title() for r in all_concepts["responsibilities"] 
@@ -74,7 +137,7 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
                       if r["requirement"].lower() != correct_lower]
             random.shuffle(others)
             for other in others[:2]:
-                if other not in distractors:
+                if other and other not in distractors:
                     distractors.append(other)
         
         if "purposes" in all_concepts and len(distractors) < 2:
@@ -82,7 +145,7 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
                       if p["purpose"].lower() != correct_lower]
             random.shuffle(others)
             for other in others[:2]:
-                if other not in distractors:
+                if other and other not in distractors:
                     distractors.append(other)
     
     # Strategy 2: Subtle modifications to correct answer (requires careful reading)
@@ -105,8 +168,9 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
         for mod in subtle_modifications:
             try:
                 modified = mod(correct_answer)
-                if modified != correct_answer and modified not in distractors and len(modified) > 20:
-                    distractors.append(make_concept_summary(modified, 150))
+                cleaned = make_concept_summary(modified, 150)
+                if cleaned and cleaned != correct_answer and cleaned not in distractors and len(cleaned) > 20:
+                    distractors.append(cleaned)
                     if len(distractors) >= 3:
                         break
             except:
@@ -128,8 +192,9 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
         ]
         random.shuffle(domain_distractors)
         for d in domain_distractors:
-            if d not in distractors and d.lower() != correct_lower:
-                distractors.append(d)
+            cleaned = make_concept_summary(d, 150)
+            if cleaned and cleaned not in distractors and cleaned.lower() != correct_lower:
+                distractors.append(cleaned)
                 if len(distractors) >= 3:
                     break
     
@@ -144,8 +209,9 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
     ]
     while len(distractors) < 3:
         for fb in fallback_options:
-            if fb not in distractors:
-                distractors.append(fb)
+            cleaned = make_concept_summary(fb, 150)
+            if cleaned and cleaned not in distractors:
+                distractors.append(cleaned)
                 break
     
     return distractors[:3]

@@ -20,6 +20,28 @@ body {
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     padding: 40px 32px;
 }
+.page-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #4c5ac7;
+    background: #eef0ff;
+}
+.page-link-alt {
+    color: #0d6a74;
+    background: #e6f8fa;
+}
 h1 {
     text-align: center;
     color: #2c3e50;
@@ -141,4 +163,9 @@ h1 {
 }
 .status-loading {
     color: #667eea;
+}
+@media (max-width: 520px) {
+    .page-links {
+        flex-direction: column;
+    }
 }

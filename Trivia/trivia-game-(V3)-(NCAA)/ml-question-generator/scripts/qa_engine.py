@@ -10,6 +10,7 @@ PROJECT_ROOT = CURRENT_DIR.parent
 sys.path.append(str(PROJECT_ROOT))
 
 from core.vector_store import search_similar_chunks
+from core.catalog import get_document_record
 
 
 # ==========================
@@ -24,26 +25,48 @@ TOP_K = 3
 # ==========================
 
 DOMAIN_MAP = {
-    "1": "Definitions & Abbreviations",
+    "1": "General Policies, Procedures and Definitions",
     "2": "Personnel Licensing",
-    "3": "Medical Standards",
+    "3": "Approved Training Organization",
     "4": "Aircraft Registration & Marking",
     "5": "Airworthiness",
-    "6": "Instrument & Equipment",
-    "7": "Flight Operations",
-    "8": "Air Transport Operations",
-    "9": "Aerial Work",
-    "10": "Air Navigation Services",
-    "11": "Aerodromes",
-    "12": "Search & Rescue",
-    "13": "Aircraft Accident Investigation",
-    "14": "Environmental Protection",
-    "15": "Information Services",
-    "16": "Aviation Training Organizations",
+    "6": "Approved Maintenance Organization",
+    "7": "Instrument and Equipment",
+    "8": "Operations",
+    "9": "Air Operator Certification and Administration",
+    "10": "Commercial Air Transport by Foreign Air Operators within Nigeria",
+    "11": "Aerial Work",
+    "12": "Aerodrome and Heliport Regulations",
+    "14": "Air Navigation Services",
+    "15": "Safe Transport of Dangerous Goods by Air",
+    "16": "Environmental Protection",
     "17": "Aviation Security",
-    "18": "Dangerous Goods",
-    "19": "Safety Management",
+    "18": "Air Transport Economics",
+    "19": "Consumer Protection",
+    "20": "Safety Management",
+    "21": "Remotely Piloted Aircraft System",
 }
+
+QUESTION_DOMAIN_KEYWORDS = [
+    ("Schedule", ["fee", "fees", "charge", "charges", "payment", "tariff", "levy"]),
+    ("Part 21", ["rpas", "remotely piloted", "drone", "uas", "uav", "unmanned", "remote pilot"]),
+    ("Part 20", ["safety management", "sms", "hazard", "risk management", "safety assurance", "safety promotion"]),
+    ("Part 19", ["consumer protection", "passenger rights", "refund", "denied boarding", "delay", "cancellation", "baggage claim"]),
+    ("Part 17", ["security", "screening", "access control", "unlawful interference", "sterile area", "security programme"]),
+    ("Part 15", ["dangerous goods", "lithium battery", "shipper", "hazmat", "dangerous article"]),
+    ("Part 14", ["air navigation", "air traffic", "ats", "atc", "aeronautical information", "ais", "communication navigation surveillance", "cns"]),
+    ("Part 12", ["aerodrome", "heliport", "runway", "taxiway", "apron", "airport operator", "rescue and firefighting"]),
+    ("Part 10", ["foreign air operator", "foreign operator", "commercial air transport by foreign", "within nigeria"]),
+    ("Part 9", ["air operator certificate", "aoc", "operator certification", "operator administration"]),
+    ("Part 8", ["flight operations", "operational control", "dispatch", "flight duty", "fuel planning", "pilot in command", "pre flight"]),
+    ("Part 7", ["instrument", "equipment", "elt", "altimeter", "radio equipment", "minimum equipment", "navigation equipment"]),
+    ("Part 6", ["approved maintenance organization", "amo", "maintenance organization", "maintenance facility", "maintenance exposition"]),
+    ("Part 5", ["airworthiness", "maintenance release", "return to service", "damage", "repair", "continuing airworthiness", "certificate of airworthiness"]),
+    ("Part 4", ["registration", "marking", "nationality mark", "registration mark"]),
+    ("Part 3", ["approved training organization", "ato", "training organization", "flight training school"]),
+    ("Part 2", ["licence", "license", "rating", "pilot", "instructor", "medical certificate", "flight crew", "personnel licensing"]),
+    ("Part 1", ["definition", "definitions", "abbreviation", "interpretation", "meaning of", "term"]),
+]
 
 
 # ==========================
@@ -51,9 +74,16 @@ DOMAIN_MAP = {
 # ==========================
 
 def extract_part_from_doc_id(doc_id: str):
+    if not doc_id:
+        return None
+
+    record = get_document_record(doc_id=doc_id)
+    if record and record.get("regulatory_part"):
+        return record["regulatory_part"]
+
     match = re.search(r"part-(\d+)", doc_id.lower())
     if match:
-        return f"Part {match.group(1)}"
+        return f"Part {int(match.group(1))}"
     return None
 
 
@@ -61,13 +91,22 @@ def format_citation(metadata: Dict):
     doc_id = metadata.get("doc_id")
     page = metadata.get("page")
     section = metadata.get("section")
+    record = get_document_record(doc_id=doc_id)
 
-    part = extract_part_from_doc_id(doc_id)
+    part = metadata.get("regulatory_part") or extract_part_from_doc_id(doc_id)
+    title = metadata.get("title") or (record.get("title") if record else None) or doc_id
+    document_family = metadata.get("document_family") or (record.get("document_family") if record else None)
+    family_label = metadata.get("document_family_label") or (record.get("document_family_label") if record else None)
 
-    citation = "Nig. CARs"
-
-    if part:
-        citation += f" {part}"
+    if document_family == "nig_cars":
+        if part:
+            citation = f"Nig. CARs {part}"
+            if title and " - " in title:
+                citation += f" - {title.split(' - ', 1)[1]}"
+        else:
+            citation = f"Nig. CARs - {title}"
+    else:
+        citation = f"{family_label or 'Database Document'} - {title}"
 
     if section:
         citation += f" – Section {section}"
@@ -164,6 +203,91 @@ def get_confidence_label(confidence: float) -> str:
         return "Low"
 
 
+def format_legacy_answer(
+    answer_text: str,
+    confidence: float = None,
+    detected_domain: str = None,
+    retrieved_domain: str = None,
+    sources: List[str] = None
+) -> str:
+    sections = [f"Answer:\n{answer_text}"]
+
+    metadata_lines = []
+    if confidence is not None:
+        metadata_lines.append(f"Confidence: {confidence:.2f}")
+    if detected_domain and detected_domain != "Unknown":
+        metadata_lines.append(f"Expected Domain: {detected_domain}")
+    if retrieved_domain:
+        metadata_lines.append(f"Retrieved Domain: {retrieved_domain}")
+
+    if metadata_lines:
+        sections.append("\n".join(metadata_lines))
+
+    if sources:
+        citation_block = "\n".join(f"- {citation}" for citation in sources)
+        sections.append(f"Sources:\n{citation_block}")
+
+    return "\n\n".join(sections)
+
+
+def parse_answer_structure(answer_text: str):
+    lines = [line.strip() for line in answer_text.splitlines() if line.strip()]
+    if not lines:
+        return None, []
+
+    summary_lines = []
+    answer_points = []
+
+    for line in lines:
+        bullet_match = re.match(r"^[-*•]\s+(.*)", line)
+        numbered_match = re.match(r"^\d+\.\s+(.*)", line)
+
+        if bullet_match:
+            answer_points.append(bullet_match.group(1).strip())
+        elif numbered_match:
+            answer_points.append(numbered_match.group(1).strip())
+        else:
+            summary_lines.append(line)
+
+    if not answer_points and len(summary_lines) > 1:
+        return summary_lines[0], summary_lines[1:]
+
+    answer_summary = " ".join(summary_lines) if summary_lines else None
+    return answer_summary, answer_points
+
+
+def build_result(
+    answer_text: str,
+    detected_domain: str,
+    retrieved_domain: str = None,
+    subcontext: str = None,
+    confidence: float = None,
+    cross_refs: List[str] = None,
+    sources: List[str] = None
+) -> Dict:
+    answer_summary, answer_points = parse_answer_structure(answer_text)
+
+    return {
+        "detected_domain": detected_domain,
+        "retrieved_domain": retrieved_domain,
+        "subcontext": subcontext,
+        "confidence": confidence,
+        "confidence_label": get_confidence_label(confidence) if confidence is not None else None,
+        "cross_refs": cross_refs or [],
+        "sources": sources or [],
+        "answer_summary": answer_summary,
+        "answer_points": answer_points,
+        "answer_text": answer_text,
+        "answer": format_legacy_answer(
+            answer_text,
+            confidence=confidence,
+            detected_domain=detected_domain,
+            retrieved_domain=retrieved_domain,
+            sources=sources or []
+        ),
+    }
+
+
 # ==========================
 # GUARDRAILS
 # ==========================
@@ -204,6 +328,7 @@ def detect_domain(citations: List[str]) -> str:
     Returns domain string like "Airworthiness (Part 5)".
     """
     parts_found = []
+    titles_found = []
 
     for citation in citations:
         match = re.search(r"Part (\d+)", citation)
@@ -211,8 +336,10 @@ def detect_domain(citations: List[str]) -> str:
             part_num = match.group(1)
             if part_num not in parts_found:
                 parts_found.append(part_num)
+        elif "Schedule of Fees and Charges" in citation and "Schedule of Fees and Charges" not in titles_found:
+            titles_found.append("Schedule of Fees and Charges")
 
-    if not parts_found:
+    if not parts_found and not titles_found:
         return None
 
     # Build domain string
@@ -220,6 +347,7 @@ def detect_domain(citations: List[str]) -> str:
     for part_num in parts_found:
         domain_name = DOMAIN_MAP.get(part_num, "Unknown")
         domains.append(f"{domain_name} (Part {part_num})")
+    domains.extend(titles_found)
 
     return ", ".join(domains)
 
@@ -263,119 +391,11 @@ def detect_question_domain(question: str) -> str:
     """
     Detect which Part the question is targeting based on keyword matching.
     """
-    domain_keywords = {
-        "Part 1": [
-            "definition",
-            "aircraft",
-            "airworthiness",
-            "operator",
-            "commercial air transport",
-            "define",
-            "meaning",
-            "term",
-            "interpretation",
-            "abbreviation"
-        ],
-        "Part 2": [
-            "pilot",
-            "licence",
-            "license",
-            "rating",
-            "commercial pilot",
-            "private pilot",
-            "flight instructor",
-            "ATPL",
-            "recency",
-            "medical certificate",
-            "medical certification",
-            "flight crew"
-        ],
-        "Part 5": [
-            "airworthiness",
-            "maintenance",
-            "component",
-            "return to service",
-            "return to service after maintenance",
-            "damage",
-            "repair",
-            "unserviceable",
-            "aircraft condition",
-            "inspection",
-            "defect",
-            "modification",
-            "serviceability"
-        ],
-        "Part 6": [
-            "maintenance engineer",
-            "aircraft maintenance engineer",
-            "AME",
-            "AME licence",
-            "certifying staff",
-            "certifying engineer",
-            "maintenance licence",
-            "personnel licensing",
-            "maintenance personnel",
-            "certification authorization",
-            "qualifications",
-            "AMEL",
-            "engineer licence"
-        ],
-        "Part 8": [
-            "operator",
-            "flight operations",
-            "pre flight",
-            "departure",
-            "documents",
-            "on board",
-            "documents onboard",
-            "aircraft documents",
-            "carried on board",
-            "alternate aerodrome",
-            "flight planning",
-            "aircraft operator",
-            "fuel planning",
-            "pilot in command",
-            "operational procedures",
-            "flight preparation"
-        ],
-        "Part 12": [
-            "accident",
-            "investigation",
-            "reported",
-            "incident",
-            "serious",
-            "accident investigation",
-            "incident reporting",
-            "reporting",
-            "safety investigation"
-        ],
-        "Part 17": [
-            "security",
-            "aviation security",
-            "unlawful interference",
-            "aerodrome security",
-            "security threat",
-            "airport security",
-            "screening",
-            "security measures",
-            "security responsibilities"
-        ]
-    }
+    normalized_question = question.lower()
 
-    priority_order = [
-        "Part 17",  # security first
-        "Part 12",  # accident investigation
-        "Part 6",   # personnel licensing
-        "Part 5",   # airworthiness
-        "Part 8",   # operations
-        "Part 2",   # pilot licensing
-        "Part 1"    # definitions last
-    ]
-
-    for part in priority_order:
-        keywords = domain_keywords[part]
-        if any(k in question.lower() for k in keywords):
-            return part
+    for domain_name, keywords in QUESTION_DOMAIN_KEYWORDS:
+        if any(keyword in normalized_question for keyword in keywords):
+            return domain_name
 
     return "Unknown"
 
@@ -385,36 +405,69 @@ def detect_cross_reference(question):
 
     cross_refs = []
 
-    # Licensing references
+    if any(word in question for word in [
+        "maintenance",
+        "return to service",
+        "airworthiness",
+        "repair",
+        "approved maintenance organization",
+        "amo",
+    ]):
+        cross_refs.append("Part 5 – Airworthiness")
+        cross_refs.append("Part 6 – Approved Maintenance Organization")
+
     if any(word in question for word in [
         "licence",
         "license",
-        "authorised",
-        "authorized",
-        "who can sign",
-        "certifying staff",
-        "engineer licence"
+        "pilot",
+        "instructor",
+        "rating",
+        "medical certificate",
     ]):
-        cross_refs.append("Part 6 – Personnel Licensing")
+        cross_refs.append("Part 2 – Personnel Licensing")
+        cross_refs.append("Part 3 – Approved Training Organization")
 
-    # Operations references
     if any(word in question for word in [
         "operator",
-        "flight operations",
+        "aoc",
         "operational control",
-        "dispatch"
+        "dispatch",
+        "flight operations",
     ]):
-        cross_refs.append("Part 8 – Air Transport Operations")
+        cross_refs.append("Part 8 – Operations")
+        cross_refs.append("Part 9 – Air Operator Certification and Administration")
 
-    # Security references
+    if any(word in question for word in [
+        "aerodrome",
+        "heliport",
+        "runway",
+        "taxiway",
+    ]):
+        cross_refs.append("Part 12 – Aerodrome and Heliport Regulations")
+
+    if any(word in question for word in [
+        "dangerous goods",
+        "lithium battery",
+        "hazmat",
+    ]):
+        cross_refs.append("Part 15 – Safe Transport of Dangerous Goods by Air")
+
     if any(word in question for word in [
         "security",
+        "screening",
         "unlawful interference",
-        "airport protection"
     ]):
         cross_refs.append("Part 17 – Aviation Security")
 
-    return cross_refs
+    if any(word in question for word in [
+        "hazard",
+        "risk management",
+        "safety management",
+        "sms",
+    ]):
+        cross_refs.append("Part 20 – Safety Management")
+
+    return list(dict.fromkeys(cross_refs))
 
 
 # ==========================
@@ -667,9 +720,11 @@ def run_engine(question: str):
     Run the QA engine and return structured result.
     
     Returns:
-        dict with keys: detected_domain, subcontext, confidence, answer
+        dict with keys including detected_domain, retrieved_domain,
+        subcontext, confidence, cross_refs, sources, answer_text, answer
     """
     context, citations, avg_score, detected_domain = retrieve_context(question)
+    retrieved_domain = detect_domain(citations)
 
     print(f"\nDetected Regulatory Domain: {detected_domain}")
 
@@ -687,11 +742,8 @@ def run_engine(question: str):
         print(f"Part 5 Subcontext: {subcontext}")
 
         if subcontext == "Ambiguous":
-            return {
-                "detected_domain": detected_domain,
-                "subcontext": subcontext,
-                "confidence": None,
-                "answer": """⚠ Ambiguity Detected in Regulatory Context.
+            return build_result(
+                answer_text="""Ambiguity detected in regulatory context.
 
 The phrase 'returned to service' appears in multiple regulatory contexts under Part 5:
 1. Return to service after maintenance (maintenance release requirements)
@@ -699,8 +751,14 @@ The phrase 'returned to service' appears in multiple regulatory contexts under P
 
 Please clarify which context you are referring to:
 - For maintenance: "What are the requirements for maintenance release?"
-- For damage: "What are the requirements after aircraft damage?\""""
-            }
+- For damage: "What are the requirements after aircraft damage?""",
+                detected_domain=detected_domain,
+                retrieved_domain=retrieved_domain,
+                subcontext=subcontext,
+                confidence=None,
+                cross_refs=cross_refs,
+                sources=citations,
+            )
 
         # Damage context clarification (warning, not a stop)
         if subcontext == "Damage Context" and "maintenance" not in question.lower():
@@ -710,12 +768,15 @@ Please clarify which context you are referring to:
     valid, reason = guardrail_check(context, avg_score)
 
     if not valid:
-        return {
-            "detected_domain": detected_domain,
-            "subcontext": subcontext,
-            "confidence": avg_score,
-            "answer": f"Unable to generate reliable answer.\n\nReason: {reason}"
-        }
+        return build_result(
+            answer_text=f"Unable to generate a reliable answer.\n\nReason: {reason}",
+            detected_domain=detected_domain,
+            retrieved_domain=retrieved_domain,
+            subcontext=subcontext,
+            confidence=avg_score,
+            cross_refs=cross_refs,
+            sources=citations,
+        )
 
     prompt = build_prompt(question, context)
 
@@ -732,33 +793,15 @@ Please clarify which context you are referring to:
     if real_confidence < 0.55:
         print("\nWarning: The system is uncertain about this answer. Please verify the cited regulation manually.")
 
-    # Detect domain from retrieved citations
-    retrieved_domain = detect_domain(citations)
-
-    citation_block = "\n".join(f"- {c}" for c in citations)
-
-    # Build domain info - show both detected and retrieved for transparency
-    domain_line = ""
-    if detected_domain != "Unknown":
-        domain_line += f"\nExpected Domain: {detected_domain}"
-    if retrieved_domain:
-        domain_line += f"\nRetrieved Domain: {retrieved_domain}"
-
-    final_answer = f"""Answer:
-{answer}
-
-Confidence: {real_confidence:.2f}{domain_line}
-
-Sources:
-{citation_block}
-"""
-
-    return {
-        "detected_domain": detected_domain,
-        "subcontext": subcontext,
-        "confidence": real_confidence,
-        "answer": final_answer
-    }
+    return build_result(
+        answer_text=answer,
+        detected_domain=detected_domain,
+        retrieved_domain=retrieved_domain,
+        subcontext=subcontext,
+        confidence=real_confidence,
+        cross_refs=cross_refs,
+        sources=citations,
+    )
 
 
 def answer_question(question: str):

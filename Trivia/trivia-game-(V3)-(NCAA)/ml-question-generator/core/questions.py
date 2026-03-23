@@ -2,49 +2,52 @@
 
 import re
 import random
-from .distractors import generate_smart_distractors, make_concept_summary
+from .distractors import (
+    clean_option_text,
+    generate_smart_distractors,
+    looks_like_weak_option,
+    make_concept_summary,
+)
+from .hints import find_topic_for_text
 
 # ============================================================================
 # EXAM-STYLE QUESTION TEMPLATES
 # ============================================================================
 
 SCENARIO_TEMPLATES = [
-    "An organization is implementing a {topic}. Which of the following BEST describes {aspect}?",
-    "A {role} needs to ensure compliance with {topic} requirements. What should be the PRIMARY focus?",
-    "During an audit, an inspector finds issues with {topic}. Which action would be MOST appropriate?",
-    "An operator is developing their {topic} documentation. Which element is ESSENTIAL to include?",
-    "A safety manager discovers a gap in {topic}. What is the FIRST step to address this?",
-    "When establishing a {topic}, which of the following is the MOST important consideration?",
-    "A company wants to improve their {topic}. Which approach would be MOST effective?",
-    "{role} is reviewing the {topic} framework. Which component is CRITICAL for success?",
+    "During an audit of {topic}, which action would be MOST appropriate?",
+    "A {role} is implementing {topic}. Which approach best aligns with the regulations?",
+    "When reviewing {topic}, which element should receive PRIMARY attention?",
+    "A regulator identifies a gap in {topic}. What should be addressed FIRST?",
+    "Which scenario best reflects compliant implementation of {topic}?",
 ]
 
 PURPOSE_TEMPLATES = [
+    "Why is {concept} required within the regulatory framework?",
     "What is the PRIMARY purpose of {concept}?",
     "The MAIN objective of {concept} is to:",
-    "Which statement BEST describes the goal of {concept}?",
-    "{concept} is implemented PRIMARILY to:",
+    "Which outcome is {concept} primarily intended to achieve?",
 ]
 
 RESPONSIBILITY_TEMPLATES = [
-    "Who has PRIMARY responsibility for {action}?",
-    "Which entity is ACCOUNTABLE for {action}?",
-    "{action} is the responsibility of:",
-    "Which role is responsible for {action}?",
+    "Under the regulations, who is responsible for {action}?",
+    "Which entity has primary accountability for {action}?",
+    "Responsibility for {action} rests with which role?",
+    "Who has the designated responsibility for {action}?",
 ]
 
 REQUIREMENT_TEMPLATES = [
-    "What is REQUIRED regarding {topic}?",
-    "Which of the following is a MANDATORY requirement for {topic}?",
-    "Organizations MUST ensure which of the following regarding {topic}?",
-    "What is an essential requirement for {topic}?",
+    "According to the regulations, what is required of {topic}?",
+    "Which action is mandatory for {topic}?",
+    "What must {topic} do to remain compliant?",
+    "Which requirement applies directly to {topic}?",
 ]
 
 UNDERSTANDING_TEMPLATES = [
-    "Which statement BEST describes {concept}?",
-    "What is the CORRECT understanding of {concept}?",
-    "How would you BEST define {concept}?",
-    "{concept} can be BEST described as:",
+    "According to the regulations, what does {concept} mean?",
+    "Which option best defines {concept}?",
+    "What is the correct regulatory meaning of {concept}?",
+    "How is {concept} best described in the regulations?",
 ]
 
 APPLICATION_TEMPLATES = [
@@ -60,22 +63,421 @@ NOT_TEMPLATES = [
     "Which statement is INCORRECT regarding {topic}?",
 ]
 
+WEAK_LABELS = {
+    "abbreviations",
+    "attachment",
+    "annex",
+    "applicability",
+    "appendix",
+    "chapter",
+    "definitions",
+    "example",
+    "examples",
+    "figure",
+    "general",
+    "note",
+    "notes",
+    "part",
+    "section",
+    "table",
+}
+
+LOW_SIGNAL_TOPICS = {
+    "airworthiness",
+    "applicability",
+    "general principles",
+    "requirements analysis",
+    "the applicable organization",
+    "the relevant aviation safety plan",
+    "volume",
+}
+
+LOW_VALUE_DEFINITION_TERMS = {
+    "aeroplane",
+    "aircraft",
+    "helicopter",
+}
+
+PRIORITY_KEYWORDS = {
+    "safety",
+    "hazard",
+    "risk",
+    "management",
+    "reporting",
+    "accountable",
+    "authority",
+    "service provider",
+    "operator",
+    "organization",
+    "compliance",
+    "certificate",
+    "training",
+    "maintenance",
+}
+
+REQUIREMENT_START_WORDS = {
+    "address",
+    "apply",
+    "appoint",
+    "communicate",
+    "coordinate",
+    "define",
+    "develop",
+    "document",
+    "ensure",
+    "establish",
+    "evaluate",
+    "identify",
+    "implement",
+    "include",
+    "maintain",
+    "monitor",
+    "provide",
+    "report",
+    "review",
+    "set",
+    "verify",
+}
+
+PURPOSE_START_WORDS = {
+    "enable",
+    "ensure",
+    "facilitate",
+    "improve",
+    "maintain",
+    "prevent",
+    "promote",
+    "protect",
+    "provide",
+    "reduce",
+    "strengthen",
+    "support",
+}
+
+TRAILING_FRAGMENT_WORDS = {
+    "a", "an", "and", "are", "as", "be", "for", "from", "if", "in", "is",
+    "it", "of", "on", "or", "that", "the", "their", "this", "to", "was",
+    "were", "which", "who", "with",
+}
+
+SPECIFIC_REQUIREMENT_TOPICS = [
+    (re.compile(r"\bmaintenance and operational experience\b", re.IGNORECASE), "maintenance and operational experience"),
+    (re.compile(r"\bcontinuing airworthiness(?: and inspections)?\b", re.IGNORECASE), "continuing airworthiness"),
+    (re.compile(r"\bnoise certificate\b|\bnoise certification\b", re.IGNORECASE), "noise certification"),
+    (re.compile(r"\bcertificate of airworthiness\b", re.IGNORECASE), "certificate of airworthiness"),
+    (re.compile(r"\bsupplemental type certificate\b", re.IGNORECASE), "supplemental type certificate"),
+    (re.compile(r"\bairworthiness review staff\b", re.IGNORECASE), "airworthiness review staff"),
+    (re.compile(r"\bemissions certification\b", re.IGNORECASE), "emissions certification"),
+    (re.compile(r"\bfuel venting\b", re.IGNORECASE), "fuel venting"),
+]
+
+LEADING_REQUIREMENT_ACTION_PATTERN = re.compile(
+    r"^(?:address|apply|appoint|communicate|coordinate|define|develop|document|ensure|establish|evaluate|identify|implement|include|maintain|monitor|provide|report|review|set|verify)\s+",
+    re.IGNORECASE,
+)
+SUBJECT_STOP_PATTERN = re.compile(
+    r"\b(?:acceptable to|as required by|for the purpose of|in a form|in accordance with|to the authority|under|within|which|that|who|when|where|while)\b",
+    re.IGNORECASE,
+)
+
+
+def clean_prompt_text(text, max_len=None):
+    text = clean_option_text(text)
+    text = re.sub(r'^\s*(?:note|notes)\s*[:\-]?\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\b(?:IS\s*)?\d+\.\d+(?:\.\d+)*\b', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip(" -:;,.")
+
+    if max_len and len(text) > max_len:
+        trimmed = text[:max_len].rsplit(" ", 1)[0].strip()
+        text = trimmed or text[:max_len]
+
+    return text.strip(" -:;,.")
+
+
+def looks_like_weak_label(text):
+    label = clean_prompt_text(text)
+    if not label:
+        return True
+    if label.lower() in WEAK_LABELS:
+        return True
+    if label.lower().startswith(("of this ", "in this ", "under this ", "of the ")):
+        return True
+    if len(label.split()) > 7:
+        return True
+    if label.split()[-1].lower() in TRAILING_FRAGMENT_WORDS:
+        return True
+    if ";" in label or re.search(r'\b[a-z]\)$|\b[a-z]\b', label):
+        return True
+    if re.search(r'\b(amendment|contents|record of amendment)\b', label, re.IGNORECASE):
+        return True
+    return False
+
+
+def is_complete_statement(text, min_words=5):
+    cleaned = clean_prompt_text(text)
+    words = cleaned.split()
+    if len(words) < min_words:
+        return False
+    if words[-1].lower() in TRAILING_FRAGMENT_WORDS:
+        return False
+    if looks_like_weak_option(cleaned):
+        return False
+    return True
+
+
+def score_priority(text):
+    cleaned = clean_prompt_text(text).lower()
+    score = 0
+
+    for keyword in PRIORITY_KEYWORDS:
+        if keyword in cleaned:
+            score += 2
+
+    return score
+
+
+def starts_with_allowed_word(text, allowed_words):
+    cleaned = clean_prompt_text(text).lower()
+    if not cleaned:
+        return False
+    first_word = cleaned.split()[0]
+    return first_word in allowed_words
+
+
+def score_definition_candidate(definition):
+    term = clean_prompt_text(definition["term"])
+    meaning = clean_prompt_text(definition["meaning"])
+    score = score_priority(term) + score_priority(meaning)
+
+    if len(term.split()) >= 2:
+        score += 2
+
+    if term.lower() in LOW_VALUE_DEFINITION_TERMS:
+        score -= 3
+
+    return score
+
+
+def normalize_entity_name(entity):
+    entity = clean_prompt_text(entity)
+    entity = re.sub(r'^\s*the\s+', '', entity, flags=re.IGNORECASE).strip()
+    entity = entity.title()
+
+    replacements = {
+        "Sms": "SMS",
+        "Aoc": "AOC",
+        "Amo": "AMO",
+        "Ato": "ATO",
+        "Ats": "ATS",
+    }
+    for source, target in replacements.items():
+        entity = entity.replace(source, target)
+
+    return entity
+
+
+def to_gerund(phrase):
+    words = phrase.split()
+    if not words:
+        return ""
+
+    irregular = {
+        "be": "being",
+        "conduct": "conducting",
+        "create": "creating",
+        "define": "defining",
+        "develop": "developing",
+        "ensure": "ensuring",
+        "establish": "establishing",
+        "identify": "identifying",
+        "implement": "implementing",
+        "maintain": "maintaining",
+        "monitor": "monitoring",
+        "provide": "providing",
+        "review": "reviewing",
+    }
+
+    def convert_word(word):
+        lower = word.lower()
+        if lower in irregular:
+            return irregular[lower]
+        if lower.endswith("ing"):
+            return lower
+        if lower.endswith("e") and lower not in {"be", "see"}:
+            return lower[:-1] + "ing"
+        return lower + "ing"
+
+    words[0] = convert_word(words[0])
+
+    if len(words) >= 3 and words[1].lower() == "and":
+        words[2] = convert_word(words[2])
+
+    return " ".join(words)
+
+
+def normalize_action_for_question(action):
+    action = clean_prompt_text(action, max_len=120)
+    action = re.split(r'\b(?:who|which|that|when|where|while|because|as described|in accordance with)\b', action, 1, flags=re.IGNORECASE)[0]
+    action = re.split(r'[:;]', action, 1)[0]
+    action = clean_prompt_text(action, max_len=95).lower()
+
+    if not action or not is_complete_statement(action, min_words=3):
+        return None
+
+    action = to_gerund(action)
+
+    if not is_complete_statement(action, min_words=3):
+        return None
+
+    return action
+
+
+def pick_requirement_topic(requirement, context):
+    full_context = f"{context} {requirement}".lower()
+    topic_patterns = [
+        (r'\bthe authority\b', 'the Authority'),
+        (r'\bservice providers?\b', 'service providers'),
+        (r'\baccountable executive\b', 'the accountable executive'),
+        (r'\boperators?\b', 'operators'),
+        (r'\batos?\b|\bapproved training organization\b', 'approved training organizations'),
+        (r'\bamos?\b|\bapproved maintenance organization\b', 'approved maintenance organizations'),
+        (r'\bats providers?\b', 'ATS providers'),
+        (r'\baerodrome operators?\b|\boperators of aerodromes\b', 'aerodrome operators'),
+        (r'\baoc holders?\b', 'AOC holders'),
+        (r'\bsms\b|\bsafety management system\b', 'the SMS'),
+        (r'\bnasp\b|\bnational aviation safety plan\b', 'the National Aviation Safety Plan'),
+        (r'\bgasp\b|\brasp\b', 'the relevant aviation safety plan'),
+    ]
+
+    for pattern, label in topic_patterns:
+        if re.search(pattern, full_context, re.IGNORECASE):
+            return label
+
+    return "the applicable organization"
+
+
+def extract_requirement_subject(requirement, context=""):
+    combined = clean_prompt_text(f"{context} {requirement}", max_len=220)
+    for pattern, label in SPECIFIC_REQUIREMENT_TOPICS:
+        if pattern.search(combined):
+            return label
+
+    candidate = clean_prompt_text(requirement, max_len=140)
+    candidate = LEADING_REQUIREMENT_ACTION_PATTERN.sub("", candidate, count=1)
+    candidate = re.sub(r"^(?:all|any|each|the|a|an)\s+", "", candidate, flags=re.IGNORECASE)
+    candidate = SUBJECT_STOP_PATTERN.split(candidate, 1)[0]
+    candidate = clean_prompt_text(candidate, max_len=72)
+
+    if candidate.lower().startswith("record of "):
+        candidate = clean_prompt_text(candidate[10:] + " records", max_len=72)
+
+    if not candidate:
+        return None
+    if len(candidate.split()) < 2 or len(candidate.split()) > 8:
+        return None
+    if looks_like_weak_label(candidate):
+        return None
+    return candidate
+
+
+def refine_topic_with_pages(primary_text, pages_data=None, fallback_topic=None, context_text=None):
+    if not pages_data:
+        return fallback_topic
+
+    topic = find_topic_for_text(primary_text, pages_data, fallback_topic=fallback_topic, context_text=context_text)
+    if not topic:
+        return fallback_topic
+
+    topic = clean_prompt_text(topic, max_len=80)
+    if not topic or looks_like_weak_label(topic):
+        return fallback_topic
+    if topic.startswith("The ") and topic.lower() not in {"the authority", "the accountable executive"}:
+        topic = topic[4:]
+    return topic
+
+
+def normalize_topic_candidate(topic):
+    topic = clean_prompt_text(topic or "", max_len=80)
+    if not topic:
+        return None
+    if looks_like_weak_label(topic):
+        return None
+    if topic.lower() in LOW_SIGNAL_TOPICS:
+        return None
+    if topic.startswith("The ") and topic.lower() not in {"the authority", "the accountable executive"}:
+        topic = topic[4:]
+    return topic
+
+
+def pick_item_topic(item, primary_text, pages_data=None, fallback_topic=None, context_text=None):
+    stored_topic = normalize_topic_candidate(
+        item.get("topic_label") or item.get("section_title") or item.get("section_heading")
+    )
+    if stored_topic:
+        return stored_topic
+
+    refined_topic = refine_topic_with_pages(
+        primary_text,
+        pages_data=pages_data,
+        fallback_topic=fallback_topic,
+        context_text=context_text,
+    )
+    return normalize_topic_candidate(refined_topic) or normalize_topic_candidate(fallback_topic)
+
+
+def attach_source_metadata(question, source_item, study_focus=None):
+    if not source_item:
+        return question
+
+    for field in ("page_num", "section_heading", "section_title"):
+        if source_item.get(field):
+            question[field] = source_item[field]
+
+    if study_focus and not question.get("studyFocus"):
+        question["studyFocus"] = study_focus
+    elif source_item.get("topic_label") and not question.get("studyFocus"):
+        question["studyFocus"] = source_item["topic_label"]
+
+    if not question.get("context"):
+        context = source_item.get("context") or source_item.get("full_text") or source_item.get("text")
+        if context:
+            question["context"] = clean_prompt_text(context, max_len=220)
+
+    return question
+
 # ============================================================================
 # QUESTION GENERATORS
 # ============================================================================
 
-def generate_definition_questions(concepts, max_questions=8):
+def generate_definition_questions(concepts, max_questions=8, pages_data=None):
     """Generate questions testing understanding of key terms"""
     questions = []
-    definitions = concepts.get("definitions", [])
+    definitions = sorted(
+        concepts.get("definitions", []),
+        key=score_definition_candidate,
+        reverse=True,
+    )
+    seen_terms = set()
     
-    for defn in definitions[:max_questions * 2]:
-        term = defn["term"]
+    for defn in definitions[:max_questions * 3]:
+        term = clean_prompt_text(defn["term"])
         meaning = make_concept_summary(defn["meaning"], 180)
         
         # Skip if too short or generic
-        if len(meaning) < 30 or len(term) < 3:
+        if len(meaning) < 30 or len(term) < 3 or looks_like_weak_label(term):
             continue
+
+        if term.lower() in seen_terms:
+            continue
+        seen_terms.add(term.lower())
+
+        study_focus = pick_item_topic(
+            defn,
+            meaning,
+            pages_data=pages_data,
+            fallback_topic=defn.get("topic_label"),
+            context_text=defn.get("context", ""),
+        )
         
         template = random.choice(UNDERSTANDING_TEMPLATES)
         question_text = template.format(concept=term)
@@ -85,14 +487,16 @@ def generate_definition_questions(concepts, max_questions=8):
         options = [meaning] + distractors
         random.shuffle(options)
         
-        questions.append({
+        question = {
             "question": question_text,
             "options": options,
             "correctAnswer": meaning,
             "explanation": f"'{term}' refers to {meaning}",
             "category": "Understanding",
             "topic": term,
-        })
+            "studyFocus": study_focus or term,
+        }
+        questions.append(attach_source_metadata(question, defn, study_focus=study_focus))
         
         if len(questions) >= max_questions:
             break
@@ -100,81 +504,44 @@ def generate_definition_questions(concepts, max_questions=8):
     return questions
 
 
-def generate_responsibility_questions(concepts, max_questions=8):
+def generate_responsibility_questions(concepts, max_questions=8, pages_data=None):
     """Generate questions about who is responsible for what"""
     questions = []
-    responsibilities = concepts.get("responsibilities", [])
+    responsibilities = sorted(
+        concepts.get("responsibilities", []),
+        key=lambda item: score_priority(item.get("entity", "")) + score_priority(item.get("action", "")),
+        reverse=True,
+    )
     
     # Group by action to create "who is responsible" questions
-    for resp in responsibilities[:max_questions * 2]:
-        entity = resp["entity"].strip()
-        action = make_concept_summary(resp["action"], 120)
-        
-        if len(action) < 20:
+    for resp in responsibilities[:max_questions * 3]:
+        entity = normalize_entity_name(resp["entity"])
+        action = normalize_action_for_question(resp["action"])
+
+        if not action:
             continue
-        
-        # Clean up entity name
-        entity = re.sub(r'^\s*the\s+', '', entity, flags=re.IGNORECASE).strip()
-        entity = entity.title()
-        
+
         # Skip if entity is too generic or unclear
         if len(entity) < 4 or entity.lower() in ['the', 'a', 'an', 'it', 'this', 'that']:
             continue
-        
-        # Create a cleaner action description for the question
-        action_summary = action[:80].strip()
-        # Remove trailing incomplete words
-        if not action_summary.endswith('.'):
-            words = action_summary.split()
-            if len(words) > 3:
-                action_summary = ' '.join(words[:-1])
-        # Clean the action for use in question
-        action_summary = re.sub(r'^(not\s+|shall\s+|must\s+|to\s+|be\s+)', '', action_summary, flags=re.IGNORECASE)
-        action_summary = action_summary.strip()
-        
-        # Skip if action is too short, too generic, or looks like a fragment
-        if len(action_summary) < 15:
-            continue
-        if action_summary.lower().startswith(('prevented', 'allowed', 'required', 'make available')):
-            continue
-        
-        # Create a clean gerund phrase
-        action_words = action_summary.split()
-        first_word = action_words[0].lower() if action_words else ""
-        
-        verbs_to_gerund = {
-            'implement': 'implementing', 'maintain': 'maintaining', 'develop': 'developing',
-            'manage': 'managing', 'ensure': 'ensuring', 'define': 'defining',
-            'establish': 'establishing', 'identify': 'identifying', 'monitor': 'monitoring',
-            'assess': 'assessing', 'review': 'reviewing', 'conduct': 'conducting',
-            'provide': 'providing', 'coordinate': 'coordinating', 'document': 'documenting',
-            'appoint': 'appointing', 'create': 'creating', 'apply': 'applying',
-        }
-        
-        if first_word in verbs_to_gerund:
-            rest_of_action = ' '.join(action_words[1:])
-            action_summary = verbs_to_gerund[first_word] + ' ' + rest_of_action
-        elif first_word.endswith('ing'):
-            pass  # Already a gerund
-        else:
-            # Skip if we can't make a clean gerund phrase
-            continue
-        
-        # Clean up any trailing punctuation
-        action_summary = action_summary.rstrip('.,;:')
-        
-        # Skip if action contains dates or document metadata
-        if re.search(r'(january|february|march|april|may|june|july|august|september|october|november|december|\d{4}|amendment)', action_summary, re.IGNORECASE):
-            continue
-        
-        # Capitalize first letter for question formatting
-        action_summary = action_summary[0].upper() + action_summary[1:] if action_summary else action_summary
+
+        study_focus = pick_item_topic(
+            resp,
+            action,
+            pages_data=pages_data,
+            fallback_topic=resp.get("topic_label"),
+            context_text=resp.get("full_text", ""),
+        )
         
         template = random.choice(RESPONSIBILITY_TEMPLATES)
-        question_text = template.format(action=action_summary)
+        question_text = template.format(action=action)
         
         # Generate entity-based distractors
-        all_entities = list(set([r["entity"].title() for r in responsibilities if len(r["entity"]) > 4]))
+        all_entities = list({
+            normalize_entity_name(r["entity"])
+            for r in responsibilities
+            if len(clean_prompt_text(r.get("entity", ""))) > 4
+        })
         other_entities = [e for e in all_entities if e.lower() != entity.lower()]
         random.shuffle(other_entities)
         
@@ -195,14 +562,16 @@ def generate_responsibility_questions(concepts, max_questions=8):
         options = [entity] + distractors[:3]
         random.shuffle(options)
         
-        questions.append({
+        question = {
             "question": question_text,
             "options": options,
             "correctAnswer": entity,
-            "explanation": f"{entity} is responsible for {action}",
+            "explanation": f"{entity} is responsible for {action}.",
             "category": "Responsibility",
-            "topic": action_summary[:50],
-        })
+            "topic": action[:50],
+            "studyFocus": study_focus or entity,
+        }
+        questions.append(attach_source_metadata(question, resp, study_focus=study_focus))
         
         if len(questions) >= max_questions:
             break
@@ -210,7 +579,7 @@ def generate_responsibility_questions(concepts, max_questions=8):
     return questions
 
 
-def generate_scenario_questions(concepts, chunks, max_questions=10):
+def generate_scenario_questions(concepts, chunks, max_questions=10, pages_data=None):
     """Generate scenario-based application questions"""
     questions = []
     
@@ -239,8 +608,8 @@ def generate_scenario_questions(concepts, chunks, max_questions=10):
         "performance": "safety performance",
     }
     
-    for topic in topics[:max_questions * 2]:
-        topic_text = topic.get("requirement", topic.get("text", ""))
+    for topic_item in topics[:max_questions * 2]:
+        topic_text = topic_item.get("requirement", topic_item.get("text", ""))
         if len(topic_text) < 40:
             continue
         
@@ -253,6 +622,16 @@ def generate_scenario_questions(concepts, chunks, max_questions=10):
         
         if not subject:
             continue
+
+        study_focus = pick_item_topic(
+            topic_item,
+            topic_text,
+            pages_data=pages_data,
+            fallback_topic=subject,
+            context_text=" ".join(topic_item.get("groups", [])) or topic_item.get("context", ""),
+        )
+        if study_focus:
+            subject = study_focus
         
         template = random.choice(SCENARIO_TEMPLATES)
         role = random.choice(roles)
@@ -266,7 +645,7 @@ def generate_scenario_questions(concepts, chunks, max_questions=10):
         correct_answer = make_concept_summary(topic_text, 150)
         
         # Ensure correct answer is meaningful
-        if len(correct_answer) < 30:
+        if len(correct_answer) < 30 or not is_complete_statement(correct_answer, min_words=6):
             continue
             
         distractors = generate_smart_distractors(correct_answer, "application", concepts)
@@ -274,14 +653,16 @@ def generate_scenario_questions(concepts, chunks, max_questions=10):
         options = [correct_answer] + distractors
         random.shuffle(options)
         
-        questions.append({
+        question = {
             "question": question_text,
             "options": options,
             "correctAnswer": correct_answer,
             "explanation": f"For {subject}, the correct approach involves: {correct_answer}",
             "category": "Application",
             "topic": subject,
-        })
+            "studyFocus": study_focus or subject,
+        }
+        questions.append(attach_source_metadata(question, topic_item, study_focus=study_focus))
         
         if len(questions) >= max_questions:
             break
@@ -289,7 +670,7 @@ def generate_scenario_questions(concepts, chunks, max_questions=10):
     return questions
 
 
-def generate_purpose_questions(concepts, max_questions=6):
+def generate_purpose_questions(concepts, max_questions=6, pages_data=None):
     """Generate questions about the purpose/objectives of concepts"""
     questions = []
     purposes = concepts.get("purposes", [])
@@ -305,9 +686,11 @@ def generate_purpose_questions(concepts, max_questions=6):
     
     for purpose_item in purposes[:max_questions * 2]:
         purpose = make_concept_summary(purpose_item["purpose"], 150)
-        context = purpose_item.get("context", "")
+        context = clean_prompt_text(purpose_item.get("context", ""), max_len=220)
         
-        if len(purpose) < 30:
+        if len(purpose) < 30 or not is_complete_statement(purpose, min_words=6):
+            continue
+        if not starts_with_allowed_word(purpose, PURPOSE_START_WORDS):
             continue
         
         # Try to identify what the purpose is for using known subjects
@@ -326,7 +709,18 @@ def generate_purpose_questions(concepts, max_questions=6):
                 subject = match.group(1).strip()
         
         # Skip if we still don't have a good subject
-        if not subject or len(subject) < 5 or subject.lower().startswith(('and ', 'or ', 'the ')):
+        subject = clean_prompt_text(subject or "")
+        if not subject or len(subject) < 5 or looks_like_weak_label(subject):
+            continue
+
+        subject = pick_item_topic(
+            purpose_item,
+            purpose,
+            pages_data=pages_data,
+            fallback_topic=subject,
+            context_text=context,
+        )
+        if not subject:
             continue
         
         template = random.choice(PURPOSE_TEMPLATES)
@@ -337,14 +731,16 @@ def generate_purpose_questions(concepts, max_questions=6):
         options = [purpose] + distractors
         random.shuffle(options)
         
-        questions.append({
+        question = {
             "question": question_text,
             "options": options,
             "correctAnswer": purpose,
             "explanation": f"The primary purpose is to {purpose}",
             "category": "Purpose",
             "topic": subject,
-        })
+            "studyFocus": subject,
+        }
+        questions.append(attach_source_metadata(question, purpose_item, study_focus=subject))
         
         if len(questions) >= max_questions:
             break
@@ -352,44 +748,34 @@ def generate_purpose_questions(concepts, max_questions=6):
     return questions
 
 
-def generate_requirement_questions(concepts, max_questions=8):
+def generate_requirement_questions(concepts, max_questions=8, pages_data=None):
     """Generate questions about mandatory requirements"""
     questions = []
-    requirements = concepts.get("requirements", [])
+    requirements = sorted(
+        concepts.get("requirements", []),
+        key=lambda item: score_priority(item.get("requirement", "")) + score_priority(item.get("context", "")),
+        reverse=True,
+    )
     
-    subject_keywords = {
-        "service provider": "service providers",
-        "operator": "operators",
-        "authority": "the Authority",
-        "organization": "organizations",
-        "sms": "SMS implementation",
-        "ssp": "SSP requirements",
-        "safety manager": "safety managers",
-        "accountable executive": "accountable executives",
-        "training": "training programmes",
-        "documentation": "documentation",
-        "reporting": "safety reporting",
-        "risk": "risk management",
-        "hazard": "hazard identification",
-    }
-    
-    for req in requirements[:max_questions * 2]:
+    for req in requirements[:max_questions * 3]:
         requirement = make_concept_summary(req["requirement"], 150)
-        context = req.get("context", "")
-        full_context = context + " " + req.get("full_text", "")
+        context = clean_prompt_text(req.get("context", ""), max_len=180)
         
-        if len(requirement) < 30:
+        if len(requirement) < 30 or not is_complete_statement(requirement, min_words=6):
             continue
-        
-        # Find the best topic match
-        topic = None
-        for keyword, topic_name in subject_keywords.items():
-            if keyword in full_context.lower():
-                topic = topic_name
-                break
-        
+        if not starts_with_allowed_word(requirement, REQUIREMENT_START_WORDS):
+            continue
+
+        topic = extract_requirement_subject(requirement, context) or pick_requirement_topic(requirement, context)
+        topic = pick_item_topic(
+            req,
+            requirement,
+            pages_data=pages_data,
+            fallback_topic=topic,
+            context_text=context,
+        )
         if not topic:
-            topic = "safety management"
+            continue
         
         template = random.choice(REQUIREMENT_TEMPLATES)
         question_text = template.format(topic=topic)
@@ -399,14 +785,16 @@ def generate_requirement_questions(concepts, max_questions=8):
         options = [requirement] + distractors
         random.shuffle(options)
         
-        questions.append({
+        question = {
             "question": question_text,
             "options": options,
             "correctAnswer": requirement,
             "explanation": f"The requirement states: {requirement}",
             "category": "Requirement",
             "topic": topic,
-        })
+            "studyFocus": topic,
+        }
+        questions.append(attach_source_metadata(question, req, study_focus=topic))
         
         if len(questions) >= max_questions:
             break
@@ -414,7 +802,7 @@ def generate_requirement_questions(concepts, max_questions=8):
     return questions
 
 
-def generate_not_questions(concepts, max_questions=4):
+def generate_not_questions(concepts, max_questions=4, pages_data=None):
     """Generate 'which is NOT' style questions for variety"""
     questions = []
     requirements = concepts.get("requirements", [])
@@ -439,19 +827,38 @@ def generate_not_questions(concepts, max_questions=4):
             ]
             wrong_answer = random.choice(wrong_answers)
             
+            topic = extract_requirement_subject(
+                " ".join(r["requirement"] for r in topic_reqs),
+                " ".join(r.get("context", "") for r in topic_reqs),
+            ) or pick_requirement_topic(
+                " ".join(r["requirement"] for r in topic_reqs),
+                " ".join(r.get("context", "") for r in topic_reqs),
+            )
+            topic = pick_item_topic(
+                topic_reqs[0],
+                " ".join(r["requirement"] for r in topic_reqs),
+                pages_data=pages_data,
+                fallback_topic=topic,
+                context_text=" ".join(r.get("context", "") for r in topic_reqs),
+            )
+            if not topic:
+                continue
             template = random.choice(NOT_TEMPLATES)
-            question_text = template.format(topic="safety management")
+            question_text = template.format(topic=topic)
             
             options = correct_reqs + [wrong_answer]
             random.shuffle(options)
             
-            questions.append({
+            question = {
                 "question": question_text,
                 "options": options,
                 "correctAnswer": wrong_answer,
                 "explanation": f"The incorrect statement is: {wrong_answer}. The other options are actual requirements.",
                 "category": "Critical Thinking",
-                "topic": "requirements analysis",
-            })
+                "topic": topic,
+                "studyFocus": topic,
+                "context": clean_prompt_text(" ".join(r.get("context", "") for r in topic_reqs), max_len=220),
+            }
+            questions.append(attach_source_metadata(question, topic_reqs[0], study_focus=topic))
     
     return questions

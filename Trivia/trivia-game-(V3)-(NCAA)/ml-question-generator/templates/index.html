@@ -1,64 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>NCAA Regulatory QA Engine</title>
-
-<link rel="stylesheet" href="/static/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask NCAA Regulatory Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
 </head>
+<body class="app-shell">
+    <header class="site-header">
+        <a class="brand-mark" href="{{ url_for('frontend_home') }}">NCAA Intelligence</a>
+        <nav class="site-nav">
+            <a href="{{ url_for('frontend_home') }}">Home</a>
+            <a href="{{ url_for('quiz_home') }}">Quiz Builder</a>
+        </nav>
+    </header>
 
-<body>
+    <main class="page-content ask-layout">
+        <section class="ask-shell">
+            <p class="eyebrow">Regulatory Q&amp;A</p>
+            <h1>Ask a question against your NCAA regulatory database.</h1>
+            <p class="page-intro">
+                This interface uses your retrieval pipeline to ground answers in databook-backed
+                context instead of generic model recall.
+            </p>
 
-<div class="container">
+            <div class="ask-actions">
+                <a class="ghost-link" href="{{ url_for('frontend_home') }}">Back to Home</a>
+                <a class="ghost-link" href="{{ url_for('quiz_home') }}">Go to Quiz Builder</a>
+            </div>
 
-<h1>NCAA Regulatory QA Engine</h1>
+            <div class="prompt-grid">
+                <article class="prompt-card">
+                    <p class="meta-label">Best Results</p>
+                    <p class="prompt-copy">
+                        Be specific about the requirement, release, approval, duty, record,
+                        document, or operating condition you want explained.
+                    </p>
+                </article>
+                <article class="prompt-card">
+                    <p class="meta-label">Try Asking</p>
+                    <ul class="prompt-list">
+                        <li>What conditions must be satisfied before an aircraft is returned to service?</li>
+                        <li>Who is responsible for certifying maintenance release actions?</li>
+                        <li>Which records must be completed after maintenance?</li>
+                    </ul>
+                </article>
+            </div>
 
-<form method="POST">
+            <form class="ask-form" method="POST">
+                <label class="ask-label" for="question">Enter a regulatory question</label>
+                <textarea
+                    class="ask-input"
+                    id="question"
+                    name="question"
+                    placeholder="Example: What conditions must be satisfied before an aircraft can be returned to service after maintenance?"
+                    required
+                >{{ question or '' }}</textarea>
+                <button class="submit-button" type="submit">Analyze Question</button>
+            </form>
 
-<input
-type="text"
-name="question"
-placeholder="Ask a regulatory question..."
-required
->
+            {% if error %}
+            <div class="feedback-banner">{{ error }}</div>
+            {% endif %}
+        </section>
 
-<button type="submit">Analyze Question</button>
+        {% if result %}
+        {% set result_tone = 'warning' if result.subcontext == 'Ambiguous' else ('caution' if result.confidence is not none and result.confidence < 0.55 else 'success') %}
+        {% set result_label = 'Ambiguity Detected' if result.subcontext == 'Ambiguous' else ('Needs Verification' if result.confidence is not none and result.confidence < 0.55 else 'Grounded Response') %}
+        <section class="result-shell result-shell-{{ result_tone }}">
+            <div class="result-header">
+                <div>
+                    <p class="meta-label">Question Reviewed</p>
+                    <h2 class="result-title">{{ question }}</h2>
+                </div>
+                <span class="status-pill status-{{ result_tone }}">{{ result_label }}</span>
+            </div>
 
-</form>
+            <div class="answer-panel">
+                <p class="meta-label">Answer</p>
+                {% if result.answer_summary %}
+                <p class="answer-summary">{{ result.answer_summary }}</p>
+                {% endif %}
 
-{% if result %}
+                {% if result.answer_points %}
+                <ul class="answer-points">
+                    {% for point in result.answer_points %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+                {% elif result.answer_text %}
+                <p class="answer-copy">{{ result.answer_text }}</p>
+                {% endif %}
+            </div>
 
-<div class="result">
+            <div class="meta-grid">
+                <article class="meta-card">
+                    <p class="meta-label">Detected Domain</p>
+                    <p class="meta-value">{{ result.detected_domain or 'Unknown' }}</p>
+                </article>
 
-<h2>Analysis Result</h2>
+                {% if result.retrieved_domain %}
+                <article class="meta-card">
+                    <p class="meta-label">Retrieved Domain</p>
+                    <p class="meta-value">{{ result.retrieved_domain }}</p>
+                </article>
+                {% endif %}
 
-<p><strong>Detected Regulation:</strong> {{ result.domain }}</p>
+                {% if result.subcontext %}
+                <article class="meta-card">
+                    <p class="meta-label">Subcontext</p>
+                    <p class="meta-value">{{ result.subcontext }}</p>
+                </article>
+                {% endif %}
 
-{% if result.subcontext %}
-<p><strong>Subcontext:</strong> {{ result.subcontext }}</p>
-{% endif %}
+                {% if result.confidence is not none %}
+                <article class="meta-card">
+                    <p class="meta-label">Confidence</p>
+                    <p class="meta-value">
+                        {{ '%.2f'|format(result.confidence) }}
+                        {% if result.confidence_label %}
+                        <span class="pill">{{ result.confidence_label }}</span>
+                        {% endif %}
+                    </p>
+                </article>
+                {% endif %}
 
-{% if result.confidence %}
-<p><strong>Confidence:</strong> {{ result.confidence }}</p>
-{% endif %}
+                {% if result.cross_refs %}
+                <article class="meta-card meta-card-wide">
+                    <p class="meta-label">Cross References</p>
+                    <ul class="meta-list">
+                        {% for ref in result.cross_refs %}
+                        <li>{{ ref }}</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+                {% endif %}
 
-{% if result.cross_refs %}
-<p><strong>Cross References:</strong></p>
-
-<ul>
-{% for ref in result.cross_refs %}
-<li>{{ ref }}</li>
-{% endfor %}
-</ul>
-
-{% endif %}
-
-</div>
-
-{% endif %}
-
-</div>
-
+                {% if result.sources %}
+                <article class="meta-card meta-card-wide">
+                    <p class="meta-label">Sources</p>
+                    <ul class="source-list">
+                        {% for source in result.sources %}
+                        <li>{{ source }}</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+    </main>
 </body>
 </html>
