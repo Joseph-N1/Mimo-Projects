@@ -5,8 +5,11 @@ import random
 from .distractors import (
     clean_option_text,
     generate_smart_distractors,
+    generate_subtle_variants,
     looks_like_weak_option,
     make_concept_summary,
+    normalize_option_key,
+    option_similarity,
 )
 from .hints import find_topic_for_text
 
@@ -159,6 +162,14 @@ TRAILING_FRAGMENT_WORDS = {
     "it", "of", "on", "or", "that", "the", "their", "this", "to", "was",
     "were", "which", "who", "with",
 }
+ACTION_FRAGMENT_WORDS = TRAILING_FRAGMENT_WORDS.union({
+    "appropriate",
+    "provided",
+    "request",
+    "required",
+    "satisfactory",
+    "stating",
+})
 
 SPECIFIC_REQUIREMENT_TOPICS = [
     (re.compile(r"\bmaintenance and operational experience\b", re.IGNORECASE), "maintenance and operational experience"),
@@ -179,6 +190,10 @@ SUBJECT_STOP_PATTERN = re.compile(
     r"\b(?:acceptable to|as required by|for the purpose of|in a form|in accordance with|to the authority|under|within|which|that|who|when|where|while)\b",
     re.IGNORECASE,
 )
+ENTITY_NOISE_PATTERN = re.compile(
+    r"\b(?:ensuring|including|implementing|issuing|applying|maintaining|monitoring|reporting|developing|considering|requiring|defining|which|that|who|shall|must)\b",
+    re.IGNORECASE,
+)
 
 
 def clean_prompt_text(text, max_len=None):
@@ -192,6 +207,76 @@ def clean_prompt_text(text, max_len=None):
         text = trimmed or text[:max_len]
 
     return text.strip(" -:;,.")
+
+
+def normalize_entity_option_key(entity):
+    return re.sub(r"[^a-z0-9]+", " ", clean_prompt_text(entity).lower()).strip()
+
+
+def is_plausible_entity_option(entity):
+    cleaned = normalize_entity_name(entity)
+    if len(cleaned) < 4 or len(cleaned.split()) > 5:
+        return False
+    if ENTITY_NOISE_PATTERN.search(cleaned):
+        return False
+    if cleaned.lower() in {"the", "this", "that", "these", "those"}:
+        return False
+    return True
+
+
+def build_option_set(correct_answer, distractors, option_kind="statement"):
+    seen = set()
+    options = []
+
+    def normalize_key(value):
+        if option_kind == "entity":
+            return normalize_entity_option_key(value)
+        return normalize_option_key(value)
+
+    def clean_value(value):
+        if option_kind == "entity":
+            return normalize_entity_name(value)
+        return clean_prompt_text(value, max_len=180)
+
+    correct_value = clean_value(correct_answer)
+    correct_key = normalize_key(correct_value)
+    if not correct_key:
+        return None
+
+    def add_option(value, is_correct=False):
+        cleaned = clean_value(value)
+        key = normalize_key(cleaned)
+        if not key or key in seen:
+            return
+
+        if option_kind == "entity":
+            if not is_plausible_entity_option(cleaned):
+                return
+        else:
+            if looks_like_weak_option(cleaned) or len(cleaned.split()) < 5:
+                return
+            if not is_correct and option_similarity(cleaned, correct_value) >= 0.98:
+                return
+            for existing in options:
+                if option_similarity(cleaned, existing) >= 0.97:
+                    return
+
+        seen.add(key)
+        options.append(cleaned)
+
+    add_option(correct_value, is_correct=True)
+    for distractor in distractors:
+        if len(options) >= 4:
+            break
+        add_option(distractor)
+
+    if len(options) < 4:
+        return None
+    if correct_key not in {normalize_key(option) for option in options}:
+        return None
+
+    random.shuffle(options)
+    return options
 
 
 def looks_like_weak_label(text):
@@ -223,6 +308,13 @@ def is_complete_statement(text, min_words=5):
     if looks_like_weak_option(cleaned):
         return False
     return True
+
+
+def trim_action_fragment(text):
+    words = clean_prompt_text(text, max_len=120).split()
+    while words and words[-1].lower().strip(".,;:") in ACTION_FRAGMENT_WORDS:
+        words.pop()
+    return " ".join(words).strip(" -:;,.")
 
 
 def score_priority(text):
@@ -316,15 +408,17 @@ def to_gerund(phrase):
 
 
 def normalize_action_for_question(action):
-    action = clean_prompt_text(action, max_len=120)
+    action = clean_prompt_text(action, max_len=150)
+    action = re.split(r',\s*(?:and\b|provided\b|stating\b|which\b|before\b|after\b)', action, 1, flags=re.IGNORECASE)[0]
     action = re.split(r'\b(?:who|which|that|when|where|while|because|as described|in accordance with)\b', action, 1, flags=re.IGNORECASE)[0]
     action = re.split(r'[:;]', action, 1)[0]
-    action = clean_prompt_text(action, max_len=95).lower()
+    action = trim_action_fragment(action).lower()
 
     if not action or not is_complete_statement(action, min_words=3):
         return None
 
     action = to_gerund(action)
+    action = trim_action_fragment(action)
 
     if not is_complete_statement(action, min_words=3):
         return None
@@ -482,10 +576,10 @@ def generate_definition_questions(concepts, max_questions=8, pages_data=None):
         template = random.choice(UNDERSTANDING_TEMPLATES)
         question_text = template.format(concept=term)
         
-        distractors = generate_smart_distractors(meaning, "definition", concepts)
-        
-        options = [meaning] + distractors
-        random.shuffle(options)
+        distractors = generate_smart_distractors(meaning, "definition", concepts, context=term)
+        options = build_option_set(meaning, distractors)
+        if not options:
+            continue
         
         question = {
             "question": question_text,
@@ -540,27 +634,27 @@ def generate_responsibility_questions(concepts, max_questions=8, pages_data=None
         all_entities = list({
             normalize_entity_name(r["entity"])
             for r in responsibilities
-            if len(clean_prompt_text(r.get("entity", ""))) > 4
+            if len(clean_prompt_text(r.get("entity", ""))) > 4 and is_plausible_entity_option(r.get("entity", ""))
         })
         other_entities = [e for e in all_entities if e.lower() != entity.lower()]
         random.shuffle(other_entities)
         
-        distractors = other_entities[:2]
-        generic_entities = [
-            "External consultants only",
-            "No specific role - shared responsibility",
-            "Government regulatory bodies exclusively",
-            "Individual employees at their discretion",
+        distractors = other_entities[:]
+        fallback_entities = [
+            "Authority",
+            "Operator",
+            "Accountable Executive",
+            "Service Provider",
+            "Safety Manager",
+            "Organization",
         ]
-        while len(distractors) < 3:
-            for g in generic_entities:
-                if g not in distractors:
-                    distractors.append(g)
-                    if len(distractors) >= 3:
-                        break
-        
-        options = [entity] + distractors[:3]
-        random.shuffle(options)
+        for fallback_entity in fallback_entities:
+            if fallback_entity.lower() != entity.lower() and fallback_entity not in distractors:
+                distractors.append(fallback_entity)
+
+        options = build_option_set(entity, distractors[:6], option_kind="entity")
+        if not options:
+            continue
         
         question = {
             "question": question_text,
@@ -648,10 +742,10 @@ def generate_scenario_questions(concepts, chunks, max_questions=10, pages_data=N
         if len(correct_answer) < 30 or not is_complete_statement(correct_answer, min_words=6):
             continue
             
-        distractors = generate_smart_distractors(correct_answer, "application", concepts)
-        
-        options = [correct_answer] + distractors
-        random.shuffle(options)
+        distractors = generate_smart_distractors(correct_answer, "application", concepts, context=subject)
+        options = build_option_set(correct_answer, distractors)
+        if not options:
+            continue
         
         question = {
             "question": question_text,
@@ -726,10 +820,10 @@ def generate_purpose_questions(concepts, max_questions=6, pages_data=None):
         template = random.choice(PURPOSE_TEMPLATES)
         question_text = template.format(concept=subject)
         
-        distractors = generate_smart_distractors(purpose, "purpose", concepts)
-        
-        options = [purpose] + distractors
-        random.shuffle(options)
+        distractors = generate_smart_distractors(purpose, "purpose", concepts, context=subject)
+        options = build_option_set(purpose, distractors)
+        if not options:
+            continue
         
         question = {
             "question": question_text,
@@ -780,10 +874,10 @@ def generate_requirement_questions(concepts, max_questions=8, pages_data=None):
         template = random.choice(REQUIREMENT_TEMPLATES)
         question_text = template.format(topic=topic)
         
-        distractors = generate_smart_distractors(requirement, "requirement", concepts)
-        
-        options = [requirement] + distractors
-        random.shuffle(options)
+        distractors = generate_smart_distractors(requirement, "requirement", concepts, context=topic or context)
+        options = build_option_set(requirement, distractors)
+        if not options:
+            continue
         
         question = {
             "question": question_text,
@@ -818,14 +912,16 @@ def generate_not_questions(concepts, max_questions=4, pages_data=None):
             # Get 3 correct requirements and 1 wrong answer
             correct_reqs = [make_concept_summary(r["requirement"], 100) for r in topic_reqs[:3]]
             
-            # The wrong answer (what we're looking for)
-            wrong_answers = [
-                "This is recommended but not mandatory",
-                "This is at the discretion of individual organizations",
-                "This requirement has been waived for most operators",
-                "This applies only in emergency situations",
-            ]
-            wrong_answer = random.choice(wrong_answers)
+            wrong_answer = None
+            for requirement_text in correct_reqs:
+                for variant in generate_subtle_variants(requirement_text):
+                    if normalize_option_key(variant) not in {normalize_option_key(req) for req in correct_reqs}:
+                        wrong_answer = variant
+                        break
+                if wrong_answer:
+                    break
+            if not wrong_answer:
+                continue
             
             topic = extract_requirement_subject(
                 " ".join(r["requirement"] for r in topic_reqs),
@@ -846,8 +942,9 @@ def generate_not_questions(concepts, max_questions=4, pages_data=None):
             template = random.choice(NOT_TEMPLATES)
             question_text = template.format(topic=topic)
             
-            options = correct_reqs + [wrong_answer]
-            random.shuffle(options)
+            options = build_option_set(wrong_answer, correct_reqs)
+            if not options:
+                continue
             
             question = {
                 "question": question_text,

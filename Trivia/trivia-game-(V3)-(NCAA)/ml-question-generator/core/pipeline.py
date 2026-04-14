@@ -3,6 +3,7 @@
 import re
 from .chunking import filter_source_chunks, normalize_source_text, split_into_chunks
 from .concepts import extract_concepts
+from .distractors import normalize_option_key
 from .questions import (
     generate_definition_questions,
     generate_responsibility_questions,
@@ -56,9 +57,96 @@ LOW_SIGNAL_PATTERNS = [
     re.compile(r"\b(?:of|for|to)\s+volume\?$", re.IGNORECASE),
 ]
 
+QUESTION_DUPLICATE_STOP_WORDS = {
+    "according",
+    "action",
+    "accountability",
+    "applies",
+    "appropriate",
+    "best",
+    "compliant",
+    "compliance",
+    "correct",
+    "described",
+    "defines",
+    "definition",
+    "designated",
+    "directly",
+    "entity",
+    "following",
+    "implementation",
+    "mandatory",
+    "mean",
+    "meaning",
+    "most",
+    "option",
+    "primary",
+    "question",
+    "regarding",
+    "regulation",
+    "regulations",
+    "remain",
+    "required",
+    "requirement",
+    "responsibility",
+    "rests",
+    "role",
+    "statement",
+    "true",
+    "under",
+    "which",
+    "what",
+    "when",
+    "who",
+}
+
 
 def normalize_question_key(question):
     return re.sub(r"\s+", " ", (question or "").strip().lower())
+
+
+def extract_distinctive_tokens(*values):
+    tokens = set()
+    for value in values:
+        normalized = normalize_question_key(value)
+        for token in re.findall(r"[a-z]{4,}", normalized):
+            if token not in QUESTION_DUPLICATE_STOP_WORDS:
+                tokens.add(token)
+    return tokens
+
+
+def token_similarity(left_tokens, right_tokens):
+    if not left_tokens or not right_tokens:
+        return 0.0
+    return len(left_tokens & right_tokens) / len(left_tokens | right_tokens)
+
+
+def question_focus_key(question):
+    return normalize_question_key(
+        question.get("studyFocus")
+        or question.get("topic")
+        or question.get("section_heading")
+        or question.get("section_title")
+        or ""
+    )
+
+
+def question_answer_key(question):
+    return normalize_option_key(question.get("correctAnswer", ""))
+
+
+def question_prompt_tokens(question):
+    return extract_distinctive_tokens(
+        question.get("question", ""),
+        question.get("studyFocus", ""),
+        question.get("topic", ""),
+        question.get("section_heading", ""),
+        question.get("section_title", ""),
+    )
+
+
+def question_answer_tokens(question):
+    return extract_distinctive_tokens(question.get("correctAnswer", ""))
 
 
 def looks_low_signal(text):
@@ -106,6 +194,12 @@ def score_question_candidate(question):
     if question.get("page_num"):
         score += 2
 
+    option_keys = [normalize_option_key(option) for option in question.get("options", []) if normalize_option_key(option)]
+    if len(option_keys) == 4 and len(set(option_keys)) == 4:
+        score += 4
+    elif option_keys:
+        score -= 12
+
     if looks_low_signal(prompt):
         score -= 10
     if category != "Critical Thinking" and looks_low_signal(answer):
@@ -114,17 +208,41 @@ def score_question_candidate(question):
     return score
 
 
+def questions_are_near_duplicates(left, right):
+    left_answer_key = question_answer_key(left)
+    right_answer_key = question_answer_key(right)
+    left_focus = question_focus_key(left)
+    right_focus = question_focus_key(right)
+
+    if left_answer_key and left_answer_key == right_answer_key:
+        if left_focus and left_focus == right_focus:
+            return True
+        if (
+            normalize_question_key(left.get("section_heading", ""))
+            and normalize_question_key(left.get("section_heading", "")) == normalize_question_key(right.get("section_heading", ""))
+        ):
+            return True
+
+    prompt_similarity = token_similarity(question_prompt_tokens(left), question_prompt_tokens(right))
+    answer_similarity = token_similarity(question_answer_tokens(left), question_answer_tokens(right))
+
+    if prompt_similarity >= 0.82 and answer_similarity >= 0.60:
+        return True
+    if left_answer_key and left_answer_key == right_answer_key and prompt_similarity >= 0.62:
+        return True
+    if left_focus and left_focus == right_focus and prompt_similarity >= 0.72:
+        return True
+    if left.get("category") == right.get("category") == "Responsibility" and left_answer_key == right_answer_key and prompt_similarity >= 0.60:
+        return True
+
+    return False
+
+
 def dedupe_questions(questions):
-    seen = set()
     unique_questions = []
     for question in questions:
-        key = (
-            normalize_question_key(question.get("question", "")),
-            normalize_question_key(question.get("correctAnswer", "")),
-        )
-        if key in seen:
+        if any(questions_are_near_duplicates(question, existing) for existing in unique_questions):
             continue
-        seen.add(key)
         unique_questions.append(question)
     return unique_questions
 
@@ -157,18 +275,78 @@ def select_best_questions(all_questions, max_questions):
         category_questions.sort(key=lambda item: item["_quality_score"], reverse=True)
 
     selected = []
+    selected_ids = set()
     targets = build_category_targets(max_questions)
+    focus_counts = {}
+    responsibility_answer_counts = {}
+
+    def register_selection(question):
+        selected.append(question)
+        selected_ids.add(id(question))
+
+        focus_key = question_focus_key(question)
+        if focus_key:
+            focus_counts[focus_key] = focus_counts.get(focus_key, 0) + 1
+
+        answer_key = question_answer_key(question)
+        if question.get("category") == "Responsibility" and answer_key:
+            responsibility_answer_counts[answer_key] = responsibility_answer_counts.get(answer_key, 0) + 1
+
+    def can_select(question, enforce_focus_cap=True):
+        if any(questions_are_near_duplicates(question, existing) for existing in selected):
+            return False
+
+        focus_key = question_focus_key(question)
+        if enforce_focus_cap and focus_key and focus_counts.get(focus_key, 0) >= 2:
+            return False
+
+        answer_key = question_answer_key(question)
+        if (
+            enforce_focus_cap
+            and question.get("category") == "Responsibility"
+            and answer_key
+            and responsibility_answer_counts.get(answer_key, 0) >= 2
+        ):
+            return False
+
+        return True
+
     for category in sorted(CATEGORY_PRIORITY, key=CATEGORY_PRIORITY.get, reverse=True):
         pool = buckets.get(category, [])
-        selected.extend(pool[:targets.get(category, 0)])
-        buckets[category] = pool[targets.get(category, 0):]
+        target = targets.get(category, 0)
+        retained_pool = []
+        added = 0
+
+        for question in pool:
+            if added < target and can_select(question, enforce_focus_cap=True):
+                register_selection(question)
+                added += 1
+            else:
+                retained_pool.append(question)
+
+        buckets[category] = retained_pool
 
     if len(selected) < max_questions:
         remaining = []
         for pool in buckets.values():
             remaining.extend(pool)
         remaining.sort(key=lambda item: item["_quality_score"], reverse=True)
-        selected.extend(remaining[:max_questions - len(selected)])
+
+        for question in remaining:
+            if len(selected) >= max_questions:
+                break
+            if id(question) in selected_ids:
+                continue
+            if can_select(question, enforce_focus_cap=False):
+                register_selection(question)
+
+        if len(selected) < max_questions:
+            for question in remaining:
+                if len(selected) >= max_questions:
+                    break
+                if id(question) in selected_ids:
+                    continue
+                register_selection(question)
 
     selected.sort(
         key=lambda item: (
@@ -255,6 +433,10 @@ def generate_questions_json(text=None, max_questions=40, section_size=5, pages_d
     # Format for output with enhanced explanations and page references
     questions = []
     for i, q in enumerate(unique_questions):
+        option_keys = [normalize_option_key(option) for option in q.get("options", []) if normalize_option_key(option)]
+        if len(option_keys) != 4 or len(set(option_keys)) != 4:
+            continue
+
         category = q.get("category", "General")
         topic = q.get("topic", "")
         study_focus = q.get("studyFocus", "") or q.get("section_title", "") or topic

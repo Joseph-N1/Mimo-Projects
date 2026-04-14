@@ -13,6 +13,56 @@ FRAGMENT_ENDINGS = {
     "to", "was", "were", "which", "who", "with",
 }
 
+OPTION_STOP_WORDS = FRAGMENT_ENDINGS.union({
+    "acceptable",
+    "accordance",
+    "according",
+    "aircraft",
+    "aviation",
+    "authority",
+    "civil",
+    "compliance",
+    "following",
+    "include",
+    "includes",
+    "including",
+    "maintain",
+    "management",
+    "operator",
+    "organization",
+    "provider",
+    "regulation",
+    "regulations",
+    "required",
+    "requirement",
+    "requirements",
+    "safety",
+    "service",
+    "shall",
+    "should",
+    "state",
+    "system",
+    "that",
+    "their",
+    "these",
+    "those",
+    "under",
+})
+
+GENERIC_DISTRACTOR_PATTERNS = [
+    re.compile(r"\binternal reference purposes only\b", re.IGNORECASE),
+    re.compile(r"\borganizational preference\b", re.IGNORECASE),
+    re.compile(r"\bself-declaration processes\b", re.IGNORECASE),
+    re.compile(r"\bindustry best practices\b", re.IGNORECASE),
+    re.compile(r"\badvisory basis\b", re.IGNORECASE),
+    re.compile(r"\boperational needs\b", re.IGNORECASE),
+    re.compile(r"\bwithout central oversight\b", re.IGNORECASE),
+    re.compile(r"\bvoluntary safety measures\b", re.IGNORECASE),
+    re.compile(r"^following established organizational protocols$", re.IGNORECASE),
+    re.compile(r"^maintaining appropriate safety standards$", re.IGNORECASE),
+    re.compile(r"^ensuring operational efficiency$", re.IGNORECASE),
+]
+
 
 def clean_option_text(text):
     """Remove common PDF artifacts before using text as an answer option."""
@@ -26,6 +76,43 @@ def clean_option_text(text):
     text = re.sub(r"\b\d{1,2}-\d+\b", " ", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip(" -:;,.")
+
+
+def normalize_option_key(text):
+    cleaned = clean_option_text(text).lower()
+    cleaned = re.sub(r"[^a-z0-9]+", " ", cleaned)
+    return cleaned.strip()
+
+
+def extract_option_tokens(text):
+    words = re.findall(r"[a-z]{3,}", normalize_option_key(text))
+    return {word for word in words if word not in OPTION_STOP_WORDS}
+
+
+def option_similarity(left, right):
+    left_tokens = extract_option_tokens(left)
+    right_tokens = extract_option_tokens(right)
+
+    if not left_tokens or not right_tokens:
+        return 0.0
+
+    return len(left_tokens & right_tokens) / len(left_tokens | right_tokens)
+
+
+def first_content_word(text):
+    for word in normalize_option_key(text).split():
+        if word not in OPTION_STOP_WORDS:
+            return word
+    return ""
+
+
+def looks_generic_distractor(text):
+    cleaned = clean_option_text(text)
+    if not cleaned:
+        return True
+    if looks_like_weak_option(cleaned):
+        return True
+    return any(pattern.search(cleaned) for pattern in GENERIC_DISTRACTOR_PATTERNS)
 
 
 def looks_like_weak_option(text):
@@ -87,6 +174,93 @@ def make_concept_summary(text, max_len=150):
 
     return text
 
+
+def score_distractor_candidate(candidate, correct_answer, context="", label=""):
+    candidate_tokens = extract_option_tokens(candidate)
+    correct_tokens = extract_option_tokens(correct_answer)
+    context_tokens = extract_option_tokens(context)
+    label_tokens = extract_option_tokens(label)
+
+    score = 0
+    score += len(candidate_tokens & correct_tokens) * 2
+    score += len(candidate_tokens & context_tokens) * 4
+    score += len(label_tokens & context_tokens) * 5
+
+    if first_content_word(candidate) and first_content_word(candidate) == first_content_word(correct_answer):
+        score += 4
+
+    if 5 <= len(candidate.split()) <= 28:
+        score += 2
+
+    if abs(len(candidate.split()) - len(correct_answer.split())) <= 6:
+        score += 2
+
+    return score
+
+
+def can_use_distractor(candidate, correct_answer, existing=None):
+    if not candidate:
+        return False
+
+    candidate_key = normalize_option_key(candidate)
+    correct_key = normalize_option_key(correct_answer)
+
+    if not candidate_key or candidate_key == correct_key:
+        return False
+
+    if looks_generic_distractor(candidate):
+        return False
+
+    if option_similarity(candidate, correct_answer) >= 0.98:
+        return False
+
+    for item in existing or []:
+        if not item:
+            continue
+        if normalize_option_key(item) == candidate_key:
+            return False
+        if option_similarity(candidate, item) >= 0.97:
+            return False
+
+    return True
+
+
+def generate_subtle_variants(correct_answer):
+    subtle_modifications = [
+        lambda x: re.sub(r'\b(all|every|each)\b', 'some', x, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\b(must|shall)\b', 'should', x, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\b(required|mandatory)\b', 'recommended', x, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\b(always|continuously)\b', 'periodically', x, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\b(immediately|promptly|without delay)\b', 'after further review', x, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bbefore\b', 'after', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bminimum\b', 'maximum', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bAuthority\b', 'operator', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\boperator\b', 'Authority', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\b(organization|service provider)\b', 'operator', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bensure\b', 'consider', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bmaintain\b', 'review', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bimplement\b', 'document', x, count=1, flags=re.IGNORECASE),
+        lambda x: re.sub(r'\bapply\b', 'review', x, count=1, flags=re.IGNORECASE),
+    ]
+
+    variants = []
+    correct_key = normalize_option_key(correct_answer)
+
+    for modifier in subtle_modifications:
+        try:
+            modified = modifier(correct_answer)
+        except Exception:
+            continue
+
+        if normalize_option_key(modified) == correct_key:
+            continue
+
+        cleaned = make_concept_summary(modified, 150)
+        if cleaned and normalize_option_key(cleaned) != correct_key:
+            variants.append(cleaned)
+
+    return variants
+
 # ============================================================================
 # SMART DISTRACTOR GENERATION
 # ============================================================================
@@ -106,112 +280,67 @@ def generate_smart_distractors(correct_answer, concept_type, all_concepts, conte
     """
     distractors = []
     correct_lower = correct_answer.lower()
+    candidates = {}
+
+    def queue_candidate(text, label=""):
+        cleaned = make_concept_summary(text, 150)
+        if not can_use_distractor(cleaned, correct_answer):
+            return
+
+        key = normalize_option_key(cleaned)
+        score = score_distractor_candidate(cleaned, correct_answer, context=context, label=label)
+        existing = candidates.get(key)
+
+        if existing is None or score > existing[0]:
+            candidates[key] = (score, cleaned)
     
     # Strategy 1: Use other similar concepts from the same document (most plausible)
     if concept_type == "definition" and "definitions" in all_concepts:
-        others = [d["meaning"] for d in all_concepts["definitions"] 
-                  if d["meaning"].lower() != correct_lower and len(d["meaning"]) > 20]
-        random.shuffle(others)
-        for other in others[:3]:
-            # Make sure it's sufficiently different but still plausible
-            cleaned = make_concept_summary(other, 150)
-            if cleaned and cleaned not in distractors:
-                distractors.append(cleaned)
+        context_tokens = extract_option_tokens(context)
+        for definition in all_concepts["definitions"]:
+            meaning = definition.get("meaning", "")
+            if meaning.lower() == correct_lower or len(meaning) <= 20:
+                continue
+            label_tokens = extract_option_tokens(definition.get("term", ""))
+            if context_tokens and label_tokens and not (label_tokens & context_tokens):
+                continue
+            queue_candidate(meaning, label=definition.get("term", ""))
     
     elif concept_type == "responsibility" and "responsibilities" in all_concepts:
-        others = [r["entity"].title() for r in all_concepts["responsibilities"] 
-                  if r["entity"].lower() != correct_lower.split()[0].lower()]
-        random.shuffle(others)
-        seen = set()
-        for e in others:
-            if e not in seen and e not in distractors and e.lower() != correct_lower:
-                seen.add(e)
-                distractors.append(e)
-                if len(distractors) >= 2:
-                    break
+        for responsibility in all_concepts["responsibilities"]:
+            entity = responsibility.get("entity", "").title()
+            if entity.lower() == correct_lower:
+                continue
+            queue_candidate(entity, label=responsibility.get("action", ""))
     
     elif concept_type in ["requirement", "purpose", "application"]:
-        # Use other requirements/purposes as distractors (they're plausible but wrong for this question)
         if "requirements" in all_concepts:
-            others = [make_concept_summary(r["requirement"], 120) for r in all_concepts["requirements"]
-                      if r["requirement"].lower() != correct_lower]
-            random.shuffle(others)
-            for other in others[:2]:
-                if other and other not in distractors:
-                    distractors.append(other)
+            for requirement in all_concepts["requirements"]:
+                text = requirement.get("requirement", "")
+                if text.lower() != correct_lower:
+                    queue_candidate(text, label=requirement.get("topic_label") or requirement.get("context", ""))
         
-        if "purposes" in all_concepts and len(distractors) < 2:
-            others = [make_concept_summary(p["purpose"], 120) for p in all_concepts["purposes"]
-                      if p["purpose"].lower() != correct_lower]
-            random.shuffle(others)
-            for other in others[:2]:
-                if other and other not in distractors:
-                    distractors.append(other)
+        if "purposes" in all_concepts:
+            for purpose in all_concepts["purposes"]:
+                text = purpose.get("purpose", "")
+                if text.lower() != correct_lower:
+                    queue_candidate(text, label=purpose.get("topic_label") or purpose.get("context", ""))
+
+        if "procedures" in all_concepts:
+            for procedure in all_concepts["procedures"]:
+                text = procedure.get("text", "")
+                if text.lower() != correct_lower:
+                    queue_candidate(text, label=" ".join(procedure.get("groups", [])))
     
     # Strategy 2: Subtle modifications to correct answer (requires careful reading)
-    if len(distractors) < 3:
-        subtle_modifications = [
-            # Change scope/applicability
-            lambda x: re.sub(r'\b(all|every|each)\b', 'some', x, flags=re.IGNORECASE),
-            lambda x: re.sub(r'\b(must|shall)\b', 'should', x, flags=re.IGNORECASE),
-            lambda x: re.sub(r'\b(required|mandatory)\b', 'recommended', x, flags=re.IGNORECASE),
-            # Change timing/frequency
-            lambda x: re.sub(r'\b(always|continuously)\b', 'periodically', x, flags=re.IGNORECASE),
-            lambda x: re.sub(r'\b(immediately|promptly)\b', 'eventually', x, flags=re.IGNORECASE),
-            # Change responsibility
-            lambda x: re.sub(r'\b(organization|operator)\b', 'individual', x, flags=re.IGNORECASE),
-            # Negate or invert
-            lambda x: x.replace("ensure", "consider") if "ensure" in x.lower() else x,
-            lambda x: x.replace("prevent", "minimize") if "prevent" in x.lower() else x,
-        ]
-        
-        for mod in subtle_modifications:
-            try:
-                modified = mod(correct_answer)
-                cleaned = make_concept_summary(modified, 150)
-                if cleaned and cleaned != correct_answer and cleaned not in distractors and len(cleaned) > 20:
-                    distractors.append(cleaned)
-                    if len(distractors) >= 3:
-                        break
-            except:
-                continue
-    
-    # Strategy 3: Domain-specific plausible alternatives (aviation/safety focused)
-    if len(distractors) < 3:
-        domain_distractors = [
-            "Establishing documentation procedures without practical implementation requirements",
-            "Conducting periodic reviews based on organizational preference",
-            "Delegating responsibility to departmental managers without central oversight",
-            "Implementing voluntary safety measures beyond regulatory requirements",
-            "Maintaining records for internal reference purposes only",
-            "Coordinating with external stakeholders on an advisory basis",
-            "Providing guidance that may be adapted based on operational needs",
-            "Ensuring compliance through self-declaration processes",
-            "Developing procedures aligned with industry best practices",
-            "Establishing communication channels for safety-related information",
-        ]
-        random.shuffle(domain_distractors)
-        for d in domain_distractors:
-            cleaned = make_concept_summary(d, 150)
-            if cleaned and cleaned not in distractors and cleaned.lower() != correct_lower:
-                distractors.append(cleaned)
-                if len(distractors) >= 3:
-                    break
-    
-    # Ensure we have exactly 3 unique distractors
-    distractors = list(dict.fromkeys(distractors))[:3]
-    
-    # If still short, add fallback that's clearly domain-relevant
-    fallback_options = [
-        "Following established organizational protocols",
-        "Maintaining appropriate safety standards",
-        "Ensuring operational efficiency",
-    ]
-    while len(distractors) < 3:
-        for fb in fallback_options:
-            cleaned = make_concept_summary(fb, 150)
-            if cleaned and cleaned not in distractors:
-                distractors.append(cleaned)
+    for variant in generate_subtle_variants(correct_answer):
+        queue_candidate(variant, label=context)
+
+    ranked_candidates = sorted(candidates.values(), key=lambda item: item[0], reverse=True)
+    for _, candidate in ranked_candidates:
+        if can_use_distractor(candidate, correct_answer, existing=distractors):
+            distractors.append(candidate)
+            if len(distractors) >= 3:
                 break
     
     return distractors[:3]
